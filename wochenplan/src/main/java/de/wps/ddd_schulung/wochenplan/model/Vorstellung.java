@@ -15,7 +15,7 @@ public class Vorstellung {
     @ManyToOne
     @JoinColumn(name = "film_id", nullable = false)
     private Film film;
-    private Float preis;
+    private Integer preis;
     @ManyToOne
     @JoinColumn(name = "saal_id", nullable = false)
     private Saal saal;
@@ -55,11 +55,11 @@ public class Vorstellung {
         this.film = film;
     }
 
-    public Float getPreis() {
+    public Integer getPreis() {
         return preis;
     }
 
-    public void setPreis(Float preis) {
+    public void setPreis(Integer preis) {
         this.preis = preis;
     }
 
