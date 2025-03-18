@@ -1,3 +1,5 @@
+package de.wps.dddschulung.model;
+
 import jakarta.persistence.*;
 
 @Entity

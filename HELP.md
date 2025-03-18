@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'de.wps.ddd-schulung.wochenplan' is invalid and this project uses 'de.wps.ddd_schulung.wochenplan' instead.
+* The original package name 'de.wps.dddschulung.wochenplan' is invalid and this project uses 'de.wps.ddd_schulung.wochenplan' instead.
 
 # Getting Started
 

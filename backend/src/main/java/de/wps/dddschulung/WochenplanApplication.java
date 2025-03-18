@@ -1,3 +1,5 @@
+package de.wps.dddschulung;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,17 +14,5 @@ public class WochenplanApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WochenplanApplication.class, args);
-	}
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200")
-						.allowedMethods("GET", "PUT", "POST", "DELETE");
-			}
-		};
-
 	}
 }
