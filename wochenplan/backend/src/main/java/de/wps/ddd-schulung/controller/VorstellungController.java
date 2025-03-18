@@ -1,5 +1,3 @@
-package de.wps.ddd_schulung.wochenplan.controller;
-
 import de.wps.ddd_schulung.wochenplan.model.Vorstellung;
 import de.wps.ddd_schulung.wochenplan.model.VorstellungRepository;
 import org.springframework.web.bind.annotation.*;

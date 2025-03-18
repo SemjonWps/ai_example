@@ -1,5 +1,3 @@
-package de.wps.ddd_schulung.wochenplan.model;
-
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
