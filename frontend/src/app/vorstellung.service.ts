@@ -1,11 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../model/user';
-import { Observable } from 'rxjs/Observable';
-
-@Injectable({
-  providedIn: 'root'
-})
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 export interface Vorstellung {
   id: number,
@@ -17,26 +12,29 @@ export interface Vorstellung {
 }
 
 export interface Film {
-   id: number,
-   titel: string,
-   laufzeit: number,
-   posterUrl: string,
-   fsk: number,
-   beschreibung: string,
-   genre: string,
-   hauptdarsteller: string,
-   regie: string,
-   sprache: string
+  id: number,
+  titel: string,
+  laufzeit: number,
+  posterUrl: string,
+  fsk: number,
+  beschreibung: string,
+  genre: string,
+  hauptdarsteller: string,
+  regie: string,
+  sprache: string
 }
 
-export interface saal {
+export interface Saal {
   id: number,
   name: string
 }
 
+@Injectable({
+  providedIn: 'root'
+})
 export class VorstellungService {
 
-  private const vorstellungenUrl: string = 'http://localhost:8080/api/vorstellungen';
+  private vorstellungenUrl: string = 'http://localhost:8080/api/vorstellungen';
 
   constructor(private http: HttpClient) {
 

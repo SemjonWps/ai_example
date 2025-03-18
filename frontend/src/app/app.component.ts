@@ -11,13 +11,13 @@ import { Vorstellung, VorstellungService } from './vorstellung.service';
 export class AppComponent implements OnInit {
   title = 'frontend';
 
-  vorstellungen: Vorstellung[];
+  vorstellungen: Vorstellung[] = [];
 
   constructor(private vorstellungService: VorstellungService) {
   }
 
   ngOnInit() {
-    this.vorstellungService.findAll().subscribe(data :Vorstellung[] => {
+    this.vorstellungService.findAll().subscribe((data: Vorstellung[]): void => {
       this.vorstellungen = data;
       console.log(this.vorstellungen);
     });
