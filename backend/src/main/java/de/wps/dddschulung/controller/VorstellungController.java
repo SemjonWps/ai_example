@@ -2,13 +2,11 @@ package de.wps.dddschulung.controller;
 
 import de.wps.dddschulung.model.Vorstellung;
 import de.wps.dddschulung.model.VorstellungRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -24,5 +22,13 @@ public class VorstellungController {
     @GetMapping
     public List<Vorstellung> getAllVorstellungen(){
         return vorstellungRepository.findAllByOrderByAnfangszeitAsc();
+    }
+
+    @GetMapping("/tag")
+    public List<Vorstellung> getTagesvorstellungen(@RequestParam String datumString){
+        LocalDate datum = LocalDate.parse(datumString);
+        LocalDateTime start = datum.atStartOfDay();
+        LocalDateTime end = LocalTime.MAX.atDate(datum);
+        return vorstellungRepository.findByAnfangszeitBetween(start, end);
     }
 }

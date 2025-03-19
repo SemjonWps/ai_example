@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 export interface Vorstellung {
@@ -42,6 +42,10 @@ export class VorstellungService {
 
   public findAll(): Observable<Vorstellung[]> {
     return this.http.get<Vorstellung[]>(this.vorstellungenUrl);
+  }
+
+  public findTagesvorstellungen(datum : string) : Observable<Vorstellung[]> {
+    return this.http.get<Vorstellung[]>(this.vorstellungenUrl + "/tag", {params: new HttpParams().set("tag", datum)})
   }
 
   public save(vorstellung: Vorstellung) {
