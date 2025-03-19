@@ -8,11 +8,11 @@
   <tbody>
   <tr *ngFor="let saal of saele">
     <td class="background-grey"><div class="saal-spalte">{{ saal }}</div></td>
-    <td *ngFor="let day of wochentage">
+    <td *ngFor="let day of wochentage" class="vorstellung-card">
       <ng-container *ngFor="let vorstellung of vorstellungen">
         <ng-container *ngIf="vorstellung.saal.name === saal && isSameDay(vorstellung.anfangszeit, day)">
           <div>
-            <strong>{{ vorstellung.film.titel }}</strong>
+            <p class="film-titel">{{ vorstellung.film.titel }}</p>
             <table>
               <tr>
                 <td>
@@ -28,8 +28,8 @@
                 <td><img src="{{vorstellung.film.posterUrl}}" alt="{{ vorstellung.film.titel }}" class="film-poster"></td>
               </tr>
             </table>
-            <p>{{ vorstellung.anfangszeit | date:'HH:mm' }} - {{ vorstellung.endzeit | date:'HH:mm' }}</p>
-            <p>{{ vorstellung.preis / 100 | currency:'EUR':'symbol':'1.2-2' }}</p>
+            <p>Zeit: {{ vorstellung.anfangszeit | date:'HH:mm' }} - {{ vorstellung.endzeit | date:'HH:mm' }}</p>
+            <p>Preis: {{ vorstellung.preis / 100 | currency:'EUR':'symbol':'1.2-2' }}</p>
           </div>
         </ng-container>
       </ng-container>

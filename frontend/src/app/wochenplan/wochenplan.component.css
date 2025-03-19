@@ -2,11 +2,18 @@
   width: 300px;
   height: 300px;
   object-fit: cover;
+  padding-right: 10px;
 }
 
 .film-infos {
   width: 300px;
   height: 300px;
+  padding-left: 10px;
+}
+
+.film-titel {
+  text-align: center;
+  font-weight: bold;
 }
 
 .saal-spalte {
@@ -19,5 +26,9 @@
 }
 
 .background-grey {
+  background-color: grey;
+}
+
+.vorstellung-card {
   background-color: lightgrey;
 }
