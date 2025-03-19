@@ -2,5 +2,9 @@ package de.wps.dddschulung.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface VorstellungRepository extends JpaRepository<Vorstellung, Long> {
+
+    List<Vorstellung> findAllByOrderByAnfangszeitAsc();
 }

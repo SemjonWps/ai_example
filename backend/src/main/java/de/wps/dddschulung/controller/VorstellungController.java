@@ -23,12 +23,6 @@ public class VorstellungController {
 
     @GetMapping
     public List<Vorstellung> getAllVorstellungen(){
-        return vorstellungRepository.findAll();
+        return vorstellungRepository.findAllByOrderByAnfangszeitAsc();
     }
-
-    @PostMapping
-    public Vorstellung createVorstellung(@RequestBody Vorstellung vorstellung){
-        return vorstellungRepository.save(vorstellung);
-    }
-
 }

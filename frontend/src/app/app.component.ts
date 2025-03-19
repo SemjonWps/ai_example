@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {WochenplanComponent} from './wochenplan/wochenplan.component';
+import {ProgrammComponent} from './programm/programm.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, WochenplanComponent],
+  imports: [RouterOutlet, ProgrammComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
