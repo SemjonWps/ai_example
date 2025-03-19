@@ -13,6 +13,19 @@
         <ng-container *ngIf="vorstellung.saal.name === saal && isSameDay(vorstellung.anfangszeit, day)">
           <div class="movie-info">
             <strong>{{ vorstellung.film.titel }}</strong>
+            <table>
+              <tr>
+                <td>
+                  <p>{{vorstellung.film.beschreibung}}</p>
+                  <p>{{vorstellung.film.genre}}</p>
+                  <p>Regie: {{vorstellung.film.regie}}</p>
+                  <p>Hauptdarsteller: {{vorstellung.film.hauptdarsteller}}</p>
+                  <p>FSK: {{vorstellung.film.fsk}}</p>
+                  <p>Sprache: {{vorstellung.film.sprache}}</p>
+                </td>
+                <td><img [src]="vorstellung.film.posterUrl" alt="{{ vorstellung.film.titel }}"></td>
+              </tr>
+            </table>
             <p>{{ vorstellung.anfangszeit | date:'HH:mm' }} - {{ vorstellung.endzeit | date:'HH:mm' }}</p>
             <p>{{ vorstellung.preis / 100 | currency:'EUR':'symbol':'1.2-2' }}</p>
           </div>

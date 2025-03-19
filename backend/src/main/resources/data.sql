@@ -1,8 +1,8 @@
 INSERT INTO filme
     (titel, laufzeit, poster_url, fsk, beschreibung, genre, hauptdarsteller, regie, sprache)
 VALUES
-    ('Star Boars', 125, 'star_boars.jpg', 12, 'Intergalaktische Wildschweine kaempfen gegen das Imperium!', 'Sci-Fi, Comedy', 'Luke Stywalker', 'George Laxus', 'Deutsch'),
-    ('The Glitchtrix', 110, 'glitchtrix.jpg', 16, 'Ein Software-Bug offenbart eine digitale Dystopie.', 'Sci-Fi, Comedy', 'Neo Rebooter', 'Lana & Lily Crashowski', 'Finnisch'),
+    ('Star Boars', 125, 'Star_Boars.webp', 12, 'Intergalaktische Wildschweine kaempfen gegen das Imperium!', 'Sci-Fi, Comedy', 'Luke Stywalker', 'George Laxus', 'Deutsch'),
+    ('The Glitchtrix', 110, '/assets/the_glitchtrix.png', 16, 'Ein Software-Bug offenbart eine digitale Dystopie.', 'Sci-Fi, Comedy', 'Neo Rebooter', 'Lana & Lily Crashowski', 'Finnisch'),
     ('Space Farce', 140, 'space_farce.jpg', 12, 'Eine Crew voller Idioten versucht, das Universum zu retten.', 'Sci-Fi, Action, Comedy', 'Han Yolo', 'J.J. Abrahaha', 'Deutsch'),
     ('The Termi-neigh-tor', 118, 'termi-neigh-tor.jpg', 16, 'Ein Cyborg-Pferd aus der Zukunft sorgt fuer Chaos.', 'Sci-Fi, Comedy', 'Arnie Horsenegger', 'James Cameroon', 'Italienisch'),
     ('Droid Hard', 95, 'droid_hard.jpg', 6, 'Ein kleiner Roboter nimmt es mit der KI-Mafia auf.', 'Sci-Fi, Animation', 'Bleep Bloop', 'Pete Drinker', 'Deutsch'),
