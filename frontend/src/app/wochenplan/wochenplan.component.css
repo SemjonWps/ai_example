@@ -1,0 +1,23 @@
+.film-poster {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.film-infos {
+  width: 300px;
+  height: 300px;
+}
+
+.saal-spalte {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+}
+
+.background-grey {
+  background-color: lightgrey;
+}

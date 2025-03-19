@@ -1,29 +1,31 @@
 <table>
   <thead>
   <tr>
-    <th>Saal</th>
-    <th *ngFor="let day of wochentage">{{ day }}</th>
+    <th class="background-grey">Saal</th>
+    <th *ngFor="let day of wochentage"  class="background-grey">{{ day }}</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let saal of saele">
-    <td>{{ saal }}</td>
+    <td class="background-grey"><div class="saal-spalte">{{ saal }}</div></td>
     <td *ngFor="let day of wochentage">
       <ng-container *ngFor="let vorstellung of vorstellungen">
         <ng-container *ngIf="vorstellung.saal.name === saal && isSameDay(vorstellung.anfangszeit, day)">
-          <div class="movie-info">
+          <div>
             <strong>{{ vorstellung.film.titel }}</strong>
             <table>
               <tr>
                 <td>
-                  <p>{{vorstellung.film.beschreibung}}</p>
-                  <p>{{vorstellung.film.genre}}</p>
-                  <p>Regie: {{vorstellung.film.regie}}</p>
-                  <p>Hauptdarsteller: {{vorstellung.film.hauptdarsteller}}</p>
-                  <p>FSK: {{vorstellung.film.fsk}}</p>
-                  <p>Sprache: {{vorstellung.film.sprache}}</p>
+                  <div class="film-infos">
+                    <p>{{vorstellung.film.beschreibung}}</p>
+                    <p>{{vorstellung.film.genre}}</p>
+                    <p>Regie: {{vorstellung.film.regie}}</p>
+                    <p>Hauptdarsteller: {{vorstellung.film.hauptdarsteller}}</p>
+                    <p>FSK: {{vorstellung.film.fsk}}</p>
+                    <p>Sprache: {{vorstellung.film.sprache}}</p>
+                  </div>
                 </td>
-                <td><img [src]="vorstellung.film.posterUrl" alt="{{ vorstellung.film.titel }}"></td>
+                <td><img src="{{vorstellung.film.posterUrl}}" alt="{{ vorstellung.film.titel }}" class="film-poster"></td>
               </tr>
             </table>
             <p>{{ vorstellung.anfangszeit | date:'HH:mm' }} - {{ vorstellung.endzeit | date:'HH:mm' }}</p>
