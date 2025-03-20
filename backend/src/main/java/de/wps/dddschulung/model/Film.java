@@ -1,11 +1,15 @@
 package de.wps.dddschulung.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
+import java.util.List;
+
 @Entity
-@Table(name="filme")
+@Table(name = "filme")
 @Data
 @NoArgsConstructor
 public class Film {
@@ -13,7 +17,7 @@ public class Film {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titel;
-    private Integer laufzeit;
+    private Duration laufzeit;
     private String posterUrl;
     private Integer fsk;
     private String beschreibung;
@@ -21,5 +25,9 @@ public class Film {
     private String hauptdarsteller;
     private String regie;
     private String sprache;
+    @OneToMany
+    @JoinColumn(name = "filmId")
+    @JsonIgnore
+    private List<Vorstellung> vorstellungen;
 
 }

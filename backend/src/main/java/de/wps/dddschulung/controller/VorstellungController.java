@@ -1,7 +1,8 @@
 package de.wps.dddschulung.controller;
 
-import de.wps.dddschulung.model.Vorstellung;
-import de.wps.dddschulung.model.VorstellungRepository;
+import de.wps.dddschulung.model.ProgrammRepository;
+import de.wps.dddschulung.model.Programmeintrag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -12,23 +13,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vorstellungen")
 @CrossOrigin("*")
+@RequiredArgsConstructor
 public class VorstellungController {
-    private final VorstellungRepository vorstellungRepository;
+    private final ProgrammRepository programmRepository;
 
-    public VorstellungController(VorstellungRepository vorstellungRepository) {
-        this.vorstellungRepository = vorstellungRepository;
-    }
-
-    @GetMapping
-    public List<Vorstellung> getAllVorstellungen(){
-        return vorstellungRepository.findAllByOrderByAnfangszeitAsc();
-    }
-
-    @GetMapping("/tag")
-    public List<Vorstellung> getTagesvorstellungen(@RequestParam String datumString){
-        LocalDate datum = LocalDate.parse(datumString);
+    @GetMapping()
+    public List<Programmeintrag> holeVorstellungenFuerTag(@RequestParam String tag) {
+        LocalDate datum = LocalDate.parse(tag);
         LocalDateTime start = datum.atStartOfDay();
         LocalDateTime end = LocalTime.MAX.atDate(datum);
-        return vorstellungRepository.findByAnfangszeitBetween(start, end);
+        return programmRepository.holeProgrammeintraegefuerZeitraum(start, end);
     }
 }

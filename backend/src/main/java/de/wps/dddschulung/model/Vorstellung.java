@@ -1,5 +1,6 @@
 package de.wps.dddschulung.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,9 @@ public class Vorstellung {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonIgnore
+    private Long filmId;
     private LocalDateTime anfangszeit;
-    private LocalDateTime endzeit;
-    @ManyToOne
-    @JoinColumn(name = "film_id", nullable = false)
-    private Film film;
     private Integer preis;
     @ManyToOne
     @JoinColumn(name = "saal_id", nullable = false)
