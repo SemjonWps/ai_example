@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {WochentagEnum} from './wochentag.enum';
+import {WochentagEnum} from '../dtos/wochentag.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,8 @@ export class DatumService {
     6: WochentagEnum.Samstag,
   };
 
-  constructor() { }
+  constructor() {
+  }
 
   getWochentag(dateString: string): WochentagEnum {
     const weekdayIndex = new Date(dateString).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
@@ -24,11 +25,11 @@ export class DatumService {
     return this.wochentageMap[weekdayIndex];
   }
 
-  getWocheBeginnendAn(datum: string){
+  getWocheBeginnendAn(datum: string) {
     const weekdayIndex = new Date(datum).getDay();
     const rueckgabeWoche: WochentagEnum[] = [];
 
-    for (let i = 0; i < 7; i++){
+    for (let i = 0; i < 7; i++) {
       rueckgabeWoche[i] = this.wochentageMap[(weekdayIndex + i) % 7]
     }
 

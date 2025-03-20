@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {CurrencyPipe, DatePipe} from '@angular/common';
-import {Vorstellung} from '../programm/vorstellung.service';
+import {Vorstellung} from '../../dtos/film';
 
 @Component({
   selector: 'app-vorstellung',
@@ -17,7 +17,4 @@ export class VorstellungComponent {
 
   constructor() {
   }
-
-
-
 }

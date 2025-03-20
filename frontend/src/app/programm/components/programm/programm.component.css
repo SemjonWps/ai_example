@@ -1,0 +1,7 @@
+.wochentage-leiste {
+  display: flex;
+}
+
+.wochentag-button {
+  flex-direction: row;
+}

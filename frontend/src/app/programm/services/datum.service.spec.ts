@@ -1,7 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {DatumService} from './datum.service';
-import {WochentagEnum} from './wochentag.enum';
+import {WochentagEnum} from '../dtos/wochentag.enum';
 
 describe('DatumService', () => {
   let service: DatumService;
