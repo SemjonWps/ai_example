@@ -7,9 +7,9 @@ import org.springframework.boot.autoconfigure.webservices.client.WebServiceTempl
 
 @SpringBootApplication
 @ImportAutoConfiguration(exclude = WebServiceTemplateAutoConfiguration.class)
-public class WochenplanApplication {
+public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(WochenplanApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

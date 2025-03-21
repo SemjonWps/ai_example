@@ -3,8 +3,9 @@ package de.wps.dddschulung.programm.model;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalTime;
 
 @RequiredArgsConstructor
 @Service
@@ -12,8 +13,11 @@ public class ProgrammRepository {
 
     private final FilmRepository filmRepository;
 
-    public List<Programmeintrag> holeProgrammeintraegefuerZeitraum(LocalDateTime start, LocalDateTime end) {
-        var films = filmRepository.findFilmsBetween(start, end);
-        return films.stream().map(f -> new Programmeintrag(f, f.getVorstellungen())).toList();
+    public Programm holeProgrammFuerTag(LocalDate datum) {
+        LocalDateTime start = datum.atStartOfDay();
+        LocalDateTime ende = LocalTime.MAX.atDate(datum);
+        var filme = filmRepository.findFilmsBetween(start, ende);
+        var programmeintraege = filme.stream().map(f -> new Programmeintrag(f, f.getVorstellungen())).toList();
+        return new Programm(start, ende, programmeintraege);
     }
 }
