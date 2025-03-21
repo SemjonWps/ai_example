@@ -1,4 +1,4 @@
-package de.wps.dddschulung.model;
+package de.wps.dddschulung.programm.model;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;

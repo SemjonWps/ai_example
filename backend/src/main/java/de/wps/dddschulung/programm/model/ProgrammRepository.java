@@ -1,4 +1,4 @@
-package de.wps.dddschulung.model;
+package de.wps.dddschulung.programm.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,5 +16,4 @@ public class ProgrammRepository {
         var films = filmRepository.findFilmsBetween(start, end);
         return films.stream().map(f -> new Programmeintrag(f, f.getVorstellungen())).toList();
     }
-
 }

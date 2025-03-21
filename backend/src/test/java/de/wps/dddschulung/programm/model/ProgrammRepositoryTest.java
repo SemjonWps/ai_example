@@ -1,4 +1,4 @@
-package de.wps.dddschulung.model;
+package de.wps.dddschulung.programm.model;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
