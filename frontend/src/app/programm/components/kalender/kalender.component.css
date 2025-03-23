@@ -1,0 +1,12 @@
+.calendar-bar {
+  display: flex;
+  gap: 16px;
+}
+
+.date-item {
+  flex-direction: row;
+  display: flex;
+  padding: 16px;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}

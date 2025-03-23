@@ -1,7 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 
 import {DatumService} from './datum.service';
-import {WochentagEnum} from '../dtos/wochentag.enum';
 
 describe('DatumService', () => {
   let service: DatumService;
@@ -17,53 +16,36 @@ describe('DatumService', () => {
 
   describe('getWochentag', () => {
     it('should return sunday from date', () => {
-      const datum = "2025-03-16 16:30:00";
+      const datum = new Date("2025-03-16T16:30:00");
 
-      const result = service.getWochentag(datum);
+      const result = service.formatWochentag(datum);
 
-      expect(result).toEqual(WochentagEnum.Sonntag);
+      expect(result).toEqual("So");
     });
 
     it('should return tuesday from date', () => {
-      const datum = "2025-03-18 16:30:00";
+      const datum = new Date("2025-03-18T16:30:00");
 
-      const result = service.getWochentag(datum);
+      const result = service.formatWochentag(datum);
 
-      expect(result).toEqual(WochentagEnum.Dienstag);
+      expect(result).toEqual("Di");
     });
   });
 
   describe('getWocheBeginnendAn', () => {
-    it('should return week of days beginning sunday', () => {
-      const datum = "2025-03-16 16:30:00";
-      const expectedResult: WochentagEnum[] = [
-        WochentagEnum.Sonntag,
-        WochentagEnum.Montag,
-        WochentagEnum.Dienstag,
-        WochentagEnum.Mittwoch,
-        WochentagEnum.Donnerstag,
-        WochentagEnum.Freitag,
-        WochentagEnum.Samstag
-      ];
+    it('should return week of days beginning monday', () => {
+      const datum = new Date("2025-03-18T16:30:00");
+      const expectedResult = [
+        new Date("2025-03-17T00:00:00"),
+        new Date("2025-03-18T00:00:00"),
+        new Date("2025-03-19T00:00:00"),
+        new Date("2025-03-20T00:00:00"),
+        new Date("2025-03-21T00:00:00"),
+        new Date("2025-03-22T00:00:00"),
+        new Date("2025-03-23T00:00:00")
+      ]
 
-      const result = service.getWocheBeginnendAn(datum);
-
-      expect(result).toEqual(expectedResult);
-    });
-
-    it('should return week of days beginning tuesday', () => {
-      const datum = "2025-03-18 16:30:00";
-      const expectedResult: WochentagEnum[] = [
-        WochentagEnum.Dienstag,
-        WochentagEnum.Mittwoch,
-        WochentagEnum.Donnerstag,
-        WochentagEnum.Freitag,
-        WochentagEnum.Samstag,
-        WochentagEnum.Sonntag,
-        WochentagEnum.Montag
-      ];
-
-      const result = service.getWocheBeginnendAn(datum);
+      const result = service.getWochentage(datum);
 
       expect(result).toEqual(expectedResult);
     });

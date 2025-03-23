@@ -1,38 +1,27 @@
 import {Injectable} from '@angular/core';
-import {WochentagEnum} from '../dtos/wochentag.enum';
+import {addDays, format, startOfWeek} from 'date-fns';
+import {de} from 'date-fns/locale';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatumService {
 
-  private wochentageMap: { [key: number]: WochentagEnum } = {
-    0: WochentagEnum.Sonntag,
-    1: WochentagEnum.Montag,
-    2: WochentagEnum.Dienstag,
-    3: WochentagEnum.Mittwoch,
-    4: WochentagEnum.Donnerstag,
-    5: WochentagEnum.Freitag,
-    6: WochentagEnum.Samstag,
-  };
+  private today: Date = new Date();
 
   constructor() {
   }
 
-  getWochentag(dateString: string): WochentagEnum {
-    const weekdayIndex = new Date(dateString).getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-
-    return this.wochentageMap[weekdayIndex];
+  getToday() {
+    return this.today;
   }
 
-  getWocheBeginnendAn(datum: string) {
-    const weekdayIndex = new Date(datum).getDay();
-    const rueckgabeWoche: WochentagEnum[] = [];
+  formatWochentag(date: Date): string {
+    return format(date, 'EE', {locale: de}).slice(0, 2);
+  }
 
-    for (let i = 0; i < 7; i++) {
-      rueckgabeWoche[i] = this.wochentageMap[(weekdayIndex + i) % 7]
-    }
-
-    return rueckgabeWoche;
+  getWochentage(date: Date) {
+    const monday = startOfWeek(date, {weekStartsOn: 1});
+    return Array.from({length: 7}, (_, i) => addDays(monday, i));
   }
 }

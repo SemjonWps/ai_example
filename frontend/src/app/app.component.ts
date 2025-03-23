@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Inject, LOCALE_ID} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {ProgrammComponent} from './programm/components/programm/programm.component';
+import {ProgrammComponent} from './programm/components/programm-page/programm.component';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +9,8 @@ import {ProgrammComponent} from './programm/components/programm/programm.compone
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+  constructor(@Inject(LOCALE_ID) private locale: string) {
+    console.log("Current LOCALE_ID:", this.locale); // Should print: 'de-DE'
+  }
 }
