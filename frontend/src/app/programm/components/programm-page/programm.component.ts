@@ -18,7 +18,7 @@ import {format} from 'date-fns';
 })
 export class ProgrammComponent implements OnInit {
 
-  gewaehltesDatum: Date = new Date("2025-03-18");
+  gewaehltesDatum: Date = new Date("2025-03-19");
 
   programm?: Programm;
 

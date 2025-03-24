@@ -1,5 +1,5 @@
 <div class="calendar-bar">
   <button *ngFor="let datum of selectableDates" class="date-item" [ngClass]="{'active': !isBeforeToday(datum)}">
-    {{ datum | date:'EE' }}<br/>{{ datum | date:'dd.MM' }}
+    {{ datum | date:'EE' }}<br/>{{ datum | date:'dd.MM.' }}
   </button>
 </div>

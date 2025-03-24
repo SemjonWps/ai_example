@@ -19,7 +19,7 @@ export class KalenderComponent implements OnInit {
   constructor(private datumService: DatumService) {
   }
 
-  today: Date = new Date();
+  today: Date = new Date("2025-03-19");
 
   selectableDates: Date[] = [this.today];
 
