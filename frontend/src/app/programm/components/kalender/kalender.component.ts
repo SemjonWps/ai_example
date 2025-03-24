@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DatePipe, NgClass, NgForOf} from '@angular/common';
 import {DatumService} from '../../services/datum.service';
-import {format, isBefore} from 'date-fns';
+import {format, isBefore, startOfDay} from 'date-fns';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {distinctUntilChanged, map} from 'rxjs';
 
@@ -25,6 +25,8 @@ export class KalenderComponent implements OnInit {
       distinctUntilChanged())
       .subscribe(value => {
         this.selectedDate = value ?? this.today;
+        // TODO: aria-checked trotzdem noch nicht true
+        this.selectedDate = startOfDay(this.selectedDate);
         this.dateSelected.emit(this.selectedDate);
       });
   }
@@ -39,7 +41,7 @@ export class KalenderComponent implements OnInit {
   dateSelected = new EventEmitter<Date>();
 
   ngOnInit(): void {
-    this.selectableDates = this.datumService.getWochentage(this.today)
+    this.selectableDates = this.datumService.getWochentage(this.today);
   }
 
   selectDate(datum: Date): void {
@@ -47,7 +49,7 @@ export class KalenderComponent implements OnInit {
   }
 
   isBeforeToday(date: Date): boolean {
-    return isBefore(date, this.today)
+    return isBefore(startOfDay(date), startOfDay(this.today));
   }
 
   navigate(queryParams: Params): Promise<boolean> {

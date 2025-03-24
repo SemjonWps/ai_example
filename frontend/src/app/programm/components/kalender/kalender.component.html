@@ -1,6 +1,18 @@
-<div class="calendar-bar">
+<!--<div class="calendar-bar">
   <button *ngFor="let datum of selectableDates" class="date-item" [ngClass]="{'active': !isBeforeToday(datum)}"
+          [disabled]="isBeforeToday(datum)"
           (click)="selectDate(datum)">
+    {{ datum | date:'EE' }}<br/>{{ datum | date:'dd.MM.' }}
+  </button>
+</div>-->
+
+<div class="button-group" role="radiogroup" aria-label="Wochentage">
+  <button *ngFor="let datum of selectableDates"
+          (click)="selectDate(datum)"
+          [ngClass]="{'active': !isBeforeToday(datum) , 'selected': selectedDate === datum}"
+          [disabled]="isBeforeToday(datum)"
+          role="radio"
+          [attr.aria-checked]="selectedDate === datum">
     {{ datum | date:'EE' }}<br/>{{ datum | date:'dd.MM.' }}
   </button>
 </div>
