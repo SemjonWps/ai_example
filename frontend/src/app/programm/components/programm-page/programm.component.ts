@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ProgrammService} from '../../services/programm.service';
 import {Programm} from '../../dtos/programm';
 import {KalenderComponent} from '../kalender/kalender.component';
@@ -16,24 +16,18 @@ import {format} from 'date-fns';
   templateUrl: './programm.component.html',
   styleUrl: './programm.component.css'
 })
-export class ProgrammComponent implements OnInit {
-
-  gewaehltesDatum: Date = new Date("2025-03-19");
+export class ProgrammComponent {
 
   programm?: Programm;
 
   constructor(private programmService: ProgrammService) {
   }
 
-  ngOnInit() {
-    this.programmService.holeProgramm(format(this.gewaehltesDatum, "yyyy-MM-dd")).subscribe(
+  waehleDatum(datum: Date) {
+    this.programmService.holeProgramm(format(datum, "yyyy-MM-dd")).subscribe(
       data => {
         this.programm = data;
       }
     )
-  }
-
-  waehleDatum(datum: Date) {
-    this.gewaehltesDatum = datum;
   }
 }
