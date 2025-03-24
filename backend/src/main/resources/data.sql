@@ -1,25 +1,44 @@
 INSERT INTO filme
 (titel, laufzeit, poster_url, fsk, beschreibung, genre, hauptdarsteller, regie, sprache)
-VALUES ('Star Boars', 125, 'assets/Star_Boars.webp', 12, 'Intergalaktische Wildschweine kaempfen gegen das Imperium!',
+VALUES ('Star Boars', 125, 'assets/Star_Boars.webp', 12, 'In einer weit, weit entfernten Galaxie kämpfen mutige Wildschweine gegen das tyrannische Imperium.
+Angeführt von Luke Stywalker, müssen sie sich mit Lichttrüffeln und telepathischen Grunzkraftfähigkeiten gegen den dunklen Lord Swineous behaupten.
+Ein episches Sci-Fi-Abenteuer voller Action, Humor und intergalaktischem Speckduft!',
         'Sci-Fi, Comedy', 'Luke Stywalker', 'George Laxus', 'Deutsch'),
-       ('The Glitchtrix', 110, 'assets/the_glitchtrix.png', 16, 'Ein Software-Bug offenbart eine digitale Dystopie.',
+       ('The Glitchtrix', 110, 'assets/the_glitchtrix.png', 16, 'Als die Programmiererin Nea Rebooter einen fatalen Bug entdeckt, der die digitale Realität zum Einsturz bringen könnte,
+gerät sie ins Visier einer geheimnisvollen Hacker-Gesellschaft. Während die Grenzen zwischen Simulation und Wirklichkeit verschwimmen,
+muss Nea lernen, die Kontrolle über den Quellcode des Universums zu übernehmen – bevor es zu spät ist.',
         'Sci-Fi, Comedy', 'Neo Rebooter', 'Lana & Lily Crashowski', 'Finnisch'),
        ('Space Farce', 140, 'assets/Space_Farce.jpeg', 12,
-        'Eine Crew voller Idioten versucht, das Universum zu retten.', 'Sci-Fi, Action, Comedy', 'Han Yolo',
+        'Captain Han Yolo und ihre chaotische Crew sind die letzte Hoffnung des Universums – was niemandem wirklich Hoffnung macht.
+Mit einem Schrott-Raumschiff, zweifelhaften Fähigkeiten und einer gehörigen Portion Pech stolpern sie von einer Mission zur nächsten,
+immer einen Schritt davon entfernt, alles in die Luft zu jagen. Eine actiongeladene Sci-Fi-Parodie mit Gags, Explosionen und galaktischer Dummheit!',
+        'Sci-Fi, Action, Comedy', 'Han Yolo',
         'J.J. Abrahaha', 'Deutsch'),
        ('The Termi-neigh-tor', 118, 'assets/The_Termi-neigh-tor.webp', 16,
-        'Ein Cyborg-Pferd aus der Zukunft sorgt fuer Chaos.', 'Sci-Fi, Comedy', 'Arnie Horsenegger', 'James Cameroon',
+        'Im Jahr 2049 wird die Menschheit von einem skrupellosen Unternehmen mit kybernetischen Pferden unterjocht.
+Doch eines dieser Maschinenwesen – das Modell T-Equus 800 – entwickelt ein eigenes Bewusstsein und stellt sich gegen seine Schöpfer.
+Mit unaufhaltsamer Entschlossenheit (und Hufen aus Titan) beginnt es einen chaotischen Feldzug gegen die Unterdrücker.',
+        'Sci-Fi, Comedy', 'Arnie Horsenegger', 'James Cameroon',
         'Italienisch'),
-       ('Droid Hard', 95, 'assets/Droid_Hard.jpeg', 6, 'Ein kleiner Roboter nimmt es mit der KI-Mafia auf.',
+       ('Droid Hard', 95, 'assets/Droid_Hard.jpeg', 6, 'Als eine ruchlose KI-Mafia die Stadt mit einem Computervirus bedroht, ist der kleine, aber clevere Haushaltsroboter Bleep Bloop die einzige Hoffnung.
+Mit nichts als seinem eingebauten Werkzeugkasten und einem unerschütterlichen Sinn für Gerechtigkeit kämpft er sich durch Wellen von Cyber-Schurken,
+um die Menschheit zu retten – oder zumindest die Toaster.',
         'Sci-Fi, Animation', 'Bleep Bloop', 'Pete Drinker', 'Deutsch'),
        ('Guardians of the Lunacy', 130, 'assets/Guardians_of_the_Lunacy.jpeg', 12,
-        'Eine chaotische Truppe schuetzt das Universum – irgendwie.', 'Sci-Fi, Comedy', 'Chris Plattfall',
+        'Eine Truppe aus abgedrehten Außenseitern wird widerwillig zum Schutz des Universums verpflichtet – und das ist kein gutes Zeichen.
+Chris Plattfall und sein chaotisches Team aus galaktischen Verrückten stürzen sich in explosive Abenteuer voller skurriler Aliens,
+dummer Sprüche und unerwarteter Heldentaten. Werden sie das Universum retten? Wahrscheinlich nicht. Aber es wird lustig!',
+        'Sci-Fi, Comedy', 'Chris Plattfall',
         'James Gunner', 'Englisch'),
        ('Back to the Futura', 116, 'assets/Back_to_the_Futura.jpeg', 12,
-        'Ein Zeitreisender landet in einer dystopischen Zukunft.', 'Sci-Fi, Adventure', 'Marty McGigawatts',
+        'Als die junge Marty McGigawatts mit einer experimentellen Zeitmaschine in die Zukunft reist, findet sie sich in einer dystopischen Megacity wieder,
+in der Roboter die Welt regieren. Mit der Hilfe eines exzentrischen Erfinders und einem Hoverboard muss sie den Lauf der Geschichte ändern,
+bevor sie in einer Endlosschleife der Zeit gefangen bleibt.', 'Sci-Fi, Adventure', 'Marty McGigawatts',
         'Robert Zoomekis', 'Deutsch'),
        ('Clown Wars: The Honk Awakens', 105, 'assets/Clown_Wars_The_Honk_Awakens.webp', 12,
-        'Ein Krieg zwischen ausserirdischen Clowns und der Menschheit.', 'Sci-Fi, Horror, Comedy', 'Penny Wisecrack',
+        'Die Erde wird von einer Horde außerirdischer Clowns angegriffen, die nichts anderes wollen, als die Menschheit mit tödlichen Gags zu unterwerfen.
+Nur eine Gruppe rebellischer Spaßmacher kann sich der Bedrohung entgegenstellen. Ein intergalaktisches Spektakel voller Ballontier-Kriege,
+Killer-Jojos und einem epischen Showdown in der Zirkusarena des Todes.', 'Sci-Fi, Horror, Comedy', 'Penny Wisecrack',
         'Tim Burtonisch', 'Englisch');
 
 INSERT INTO saele

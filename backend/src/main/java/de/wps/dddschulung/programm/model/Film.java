@@ -19,6 +19,7 @@ public class Film {
     private Integer laufzeit;
     private String posterUrl;
     private Integer fsk;
+    @Lob
     private String beschreibung;
     private String genre;
     private String hauptdarsteller;
