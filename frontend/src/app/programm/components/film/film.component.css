@@ -1,0 +1,10 @@
+.film-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.film-details {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}

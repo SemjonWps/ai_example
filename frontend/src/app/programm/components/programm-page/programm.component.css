@@ -1,8 +1,8 @@
 
 .programm-container {
   display: flex;
+  flex-direction: column;
 }
 
 .programmeintrag {
-  flex-direction: column;
 }

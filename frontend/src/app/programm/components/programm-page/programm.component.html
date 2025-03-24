@@ -3,7 +3,7 @@
 <app-kalender (dateSelected)="waehleDatum($event)"/>
 
 <div class="programm-container">
-  <ng-container *ngFor="let programmeintrag of programm?.programmeintraege">
-    <app-programmeintrag class="programmeintrag" [programmeintrag]="programmeintrag"></app-programmeintrag>
-  </ng-container>
+  <div class="programmeintrag" *ngFor="let programmeintrag of programm?.programmeintraege">
+    <app-programmeintrag [programmeintrag]="programmeintrag"></app-programmeintrag>
+  </div>
 </div>
