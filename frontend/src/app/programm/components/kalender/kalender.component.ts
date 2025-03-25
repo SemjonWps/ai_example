@@ -18,15 +18,7 @@ import {distinctUntilChanged, map} from 'rxjs';
 export class KalenderComponent implements OnInit {
 
   constructor(private datumService: DatumService, private router: Router, private readonly activatedRoute: ActivatedRoute) {
-    this.activatedRoute.queryParamMap.pipe(
-      map((queryParamMap) => queryParamMap.get('datum')),
-      map((value) => value ? new Date(value) : undefined),
-      distinctUntilChanged())
-      .subscribe(value => {
-        this.selectedDate = value ?? this.today;
-        this.selectedDate = startOfDay(this.selectedDate);
-        this.dateSelected.emit(this.selectedDate);
-      });
+
   }
 
   today: Date = startOfDay(new Date("2025-03-19"));
@@ -40,8 +32,15 @@ export class KalenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectableDates = this.datumService.getWochentage(this.today);
-    this.dateSelected.emit(this.today);
-    this.navigate({'datum': format(this.today, 'yyyy-MM-dd')});
+    this.activatedRoute.queryParamMap.pipe(
+      map((queryParamMap) => queryParamMap.get('datum')),
+      map((value) => value ? new Date(value) : this.today),
+      distinctUntilChanged())
+      .subscribe(value => {
+        this.selectedDate = value ?? this.today;
+        this.selectedDate = startOfDay(this.selectedDate);
+        this.dateSelected.emit(this.selectedDate);
+      });
   }
 
   selectDate(datum: Date): void {
