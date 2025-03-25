@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DatePipe, NgClass, NgForOf} from '@angular/common';
+import {DatePipe, NgForOf} from '@angular/common';
 import {DatumService} from '../../services/datum.service';
 import {format, isBefore, startOfDay} from 'date-fns';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -9,7 +9,6 @@ import {distinctUntilChanged, map} from 'rxjs';
   selector: 'app-kalender',
   imports: [
     DatePipe,
-    NgClass,
     NgForOf
   ],
   providers: [DatePipe],
@@ -41,6 +40,8 @@ export class KalenderComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectableDates = this.datumService.getWochentage(this.today);
+    this.dateSelected.emit(this.today);
+    this.navigate({'datum': format(this.today, 'yyyy-MM-dd')});
   }
 
   selectDate(datum: Date): void {
