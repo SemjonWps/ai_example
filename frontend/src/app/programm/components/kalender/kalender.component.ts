@@ -25,13 +25,12 @@ export class KalenderComponent implements OnInit {
       distinctUntilChanged())
       .subscribe(value => {
         this.selectedDate = value ?? this.today;
-        // TODO: aria-checked trotzdem noch nicht true
         this.selectedDate = startOfDay(this.selectedDate);
         this.dateSelected.emit(this.selectedDate);
       });
   }
 
-  today: Date = new Date("2025-03-19");
+  today: Date = startOfDay(new Date("2025-03-19"));
 
   selectableDates: Date[] = [this.today];
 
@@ -49,7 +48,7 @@ export class KalenderComponent implements OnInit {
   }
 
   isBeforeToday(date: Date): boolean {
-    return isBefore(startOfDay(date), startOfDay(this.today));
+    return isBefore(startOfDay(date), this.today);
   }
 
   navigate(queryParams: Params): Promise<boolean> {
