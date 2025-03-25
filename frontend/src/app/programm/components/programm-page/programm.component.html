@@ -1,9 +1,10 @@
-<h2>Kinoprogramm</h2>
+<h2 class="h2">Kinoprogramm</h2>
 
 <app-kalender (dateSelected)="waehleDatum($event)"/>
 
 <div class="programm-container">
   <div class="programmeintrag" *ngFor="let programmeintrag of programm?.programmeintraege">
     <app-programmeintrag [programmeintrag]="programmeintrag"></app-programmeintrag>
+    <hr/>
   </div>
 </div>

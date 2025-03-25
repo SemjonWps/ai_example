@@ -1,10 +1,21 @@
 .film-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.film-infos {
+  margin-left: 20px;
 }
 
 .film-details {
   display: flex;
   flex-direction: row;
   gap: 8px;
+}
+
+img {
+  width: 500px;
+  object-fit: cover;
 }

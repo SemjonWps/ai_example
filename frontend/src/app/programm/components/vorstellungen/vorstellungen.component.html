@@ -1,5 +1,5 @@
 <div class="calendar-bar">
-  <button *ngFor="let vorstellung of vorstellungen">
+  <button class="vorstellung" *ngFor="let vorstellung of vorstellungen">
     {{ vorstellung.anfangszeit | date:'HH:mm' }} <br/> {{ vorstellung.saal }}
   </button>
 </div>
