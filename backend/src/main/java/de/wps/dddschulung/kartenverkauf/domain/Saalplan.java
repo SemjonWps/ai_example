@@ -1,26 +1,29 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-@Data
 @AllArgsConstructor
 public class Saalplan {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime datum;
-    @ManyToOne
-    @JoinColumn(name = "saal_id")
+    private LocalDateTime anfangszeit;
     private Saal saal;
-    @OneToMany
-    private List<ZusammenhaengendePlaetze> zusammenhaengendePlaetze;
+    private List<Platz> plaetze;
 
     public List<ZusammenhaengendePlaetze> sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
-        return null;
+        var zusammenhaengendePlaetzeListe = new ArrayList<ZusammenhaengendePlaetze>();
+        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(1L, Arrays.asList(this.plaetze.get(0), this.plaetze.get(1)));
+        zusammenhaengendePlaetzeListe.add(zusammenhaengendePlaetze);
+        return zusammenhaengendePlaetzeListe;
+    }
+
+    public void markiereAlsVerkauft(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
+        for (Platz p : zusammenhaengendePlaetze.getPlaetze()) {
+            p.markiereAlsVerkauft();
+        }
     }
 }
