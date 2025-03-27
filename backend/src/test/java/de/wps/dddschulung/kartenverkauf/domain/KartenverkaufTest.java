@@ -64,9 +64,9 @@ public class KartenverkaufTest {
         Assert.assertEquals(vorstellung1.getAnfangszeit(), geholterSaalplan1.getAnfangszeit());
         Assert.assertEquals(vorstellung1.getSaal().getName(), geholterSaalplan1.getSaal().getName());
 
-        Assert.assertEquals(anzahlGewuenschtePlaetze, zusammenhaengendePlaetze1.get(0).plaetze.size());
-        Assert.assertFalse(zusammenhaengendePlaetze1.get(0).plaetze.get(0).isBelegt());
-        Assert.assertFalse(zusammenhaengendePlaetze1.get(0).plaetze.get(1).isBelegt());
+        Assert.assertEquals(anzahlGewuenschtePlaetze, zusammenhaengendePlaetze1.getFirst().plaetze.size());
+        Assert.assertFalse(zusammenhaengendePlaetze1.getFirst().plaetze.getFirst().isBelegt());
+        Assert.assertFalse(zusammenhaengendePlaetze1.getFirst().plaetze.get(1).isBelegt());
 
         // Vorstellung 2 -> keine zusammenhängenden 2 Plätze weil belegt
         Assert.assertEquals(vorstellung2.getAnfangszeit(), geholterSaalplan2.getAnfangszeit());
@@ -81,14 +81,12 @@ public class KartenverkaufTest {
         Assert.assertEquals(0, zusammenhaengendePlaetze3.size());
 
         // act
-        geholterSaalplan1.markiereAlsVerkauft(zusammenhaengendePlaetze1.get(0));
+        geholterSaalplan1.markiereAlsVerkauft(zusammenhaengendePlaetze1.getFirst());
 
         // assert
-        Assert.assertTrue(zusammenhaengendePlaetze1.get(0).plaetze.get(0).isBelegt());
-        Assert.assertTrue(zusammenhaengendePlaetze1.get(0).plaetze.get(1).isBelegt());
+        Assert.assertTrue(zusammenhaengendePlaetze1.getFirst().plaetze.getFirst().isBelegt());
+        Assert.assertTrue(zusammenhaengendePlaetze1.getFirst().plaetze.get(1).isBelegt());
 
         //saalplanStapelMock.legeZurueck(geholterSaalplan1);
-
-
     }
 }

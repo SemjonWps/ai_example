@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor
@@ -16,21 +15,37 @@ public class Saalplan {
 
     public List<ZusammenhaengendePlaetze> sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var zusammenhaengendePlaetzeListe = new ArrayList<ZusammenhaengendePlaetze>();
-        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
+        var tempZusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
         var row = -1;
 
         for (Platz platz : plaetze) {
             if (!platz.isBelegt()) {
-                if (platz.getReihe() == row || row == -1) {
-                    zusammenhaengendePlaetze.plaetze.add(platz);
+                // erster in Reihe oder selbe Reihe
+                if (tempZusammenhaengendePlaetze.plaetze.isEmpty() || platz.getReihe() == row) {
+                    tempZusammenhaengendePlaetze.plaetze.add(platz);
                     row = platz.getReihe();
                 }
-            } else {
-                zusammenhaengendePlaetzeListe.add(new ZusammenhaengendePlaetze(Arrays.asList(new ArrayList<>(zusammenhaengendePlaetze)));
+                // neue Reihe
+                else {
+                    if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
+                        zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
+                    }
+                    tempZusammenhaengendePlaetze.plaetze.clear();
+                    tempZusammenhaengendePlaetze.plaetze.add(platz);
+                    row = platz.getReihe();
+                }
             }
-
+            // Platz belegt
+            else {
+                if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
+                    zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
+                    tempZusammenhaengendePlaetze.plaetze.clear();
+                }
+            }
         }
-        zusammenhaengendePlaetzeListe.add(zusammenhaengendePlaetze);
+        if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
+            zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
+        }
         return zusammenhaengendePlaetzeListe;
     }
 
