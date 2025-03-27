@@ -20,23 +20,17 @@ public class Saalplan {
 
         for (Platz platz : plaetze) {
             if (!platz.isBelegt()) {
-                // erster in Reihe oder selbe Reihe
                 if (tempZusammenhaengendePlaetze.plaetze.isEmpty() || platz.getReihe() == row) {
                     tempZusammenhaengendePlaetze.plaetze.add(platz);
-                    row = platz.getReihe();
-                }
-                // neue Reihe
-                else {
+                } else {
                     if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
                         zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
                     }
                     tempZusammenhaengendePlaetze.plaetze.clear();
                     tempZusammenhaengendePlaetze.plaetze.add(platz);
-                    row = platz.getReihe();
                 }
-            }
-            // Platz belegt
-            else {
+                row = platz.getReihe();
+            } else {
                 if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
                     zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
                     tempZusammenhaengendePlaetze.plaetze.clear();
