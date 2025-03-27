@@ -1,46 +1,39 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-@AllArgsConstructor
+import static java.util.stream.Collectors.groupingBy;
+
+@Getter
 public class Saalplan {
-    private Long id;
-    private LocalDateTime anfangszeit;
-    private Saal saal;
-    private List<Platz> plaetze;
+    private final Long id;
+    private final Vorstellung vorstellung;
+    private final Map<Integer, List<Platz>> plaetze;
 
-    public List<ZusammenhaengendePlaetze> sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
-        var zusammenhaengendePlaetzeListe = new ArrayList<ZusammenhaengendePlaetze>();
-        var tempZusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
-        var row = -1;
+    public Saalplan(Long id, Vorstellung vorstellung, List<Platz> plaetze) {
+        this.id = id;
+        this.vorstellung = vorstellung;
+        this.plaetze = plaetze.stream().collect(groupingBy(Platz::getReihe));
+    }
 
-        for (Platz platz : plaetze) {
-            if (!platz.isBelegt()) {
-                if (tempZusammenhaengendePlaetze.plaetze.isEmpty() || platz.getReihe() == row) {
-                    tempZusammenhaengendePlaetze.plaetze.add(platz);
-                } else {
-                    if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
-                        zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
+    public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
+        var result = new ZusammenhaengendePlaetze();
+
+        for (var reihe : plaetze.values()) {
+            for (Platz platz : reihe) {
+                if (platz.istFrei()) {
+                    result.plaetze.add(platz);
+                    if (result.plaetze.size() == anzahlPlaetze) {
+                        return result;
                     }
-                    tempZusammenhaengendePlaetze.plaetze.clear();
-                    tempZusammenhaengendePlaetze.plaetze.add(platz);
-                }
-                row = platz.getReihe();
-            } else {
-                if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
-                    zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
-                    tempZusammenhaengendePlaetze.plaetze.clear();
                 }
             }
+            result.plaetze.clear();
         }
-        if (tempZusammenhaengendePlaetze.plaetze.size() >= anzahlPlaetze) {
-            zusammenhaengendePlaetzeListe.add(tempZusammenhaengendePlaetze);
-        }
-        return zusammenhaengendePlaetzeListe;
+        return result;
     }
 
     public void markiereAlsVerkauft(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
@@ -49,11 +42,8 @@ public class Saalplan {
         }
     }
 
-    public LocalDateTime getAnfangszeit() {
-        return anfangszeit;
-    }
 
-    public Saal getSaal() {
-        return saal;
+    public void markiereAlsReserviert(Platz platz, String reservierungsnummer) {
+        // TODO implement
     }
 }

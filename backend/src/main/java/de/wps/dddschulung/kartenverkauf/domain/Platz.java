@@ -8,18 +8,30 @@ public class Platz {
     private Long id;
     private int platznummer;
     private int reihe;
-    private boolean belegt = false;
-    private String reservierungsnummer = null;
+    private boolean belegt;
+    private String reservierungsnummer;
 
     public void markiereAlsVerkauft() {
         belegt = true;
     }
 
-    public boolean isBelegt() {
+    public boolean istFrei() {
+        return !belegt;
+    }
+
+    public boolean istBelegt() {
         return belegt;
     }
 
     public int getReihe() {
         return reihe;
+    }
+
+    public String getReservierungsnummer() {
+        return reservierungsnummer;
+    }
+
+    public int getPlatznummer() {
+        return platznummer;
     }
 }
