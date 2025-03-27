@@ -16,7 +16,20 @@ public class Saalplan {
 
     public List<ZusammenhaengendePlaetze> sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var zusammenhaengendePlaetzeListe = new ArrayList<ZusammenhaengendePlaetze>();
-        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(1L, Arrays.asList(this.plaetze.get(0), this.plaetze.get(1)));
+        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
+        var row = -1;
+
+        for (Platz platz : plaetze) {
+            if (!platz.isBelegt()) {
+                if (platz.getReihe() == row || row == -1) {
+                    zusammenhaengendePlaetze.plaetze.add(platz);
+                    row = platz.getReihe();
+                }
+            } else {
+                zusammenhaengendePlaetzeListe.add(new ZusammenhaengendePlaetze(Arrays.asList(new ArrayList<>(zusammenhaengendePlaetze)));
+            }
+
+        }
         zusammenhaengendePlaetzeListe.add(zusammenhaengendePlaetze);
         return zusammenhaengendePlaetzeListe;
     }
@@ -25,5 +38,13 @@ public class Saalplan {
         for (Platz p : zusammenhaengendePlaetze.getPlaetze()) {
             p.markiereAlsVerkauft();
         }
+    }
+
+    public LocalDateTime getAnfangszeit() {
+        return anfangszeit;
+    }
+
+    public Saal getSaal() {
+        return saal;
     }
 }

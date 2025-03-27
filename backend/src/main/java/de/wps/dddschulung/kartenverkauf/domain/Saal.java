@@ -6,4 +6,8 @@ import lombok.AllArgsConstructor;
 public class Saal {
     private Long id;
     private String name;
+
+    public String getName() {
+        return name;
+    }
 }

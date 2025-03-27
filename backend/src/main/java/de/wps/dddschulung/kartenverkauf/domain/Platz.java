@@ -2,6 +2,7 @@ package de.wps.dddschulung.kartenverkauf.domain;
 
 import lombok.AllArgsConstructor;
 
+
 @AllArgsConstructor
 public class Platz {
     private Long id;
@@ -12,5 +13,13 @@ public class Platz {
 
     public void markiereAlsVerkauft() {
         belegt = true;
+    }
+
+    public boolean isBelegt() {
+        return belegt;
+    }
+
+    public int getReihe() {
+        return reihe;
     }
 }

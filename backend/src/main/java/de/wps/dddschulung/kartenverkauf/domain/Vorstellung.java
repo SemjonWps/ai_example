@@ -10,4 +10,12 @@ public class Vorstellung {
     private Long id;
     private Saal saal;
     private LocalDateTime anfangszeit;
+
+    public LocalDateTime getAnfangszeit() {
+        return anfangszeit;
+    }
+
+    public Saal getSaal() {
+        return saal;
+    }
 }
