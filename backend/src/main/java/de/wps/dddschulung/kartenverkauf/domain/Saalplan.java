@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -48,6 +49,9 @@ public class Saalplan {
     }
 
     public void markiereAlsVerkauft(String reservierungsnummer) {
-
+        plaetze.forEach((reihe, plaetzeListe) -> plaetzeListe
+                .stream()
+                .filter(platz -> Objects.equals(platz.getReservierungsnummer(), reservierungsnummer))
+                .forEach(Platz::markiereAlsVerkauft));
     }
 }
