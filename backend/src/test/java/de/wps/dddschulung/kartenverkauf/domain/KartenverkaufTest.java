@@ -7,6 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -99,5 +101,23 @@ public class KartenverkaufTest {
 
         // assert
         assertThat(zusammenhaengendePlaetze.getPlaetze()).hasSize(0);
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    public void markiereAlsVerkauft() {
+        // arrange
+        var saalplan = new Saalplan(1L, null, new ArrayList<>());
+
+        ZusammenhaengendePlaetze zusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
+        for (int platznummer = 1; platznummer <= 3; platznummer++) {
+            zusammenhaengendePlaetze.getPlaetze().add(new Platz((long) platznummer, platznummer, 1, false, null));
+        }
+
+        // act
+        saalplan.markiereAlsVerkauft(zusammenhaengendePlaetze);
+
+        // assert
+        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);
     }
 }

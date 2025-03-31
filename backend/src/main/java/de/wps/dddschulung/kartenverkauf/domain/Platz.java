@@ -11,19 +11,19 @@ public class Platz {
     private int platznummer;
     @Getter
     private int reihe;
-    private boolean belegt;
+    private boolean verkauft;
     @Getter
     private String reservierungsnummer;
 
     public void markiereAlsVerkauft() {
-        belegt = true;
+        verkauft = true;
     }
 
     public boolean istFrei() {
-        return !belegt;
+        return !verkauft && reservierungsnummer == null;
     }
 
     public boolean istBelegt() {
-        return belegt;
+        return verkauft || reservierungsnummer != null;
     }
 }
