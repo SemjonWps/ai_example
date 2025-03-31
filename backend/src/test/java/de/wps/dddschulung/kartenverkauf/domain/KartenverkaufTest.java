@@ -27,7 +27,7 @@ public class KartenverkaufTest {
     private Vorstellung vorstellung1;
     private Vorstellung vorstellung2;
     private Vorstellung vorstellung3;
-    private List<Platz> platzListe = new ArrayList<Platz>();
+    private final List<Platz> platzListe = new ArrayList<>();
 
     @BeforeEach
     public void setup() {
@@ -119,5 +119,27 @@ public class KartenverkaufTest {
 
         // assert
         assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);
+    }
+
+    @Test
+    @MockitoSettings(strictness = Strictness.LENIENT)
+    public void markiereAlsReserviert() {
+        // arrange
+        var saalplan = new Saalplan(1L, null, new ArrayList<>());
+
+        ZusammenhaengendePlaetze zusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
+        for (int platznummer = 1; platznummer <= 3; platznummer++) {
+            zusammenhaengendePlaetze.getPlaetze().add(new Platz((long) platznummer, platznummer, 1, false, null));
+        }
+
+        var reservierungsnummer = "reservierungsnummer";
+
+        // act
+        saalplan.markiereAlsReserviert(zusammenhaengendePlaetze, reservierungsnummer);
+
+        // assert
+        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);
+        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(platz -> platz.getReservierungsnummer().equals(reservierungsnummer));
+
     }
 }
