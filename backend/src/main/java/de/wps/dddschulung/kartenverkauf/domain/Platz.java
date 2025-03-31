@@ -1,14 +1,18 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 
 @AllArgsConstructor
 public class Platz {
     private Long id;
+    @Getter
     private int platznummer;
+    @Getter
     private int reihe;
     private boolean belegt;
+    @Getter
     private String reservierungsnummer;
 
     public void markiereAlsVerkauft() {
@@ -21,17 +25,5 @@ public class Platz {
 
     public boolean istBelegt() {
         return belegt;
-    }
-
-    public int getReihe() {
-        return reihe;
-    }
-
-    public String getReservierungsnummer() {
-        return reservierungsnummer;
-    }
-
-    public int getPlatznummer() {
-        return platznummer;
     }
 }

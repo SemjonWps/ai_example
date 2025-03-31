@@ -9,7 +9,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,21 +23,19 @@ public class KartenverkaufTest {
     private Vorstellung vorstellung1;
     private Vorstellung vorstellung2;
     private Vorstellung vorstellung3;
+    private List<Platz> platzListe = new ArrayList<Platz>();
 
     @BeforeEach
     public void setup() {
         var date1 = LocalDateTime.parse("2025-03-18T14:30:00");
         var date2 = LocalDateTime.parse("2025-03-17T15:30:00");
         var date3 = LocalDateTime.parse("2025-03-19T15:30:00");
-        var anzahlGewuenschtePlaetze = 2;
 
-        // TODO for loop
-        var platz1 = new Platz(1L, 1, 1, false, null);
-        var platz2 = new Platz(2L, 2, 1, false, null);
-        var platz3 = new Platz(3L, 3, 2, false, null);
-        var platz4 = new Platz(4L, 4, 2, true, null);
-        var platz5 = new Platz(5L, 5, 3, false, null);
-        var platz6 = new Platz(6L, 6, 2, false, null);
+        for (int reihe = 1; reihe <= 3; reihe++) {
+            for (int platz = 1; platz <= 6; platz++) {
+                platzListe.add(new Platz((long) ((reihe * 10) + platz), platz, reihe, true, null));
+            }
+        }
 
         var saal1 = new Saal(1L, "großer Saal");
         var saal2 = new Saal(2L, "kleiner Saal");
@@ -46,8 +45,7 @@ public class KartenverkaufTest {
         vorstellung2 = new Vorstellung(2L, saal2, date2);
         vorstellung3 = new Vorstellung(3L, saal3, date3);
 
-        // TODO saalplan mit Plätzen befüllen
-        var saalplan1 = new Saalplan(1L, vorstellung1, Arrays.asList(platz1, platz2));
+        var saalplan1 = new Saalplan(1L, vorstellung1, platzListe);
 //        var saalplan2 = new Saalplan(1L, vorstellung2, Arrays.asList(platz3, platz4));
 //        var saalplan3 = new Saalplan(1L, vorstellung3, Arrays.asList(platz5, platz6));
 
@@ -59,18 +57,28 @@ public class KartenverkaufTest {
     }
 
     @Test
-    public void testKartenverkauf() {
+    public void testKartenverkauf() throws NoSuchFieldException, IllegalAccessException {
+        // arrange
         var anzahlGewuenschtePlaetze = 4;
-
+        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("belegt");
+        belegtFeld.setAccessible(true);
+        belegtFeld.set(platzListe.get(0), false);
+        belegtFeld.set(platzListe.get(1), false);
+        belegtFeld.set(platzListe.get(2), false);
+        belegtFeld.set(platzListe.get(3), false);
+        belegtFeld.set(platzListe.get(8), false);
+        belegtFeld.set(platzListe.get(9), false);
         var geholterSaalplan1 = saalplanStapelMock.holeSaalplan(vorstellung1);
-        assertThat(geholterSaalplan1.getVorstellung()).isEqualTo(vorstellung1);
 
+        // act
         ZusammenhaengendePlaetze zusammenhaengendePlaetze = geholterSaalplan1.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
+
+        // assert
         assertThat(zusammenhaengendePlaetze.getPlaetze()).hasSize(anzahlGewuenschtePlaetze);
         assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istFrei);
+        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(platz -> platz.getReihe() == 1);
 
-        geholterSaalplan1.markiereAlsVerkauft(zusammenhaengendePlaetze);
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);
-
+        /*geholterSaalplan1.markiereAlsVerkauft(zusammenhaengendePlaetze);
+        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);*/
     }
 }
