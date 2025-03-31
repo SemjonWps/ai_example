@@ -121,12 +121,17 @@ public class KartenverkaufTest {
         // arrange
         var reservierungsnummer = "reservierungsnummer";
         var lokalePlatzliste = new ArrayList<Platz>();
+        Platz platz1 = new Platz(1L, 1, 1, false, reservierungsnummer);
+        Platz platz2 = new Platz(2L, 2, 2, false, reservierungsnummer);
+        Platz platz3 = new Platz(3L, 3, 2, false, null);
+        Platz platz4 = new Platz(4L, 4, 2, false, null);
+        Platz platz5 = new Platz(5L, 5, 2, false, "andereReservierungsnummer");
 
-        lokalePlatzliste.add(new Platz(1L, 1, 1, false, reservierungsnummer));
-        lokalePlatzliste.add(new Platz(2L, 2, 2, false, reservierungsnummer));
-        lokalePlatzliste.add(new Platz(3L, 3, 2, false, null));
-        lokalePlatzliste.add(new Platz(4L, 4, 2, false, null));
-        lokalePlatzliste.add(new Platz(5L, 5, 2, false, "andereReservierungsnummer"));
+        lokalePlatzliste.add(platz1);
+        lokalePlatzliste.add(platz2);
+        lokalePlatzliste.add(platz3);
+        lokalePlatzliste.add(platz4);
+        lokalePlatzliste.add(platz5);
 
         saalplan = new Saalplan(1L, vorstellung, lokalePlatzliste);
 
@@ -134,11 +139,11 @@ public class KartenverkaufTest {
         saalplan.markiereAlsVerkauft(reservierungsnummer);
 
         // assert
-        assertThat(saalplan.getPlaetze().get(1).getFirst().istVerkauft()).isEqualTo(true); // Reihe 1, Platz 1
-        assertThat(saalplan.getPlaetze().get(2).getFirst().istVerkauft()).isEqualTo(true); // Reihe 2, Platz 2
-        assertThat(saalplan.getPlaetze().get(2).get(1).istVerkauft()).isEqualTo(false);  // Reihe 2, Platz 3
-        assertThat(saalplan.getPlaetze().get(2).get(2).istVerkauft()).isEqualTo(false);  // Reihe 2, Platz 4
-        assertThat(saalplan.getPlaetze().get(2).get(3).istVerkauft()).isEqualTo(false); // Reihe 2, Platz 5
+        assertThat(platz1.istVerkauft()).isTrue();
+        assertThat(platz2.istVerkauft()).isTrue();
+        assertThat(platz3.istVerkauft()).isFalse();
+        assertThat(platz4.istVerkauft()).isFalse();
+        assertThat(platz5.istVerkauft()).isFalse();
     }
 
     @Test
