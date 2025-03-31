@@ -56,6 +56,9 @@ public class Saalplan {
     }
 
     public void gebeNichtAbgeholteReservierungenFrei() {
-
+        plaetze.forEach((reihe, plaetzeListe) -> plaetzeListe
+                .stream()
+                .filter(platz -> !platz.istVerkauft())
+                .forEach(Platz::gebeReservierungFrei));
     }
 }

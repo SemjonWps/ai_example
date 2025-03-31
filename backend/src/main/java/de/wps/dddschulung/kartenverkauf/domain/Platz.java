@@ -34,4 +34,8 @@ public class Platz {
     public void markiereAlsReserviert(String reservierungsnummer) {
         this.reservierungsnummer = reservierungsnummer;
     }
+
+    public void gebeReservierungFrei() {
+        reservierungsnummer = null;
+    }
 }
