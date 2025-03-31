@@ -54,4 +54,8 @@ public class Saalplan {
                 .filter(platz -> Objects.equals(platz.getReservierungsnummer(), reservierungsnummer))
                 .forEach(Platz::markiereAlsVerkauft));
     }
+
+    public void gebeNichtAbgeholteReservierungenFrei() {
+
+    }
 }
