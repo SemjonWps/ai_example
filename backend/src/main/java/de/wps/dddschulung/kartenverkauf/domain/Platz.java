@@ -26,4 +26,8 @@ public class Platz {
     public boolean istBelegt() {
         return verkauft || reservierungsnummer != null;
     }
+
+    public void markiereAlsReserviert(String reservierungsnummer) {
+        this.reservierungsnummer = reservierungsnummer;
+    }
 }

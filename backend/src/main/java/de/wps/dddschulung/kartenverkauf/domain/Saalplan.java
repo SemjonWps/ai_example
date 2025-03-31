@@ -43,7 +43,7 @@ public class Saalplan {
     }
 
 
-    public void markiereAlsReserviert(ZusammenhaengendePlaetze plaetze, String reservierungsnummer) {
-        // TODO implement
+    public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, String reservierungsnummer) {
+        zusammenhaengendePlaetze.getPlaetze().forEach(platz -> platz.markiereAlsReserviert(reservierungsnummer));
     }
 }
