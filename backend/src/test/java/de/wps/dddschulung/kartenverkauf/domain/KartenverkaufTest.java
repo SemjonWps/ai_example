@@ -44,7 +44,7 @@ public class KartenverkaufTest {
     public void sucheZusammenhaengendePlaetze_existsZusammenhaengendePlaetze_returnsCorrectPlaetze() throws NoSuchFieldException, IllegalAccessException {
         // arrange
         var anzahlGewuenschtePlaetze = 4;
-        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("verkauft");
+        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("isVerkauft");
         belegtFeld.setAccessible(true);
         belegtFeld.set(platzListe.get(0), false);
         belegtFeld.set(platzListe.get(1), false);
@@ -70,7 +70,7 @@ public class KartenverkaufTest {
     public void sucheZusammenhaengendePlaetze_doesNotExistZusammenhaengendePlaetze_returnsObjectWithEmptyList() throws NoSuchFieldException, IllegalAccessException {
         // arrange
         var anzahlGewuenschtePlaetze = 2;
-        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("verkauft");
+        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("isVerkauft");
         belegtFeld.setAccessible(true);
         belegtFeld.set(platzListe.get(0), false);
         belegtFeld.set(platzListe.get(9), false);
@@ -117,7 +117,7 @@ public class KartenverkaufTest {
     }
 
     @Test
-    public void markiereAlsVerkauft_MitReservierungsnummer() throws NoSuchFieldException, IllegalAccessException {
+    public void markiereAlsVerkauft_MitReservierungsnummer() {
         // arrange
         var reservierungsnummer = "reservierungsnummer";
         var lokalePlatzliste = new ArrayList<Platz>();
@@ -134,13 +134,11 @@ public class KartenverkaufTest {
         saalplan.markiereAlsVerkauft(reservierungsnummer);
 
         // assert
-        var verkauftFeld = Platz.class.getDeclaredField("isVerkauft");
-        verkauftFeld.setAccessible(true);
-        assertThat(verkauftFeld.get(saalplan.getPlaetze().get(1).getFirst())).isEqualTo(true); // Reihe 1, Platz 1
-        assertThat(verkauftFeld.get(saalplan.getPlaetze().get(2).getFirst())).isEqualTo(true); // Reihe 2, Platz 2
-        assertThat(verkauftFeld.get(saalplan.getPlaetze().get(2).get(1))).isEqualTo(false);  // Reihe 2, Platz 3
-        assertThat(verkauftFeld.get(saalplan.getPlaetze().get(2).get(2))).isEqualTo(false);  // Reihe 2, Platz 4
-        assertThat(verkauftFeld.get(saalplan.getPlaetze().get(2).get(3))).isEqualTo(false); // Reihe 2, Platz 5
+        assertThat(saalplan.getPlaetze().get(1).getFirst().istVerkauft()).isEqualTo(true); // Reihe 1, Platz 1
+        assertThat(saalplan.getPlaetze().get(2).getFirst().istVerkauft()).isEqualTo(true); // Reihe 2, Platz 2
+        assertThat(saalplan.getPlaetze().get(2).get(1).istVerkauft()).isEqualTo(false);  // Reihe 2, Platz 3
+        assertThat(saalplan.getPlaetze().get(2).get(2).istVerkauft()).isEqualTo(false);  // Reihe 2, Platz 4
+        assertThat(saalplan.getPlaetze().get(2).get(3).istVerkauft()).isEqualTo(false); // Reihe 2, Platz 5
     }
 
     @Test
