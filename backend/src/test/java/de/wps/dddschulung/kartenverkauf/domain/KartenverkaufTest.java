@@ -10,7 +10,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,7 +59,7 @@ public class KartenverkaufTest {
     }
 
     @Test
-    public void testKartenverkauf() throws NoSuchFieldException, IllegalAccessException {
+    public void sucheZusammenhaengendePlaetze_existsZusammenhaengendePlaetze_returnsCorrectPlaetze() throws NoSuchFieldException, IllegalAccessException {
         // arrange
         var anzahlGewuenschtePlaetze = 4;
         var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("belegt");
@@ -75,10 +77,27 @@ public class KartenverkaufTest {
 
         // assert
         assertThat(zusammenhaengendePlaetze.getPlaetze()).hasSize(anzahlGewuenschtePlaetze);
+        Set<Platz> plaetzeSet = new HashSet<>(zusammenhaengendePlaetze.getPlaetze());
+        assertThat(plaetzeSet).hasSize(anzahlGewuenschtePlaetze);
+        assertThat(zusammenhaengendePlaetze.getPlaetze().getLast().getPlatznummer() - zusammenhaengendePlaetze.getPlaetze().getFirst().getPlatznummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
         assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istFrei);
         assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(platz -> platz.getReihe() == 1);
+    }
 
-        /*geholterSaalplan1.markiereAlsVerkauft(zusammenhaengendePlaetze);
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);*/
+    @Test
+    public void sucheZusammenhaengendePlaetze_doesNotExistZusammenhaengendePlaetze_returnsObjectWithEmptyList() throws NoSuchFieldException, IllegalAccessException {
+        // arrange
+        var anzahlGewuenschtePlaetze = 2;
+        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("belegt");
+        belegtFeld.setAccessible(true);
+        belegtFeld.set(platzListe.get(0), false);
+        belegtFeld.set(platzListe.get(9), false);
+        var geholterSaalplan1 = saalplanStapelMock.holeSaalplan(vorstellung1);
+
+        // act
+        ZusammenhaengendePlaetze zusammenhaengendePlaetze = geholterSaalplan1.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
+
+        // assert
+        assertThat(zusammenhaengendePlaetze.getPlaetze()).hasSize(0);
     }
 }
