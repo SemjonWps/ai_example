@@ -15,10 +15,9 @@ import lombok.NoArgsConstructor;
 public class PlatzEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private int sitz;
-    private int reihe;
-    private boolean istVerkauft = false;
-    private String reservierungsnummer = null;
-
+    private long id;
+    private int platznummer;
+    private int reihennummer;
+    private boolean istVerkauft;
+    private String reservierungsnummer;
 }

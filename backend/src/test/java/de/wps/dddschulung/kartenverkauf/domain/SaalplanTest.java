@@ -1,8 +1,6 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +36,9 @@ public class SaalplanTest {
 
     private void befuelleSaalplan() {
         var date1 = LocalDateTime.parse("2025-03-18T14:30:00");
-        var saal = new Saal(1L, "großer Saal");
-        vorstellung = new Vorstellung(1L, saal, date1);
+        var saal = new Saal("großer Saal");
+        var filmname = new Filmname("Back to the Futura");
+        vorstellung = new Vorstellung(saal, new Beginn(date1), filmname);
         saalplan = new Saalplan(1L, vorstellung, platzListe);
     }
 
@@ -61,12 +60,12 @@ public class SaalplanTest {
         var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
 
         // assert
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).hasSize(anzahlGewuenschtePlaetze);
-        Set<Platz> plaetzeSet = new HashSet<>(zusammenhaengendePlaetze.getPlaetze());
+        assertThat(zusammenhaengendePlaetze.plaetze()).hasSize(anzahlGewuenschtePlaetze);
+        Set<Platz> plaetzeSet = new HashSet<>(zusammenhaengendePlaetze.plaetze());
         assertThat(plaetzeSet).hasSize(anzahlGewuenschtePlaetze);
-        assertThat(zusammenhaengendePlaetze.getPlaetze().getLast().getSitz().platznummer() - zusammenhaengendePlaetze.getPlaetze().getFirst().getSitz().platznummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istFrei);
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(platz -> platz.getReihe().reihennummer() == 1);
+        assertThat(zusammenhaengendePlaetze.plaetze().getLast().getSitz().platznummer() - zusammenhaengendePlaetze.plaetze().getFirst().getSitz().platznummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(Platz::istFrei);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.getReihe().reihennummer() == 1);
     }
 
     @Test
@@ -83,31 +82,33 @@ public class SaalplanTest {
         var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
 
         // assert
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).hasSize(0);
+        assertThat(zusammenhaengendePlaetze.plaetze()).hasSize(0);
     }
 
     @Test
     public void markiereAlsVerkauft() {
         // arrange
-        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
+        var plaetze = new ArrayList<Platz>();
         for (int platznummer = 1; platznummer <= 3; platznummer++) {
-            zusammenhaengendePlaetze.getPlaetze().add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null));
+            plaetze.add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null));
         }
+        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
 
         // act
         saalplan.markiereAlsVerkauft(zusammenhaengendePlaetze);
 
         // assert
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(Platz::istBelegt);
     }
 
     @Test
     public void markiereAlsReserviert() {
         // arrange
-        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze();
+        var plaetze = new ArrayList<Platz>();
         for (int platznummer = 1; platznummer <= 3; platznummer++) {
-            zusammenhaengendePlaetze.getPlaetze().add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null));
+            plaetze.add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null));
         }
+        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
 
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
 
@@ -115,8 +116,8 @@ public class SaalplanTest {
         saalplan.markiereAlsReserviert(zusammenhaengendePlaetze, reservierungsnummer);
 
         // assert
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(Platz::istBelegt);
-        assertThat(zusammenhaengendePlaetze.getPlaetze()).allMatch(platz -> platz.getReservierungsnummer().equals(reservierungsnummer));
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(Platz::istBelegt);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.getReservierungsnummer().equals(reservierungsnummer));
     }
 
     @Test

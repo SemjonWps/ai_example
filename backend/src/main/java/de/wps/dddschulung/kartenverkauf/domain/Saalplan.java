@@ -2,8 +2,10 @@ package de.wps.dddschulung.kartenverkauf.domain;
 
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,31 +25,31 @@ public class Saalplan {
     }
 
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
-        var result = new ZusammenhaengendePlaetze();
+        var result = new ArrayList<Platz>();
 
         for (var reihe : plaetze.values()) {
             for (Platz platz : reihe) {
                 if (platz.istFrei()) {
-                    result.plaetze.add(platz);
-                    if (result.plaetze.size() == anzahlPlaetze) {
-                        return result;
+                    result.add(platz);
+                    if (result.size() == anzahlPlaetze) {
+                        return new ZusammenhaengendePlaetze(result);
                     }
                 }
             }
-            result.plaetze.clear();
+            result.clear();
         }
-        return result;
+        return new ZusammenhaengendePlaetze(result);
     }
 
     public void markiereAlsVerkauft(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
-        for (Platz p : zusammenhaengendePlaetze.getPlaetze()) {
+        for (Platz p : zusammenhaengendePlaetze.plaetze()) {
             p.markiereAlsVerkauft();
         }
     }
 
 
     public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
-        zusammenhaengendePlaetze.getPlaetze().forEach(platz -> platz.markiereAlsReserviert(reservierungsnummer));
+        zusammenhaengendePlaetze.plaetze().forEach(platz -> platz.markiereAlsReserviert(reservierungsnummer));
     }
 
     public void markiereAlsVerkauft(Reservierungsnummer reservierungsnummer) {
