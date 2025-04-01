@@ -9,6 +9,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 public class Platz {
+    @Getter
     private Long id;
     @Getter
     private Sitz sitz;
