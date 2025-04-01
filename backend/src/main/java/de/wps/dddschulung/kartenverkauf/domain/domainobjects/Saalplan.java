@@ -1,5 +1,6 @@
-package de.wps.dddschulung.kartenverkauf.domain;
+package de.wps.dddschulung.kartenverkauf.domain.domainobjects;
 
+import de.wps.dddschulung.kartenverkauf.domain.ZusammenhaengendePlaetze;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;

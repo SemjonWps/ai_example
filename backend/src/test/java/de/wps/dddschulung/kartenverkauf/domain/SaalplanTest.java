@@ -1,5 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
+import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Platz;
+import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

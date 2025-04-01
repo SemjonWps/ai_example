@@ -1,7 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.persistence;
 
-import de.wps.dddschulung.kartenverkauf.domain.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.SaalplanStapel;
+import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;
 import lombok.AllArgsConstructor;
 
