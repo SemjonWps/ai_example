@@ -17,6 +17,7 @@ public class SaalplanEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private LocalDateTime anfangszeit;
+    private String originalTitel;
     @OneToMany
     private List<PlatzEntity> plaetze;
     @OneToOne
