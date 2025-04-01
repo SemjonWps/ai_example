@@ -1,5 +1,8 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,12 +11,12 @@ import lombok.Getter;
 public class Platz {
     private Long id;
     @Getter
-    private int platznummer;
+    private Sitz sitz;
     @Getter
-    private int reihe;
+    private Reihe reihe;
     private boolean isVerkauft;
     @Getter
-    private String reservierungsnummer;
+    private Reservierungsnummer reservierungsnummer;
 
     public void markiereAlsVerkauft() {
         isVerkauft = true;
@@ -31,7 +34,7 @@ public class Platz {
         return isVerkauft;
     }
 
-    public void markiereAlsReserviert(String reservierungsnummer) {
+    public void markiereAlsReserviert(Reservierungsnummer reservierungsnummer) {
         this.reservierungsnummer = reservierungsnummer;
     }
 

@@ -1,5 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import lombok.Getter;
 
 import java.util.List;
@@ -12,7 +14,7 @@ import static java.util.stream.Collectors.groupingBy;
 public class Saalplan {
     private final Long id;
     private final Vorstellung vorstellung;
-    private final Map<Integer, List<Platz>> plaetze;
+    private final Map<Reihe, List<Platz>> plaetze;
 
     public Saalplan(Long id, Vorstellung vorstellung, List<Platz> plaetze) {
         this.id = id;
@@ -44,11 +46,11 @@ public class Saalplan {
     }
 
 
-    public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, String reservierungsnummer) {
+    public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
         zusammenhaengendePlaetze.getPlaetze().forEach(platz -> platz.markiereAlsReserviert(reservierungsnummer));
     }
 
-    public void markiereAlsVerkauft(String reservierungsnummer) {
+    public void markiereAlsVerkauft(Reservierungsnummer reservierungsnummer) {
         plaetze.forEach((reihe, plaetzeListe) -> plaetzeListe
                 .stream()
                 .filter(platz -> Objects.equals(platz.getReservierungsnummer(), reservierungsnummer))
