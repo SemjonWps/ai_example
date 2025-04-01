@@ -19,5 +19,7 @@ public class SaalplanEntity {
     private LocalDateTime anfangszeit;
     @OneToMany
     private List<PlatzEntity> plaetze;
-
+    @OneToOne
+    @JoinColumn(name = "saal_id")
+    private SaalEntity saal;
 }
