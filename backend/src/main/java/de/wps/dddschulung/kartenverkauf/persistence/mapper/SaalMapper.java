@@ -1,4 +1,4 @@
-package de.wps.dddschulung.kartenverkauf.mapper;
+package de.wps.dddschulung.kartenverkauf.persistence.mapper;
 
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Saal;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;

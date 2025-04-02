@@ -1,8 +1,9 @@
 package de.wps.dddschulung.kartenverkauf.mapper;
 
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Platz;
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
+import de.wps.dddschulung.kartenverkauf.persistence.mapper.SaalplanMapper;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
@@ -39,7 +40,7 @@ class SaalplanMapperTest {
         // arrange
         List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer)));
         Filmname filmname = new Filmname(filmnameString);
-        Saal saal = new Saal(saalId, saalName);
+        Saal saal = new Saal(saalName);
         Vorstellung vorstellung = new Vorstellung(saal, beginn, filmname);
         Saalplan saalplan = new Saalplan(saalplanId, vorstellung, plaetze);
 

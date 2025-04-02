@@ -1,7 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Platz;
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class SaalplanTest {
 
     private void befuelleSaalplan() {
         var date1 = LocalDateTime.parse("2025-03-18T14:30:00");
-        var saal = new Saal(10L, "großer Saal");
+        var saal = new Saal("großer Saal");
         var filmname = new Filmname("Back to the Futura");
         vorstellung = new Vorstellung(saal, new Beginn(date1), filmname);
         saalplan = new Saalplan(1L, vorstellung, platzListe);

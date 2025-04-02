@@ -1,10 +1,10 @@
 package de.wps.dddschulung.kartenverkauf.persistence;
 
-import de.wps.dddschulung.kartenverkauf.domain.SaalplanStapel;
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
+import de.wps.dddschulung.kartenverkauf.domain.repositories.SaalplanStapel;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;
-import de.wps.dddschulung.kartenverkauf.mapper.SaalMapper;
-import de.wps.dddschulung.kartenverkauf.mapper.SaalMapperImpl;
+import de.wps.dddschulung.kartenverkauf.persistence.mapper.SaalMapper;
+import de.wps.dddschulung.kartenverkauf.persistence.mapper.SaalMapperImpl;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
 import lombok.AllArgsConstructor;

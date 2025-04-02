@@ -1,6 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.mapper;
 
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Saal;
+import de.wps.dddschulung.kartenverkauf.persistence.mapper.SaalMapper;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ class SaalMapperTest {
 
     private final long saalId = 1L;
     private final String saalName = "Großer Saal";
-    Saal saal = new Saal(saalId, saalName);
+    Saal saal = new Saal(saalName);
 
     @Test
     public void mapSaalToSaalEntity() {

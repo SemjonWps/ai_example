@@ -1,6 +1,6 @@
-package de.wps.dddschulung.kartenverkauf.mapper;
+package de.wps.dddschulung.kartenverkauf.persistence.mapper;
 
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Platz;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;

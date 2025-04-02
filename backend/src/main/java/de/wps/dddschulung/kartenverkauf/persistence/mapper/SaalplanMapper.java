@@ -1,7 +1,7 @@
-package de.wps.dddschulung.kartenverkauf.mapper;
+package de.wps.dddschulung.kartenverkauf.persistence.mapper;
 
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Platz;
-import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
@@ -20,7 +20,7 @@ public interface SaalplanMapper {
 
     PlatzMapper platzMapper = new PlatzMapperImpl();
 
-    @Mapping(target = "zeitpunkt", source = "vorstellung", qualifiedByName = "VorstellungToLocalDateTime")
+    @Mapping(target = "anfangszeit", source = "vorstellung", qualifiedByName = "VorstellungToLocalDateTime")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
     @Mapping(target = "saal", source = "vorstellung", qualifiedByName = "VorstellungToSaalEntity")
     @Mapping(target = "originalTitel", source = "vorstellung", qualifiedByName = "VorstellungToOriginalTitel")
@@ -43,7 +43,7 @@ public interface SaalplanMapper {
     @Named("SaalplanEntityToVorstellung")
     default Vorstellung mapSaalplanEntityToVorstellung(SaalplanEntity saalplanEntity) {
         return saalplanEntity == null ? null : new Vorstellung(
-                new Saal(saalplanEntity.getSaal().getId(), saalplanEntity.getSaal().getName()),
+                new Saal(saalplanEntity.getSaal().getName()),
                 new Beginn(saalplanEntity.getAnfangszeit()),
                 new Filmname(saalplanEntity.getOriginalTitel()));
     }
@@ -68,6 +68,6 @@ public interface SaalplanMapper {
 
     @Named("VorstellungToSaalEntity")
     default SaalEntity mapVorstellungToSaalEntity(Vorstellung vorstellung) {
-        return vorstellung == null ? null : new SaalEntity(vorstellung.saal().id(), vorstellung.saal().name());
+        return vorstellung == null ? null : new SaalEntity(vorstellung.saal(), vorstellung.saal().name());
     }
 }
