@@ -2,50 +2,27 @@ package de.wps.dddschulung.kartenverkauf.persistence.mappers;
 
 import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Mapper
+@Mapper(uses = VorstellungMapper.class)
 public interface SaalplanMapper {
 
     PlatzMapper platzMapper = new PlatzMapperImpl();
 
-    @Mapping(target = "anfangszeit", source = "vorstellung", qualifiedByName = "VorstellungToLocalDateTime")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
-    @Mapping(target = "saal", source = "vorstellung.saal.name")
-    @Mapping(target = "originalTitel", source = "vorstellung", qualifiedByName = "VorstellungToOriginalTitel")
     SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan);
 
-    @Mapping(target = "vorstellung", source = "saalplanEntity", qualifiedByName = "SaalplanEntityToVorstellung")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlatzEntitiesToPlaetze")
     Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
-
-    @Named("VorstellungToOriginalTitel")
-    default String mapVorstellungToOriginalTitel(Vorstellung vorstellung) {
-        return vorstellung == null ? null : vorstellung.filmname().originalTitel();
-    }
-
-    @Named("VorstellungToLocalDateTime")
-    default LocalDateTime mapVorstellungToLocalDateTime(Vorstellung vorstellung) {
-        return vorstellung == null ? null : vorstellung.anfangszeit().zeitpunkt();
-    }
-
-    @Named("SaalplanEntityToVorstellung")
-    default Vorstellung mapSaalplanEntityToVorstellung(SaalplanEntity saalplanEntity) {
-        return saalplanEntity == null ? null : new Vorstellung(
-                new Saal(saalplanEntity.getSaal()),
-                new Beginn(saalplanEntity.getAnfangszeit()),
-                new Filmname(saalplanEntity.getOriginalTitel()));
-    }
 
     @Named("PlaetzeToPlatzEntities")
     default List<PlatzEntity> mapPlaetzeToPlatzEntities(Map<Reihe, List<Platz>> plaetze) {

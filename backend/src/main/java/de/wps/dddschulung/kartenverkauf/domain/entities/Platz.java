@@ -5,19 +5,21 @@ import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.experimental.Accessors;
 
+import java.util.UUID;
 
+@Getter
 @AllArgsConstructor
 public class Platz {
-    @Getter
     private Long id;
-    @Getter
     private Sitz sitz;
-    @Getter
     private Reihe reihe;
-    private boolean istVerkauft;
     @Getter
+    @Accessors(fluent = true)
+    private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;
+    private UUID vorstellungUUID;
 
     public void markiereAlsVerkauft() {
         istVerkauft = true;

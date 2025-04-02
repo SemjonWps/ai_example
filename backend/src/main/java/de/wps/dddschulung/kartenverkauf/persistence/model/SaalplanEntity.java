@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,7 +16,6 @@ public class SaalplanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private LocalDateTime anfangszeit;
     private String originalTitel;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -27,5 +25,6 @@ public class SaalplanEntity {
             inverseJoinColumns = @JoinColumn(name = "plaetze_id")
     )
     private List<PlatzEntity> plaetze;
-    private String saal;
+    @OneToOne
+    private VorstellungEntity vorstellung;
 }

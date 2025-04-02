@@ -9,10 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SaalplanTest {
 
     private Vorstellung vorstellung;
+    private final UUID vorstellungUuid = UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74");
     private final List<Platz> platzListe = new ArrayList<>();
     private Saalplan saalplan;
 
@@ -30,7 +28,7 @@ public class SaalplanTest {
 
         for (int reihe = 1; reihe <= 3; reihe++) {
             for (int platznummer = 1; platznummer <= 6; platznummer++) {
-                platzListe.add(new Platz((long) ((reihe * 10) + platznummer), new Sitz(platznummer), new Reihe(reihe), true, null));
+                platzListe.add(new Platz((long) ((reihe * 10) + platznummer), new Sitz(platznummer), new Reihe(reihe), true, null, vorstellungUuid));
             }
         }
 
@@ -40,7 +38,7 @@ public class SaalplanTest {
         var date1 = LocalDateTime.parse("2025-03-18T14:30:00");
         var saal = new Saal("großer Saal");
         var filmname = new Filmname("Back to the Futura");
-        vorstellung = new Vorstellung(saal, new Beginn(date1), filmname);
+        vorstellung = new Vorstellung(vorstellungUuid, saal, new Beginn(date1), filmname);
         saalplan = new Saalplan(1L, vorstellung, platzListe);
     }
 
@@ -92,7 +90,7 @@ public class SaalplanTest {
         // arrange
         var plaetze = new ArrayList<Platz>();
         for (int platznummer = 1; platznummer <= 3; platznummer++) {
-            plaetze.add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null));
+            plaetze.add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null, vorstellungUuid));
         }
         var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
 
@@ -108,7 +106,7 @@ public class SaalplanTest {
         // arrange
         var plaetze = new ArrayList<Platz>();
         for (int platznummer = 1; platznummer <= 3; platznummer++) {
-            plaetze.add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null));
+            plaetze.add(new Platz((long) platznummer, new Sitz(platznummer), new Reihe(1), false, null, vorstellungUuid));
         }
         var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
 
@@ -127,11 +125,11 @@ public class SaalplanTest {
         // arrange
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
         var lokalePlatzliste = new ArrayList<Platz>();
-        var platz1 = new Platz(1L, new Sitz(1), new Reihe(1), false, reservierungsnummer);
-        var platz3 = new Platz(3L, new Sitz(3), new Reihe(2), false, null);
-        var platz2 = new Platz(2L, new Sitz(2), new Reihe(2), false, reservierungsnummer);
-        var platz4 = new Platz(4L, new Sitz(4), new Reihe(2), false, null);
-        var platz5 = new Platz(5L, new Sitz(5), new Reihe(2), false, new Reservierungsnummer("andereReservierungsnummer"));
+        var platz1 = new Platz(1L, new Sitz(1), new Reihe(1), false, reservierungsnummer, vorstellungUuid);
+        var platz3 = new Platz(3L, new Sitz(3), new Reihe(2), false, null, vorstellungUuid);
+        var platz2 = new Platz(2L, new Sitz(2), new Reihe(2), false, reservierungsnummer, vorstellungUuid);
+        var platz4 = new Platz(4L, new Sitz(4), new Reihe(2), false, null, vorstellungUuid);
+        var platz5 = new Platz(5L, new Sitz(5), new Reihe(2), false, new Reservierungsnummer("andereReservierungsnummer"), vorstellungUuid);
 
         lokalePlatzliste.add(platz1);
         lokalePlatzliste.add(platz2);
@@ -157,12 +155,12 @@ public class SaalplanTest {
         // arrange
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
         var lokalePlatzliste = new ArrayList<Platz>();
-        var platz1 = new Platz(1L, new Sitz(1), new Reihe(1), true, reservierungsnummer);
-        var platz2 = new Platz(2L, new Sitz(2), new Reihe(2), true, reservierungsnummer);
-        var platz3 = new Platz(3L, new Sitz(3), new Reihe(2), false, null);
-        var platz4 = new Platz(4L, new Sitz(4), new Reihe(2), false, null);
-        var platz5 = new Platz(5L, new Sitz(5), new Reihe(2), false, reservierungsnummer);
-        var platz6 = new Platz(6L, new Sitz(6), new Reihe(3), true, null);
+        var platz1 = new Platz(1L, new Sitz(1), new Reihe(1), true, reservierungsnummer, vorstellungUuid);
+        var platz2 = new Platz(2L, new Sitz(2), new Reihe(2), true, reservierungsnummer, vorstellungUuid);
+        var platz3 = new Platz(3L, new Sitz(3), new Reihe(2), false, null, vorstellungUuid);
+        var platz4 = new Platz(4L, new Sitz(4), new Reihe(2), false, null, vorstellungUuid);
+        var platz5 = new Platz(5L, new Sitz(5), new Reihe(2), false, reservierungsnummer, vorstellungUuid);
+        var platz6 = new Platz(6L, new Sitz(6), new Reihe(3), true, null, vorstellungUuid);
 
         lokalePlatzliste.add(platz1);
         lokalePlatzliste.add(platz2);

@@ -1,17 +1,17 @@
-package de.wps.dddschulung.kartenverkauf.mapper;
+package de.wps.dddschulung.kartenverkauf.persistence.mappers;
 
 import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
-import de.wps.dddschulung.kartenverkauf.persistence.mappers.SaalplanMapper;
-import de.wps.dddschulung.kartenverkauf.persistence.mappers.SaalplanMapperImpl;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
+import de.wps.dddschulung.kartenverkauf.persistence.model.VorstellungEntity;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,16 +31,19 @@ class SaalplanMapperTest {
     private final long platzId = 3L;
     private final String saalName = "Großer Saal";
     private final String filmnameString = "Back to the Futura";
-    private final PlatzEntity platzEntity = new PlatzEntity(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummerString);
+    private final long vorstellungId = 4L;
+    private final UUID vorstellungUuid = UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74");
+    private final VorstellungEntity vorstellungEntity = new VorstellungEntity(vorstellungId, vorstellungUuid, anfangszeit, saalName);
+    private final PlatzEntity platzEntity = new PlatzEntity(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummerString, vorstellungEntity);
     private final List<PlatzEntity> platzEntities = List.of(platzEntity);
 
     @Test
     public void saalplanToSaalplanEntity() {
         // arrange
-        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer)));
+        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer, vorstellungUuid)));
         Filmname filmname = new Filmname(filmnameString);
         Saal saal = new Saal(saalName);
-        Vorstellung vorstellung = new Vorstellung(saal, beginn, filmname);
+        Vorstellung vorstellung = new Vorstellung(vorstellungUuid, saal, beginn, filmname);
         Saalplan saalplan = new Saalplan(saalplanId, vorstellung, plaetze);
 
         // act
@@ -48,15 +51,18 @@ class SaalplanMapperTest {
 
         // assert
         assertThat(saalplanEntity.getId()).isEqualTo(saalplanId);
-        assertThat(saalplanEntity.getAnfangszeit()).isEqualTo(anfangszeit);
+        assertThat(saalplanEntity.getVorstellung().getAnfangszeit()).isEqualTo(anfangszeit);
         assertThat(saalplanEntity.getPlaetze()).isEqualTo(platzEntities);
-        assertThat(saalplanEntity.getSaal()).isEqualTo(saalplan.getVorstellung().saal().name());
+        assertThat(saalplanEntity.getVorstellung().getSaal()).isEqualTo(saalplan.getVorstellung().saal().name());
+        assertThat(saalplanEntity.getVorstellung().getUuid()).isEqualTo(vorstellungUuid);
+        assertThat(saalplanEntity.getVorstellung().getId()).isEqualTo(vorstellungId);
+        assertThat(saalplanEntity.getVorstellung().getAnfangszeit()).isEqualTo(anfangszeit);
     }
 
     @Test
     public void saalplanEntityToSaalplan() {
         // arrange
-        SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, anfangszeit, filmnameString, platzEntities, saalName);
+        SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, filmnameString, platzEntities, vorstellungEntity);
 
         // act
         Saalplan saalplan = saalplanMapper.saalplanEntityToSaalplan(saalplanEntity);
@@ -70,6 +76,6 @@ class SaalplanMapperTest {
         assertThat(mappedPlatz.getId()).isEqualTo(platzId);
         assertThat(mappedPlatz.istVerkauft()).isEqualTo(istVerkauft);
         assertThat(mappedPlatz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
-        assertThat(saalplan.getVorstellung().saal().name()).isEqualTo(saalplanEntity.getSaal());
+        assertThat(saalplan.getVorstellung().saal().name()).isEqualTo(saalplanEntity.getVorstellung().getSaal());
     }
 }

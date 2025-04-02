@@ -9,11 +9,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper
+@Mapper(uses = VorstellungMapper.class)
 public interface PlatzMapper {
     @Mapping(target = "reservierungsnummer", source = "reservierungsnummer", qualifiedByName = "StringToReservierungsnummer")
     @Mapping(target = "reihe", source = "reihennummer", qualifiedByName = "ReihennummerToReihe")
     @Mapping(target = "sitz", source = "platznummer", qualifiedByName = "PlatznummerToSitz")
+    @Mapping(target = "vorstellungUUID", source = "vorstellung.uuid")
     Platz platzEntityToPlatz(PlatzEntity platzEntity);
 
     @Mapping(target = "reservierungsnummer", source = "reservierungsnummer", qualifiedByName = "ReservierungsnummerToString")
