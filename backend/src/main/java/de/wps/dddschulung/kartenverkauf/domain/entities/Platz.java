@@ -15,24 +15,24 @@ public class Platz {
     private Sitz sitz;
     @Getter
     private Reihe reihe;
-    private boolean isVerkauft;
+    private boolean istVerkauft;
     @Getter
     private Reservierungsnummer reservierungsnummer;
 
     public void markiereAlsVerkauft() {
-        isVerkauft = true;
+        istVerkauft = true;
     }
 
     public boolean istFrei() {
-        return !isVerkauft && reservierungsnummer == null;
+        return !istVerkauft && reservierungsnummer == null;
     }
 
     public boolean istBelegt() {
-        return isVerkauft || reservierungsnummer != null;
+        return istVerkauft || reservierungsnummer != null;
     }
 
     public boolean istVerkauft() {
-        return isVerkauft;
+        return istVerkauft;
     }
 
     public void markiereAlsReserviert(Reservierungsnummer reservierungsnummer) {
