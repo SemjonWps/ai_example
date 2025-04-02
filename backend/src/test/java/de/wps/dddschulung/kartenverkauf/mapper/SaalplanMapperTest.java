@@ -27,10 +27,13 @@ class SaalplanMapperTest {
     private final boolean istVerkauft = false;
     private final String reservierungsnummerString = "reservierungsnummer";
     private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer(reservierungsnummerString);
-    private final List<Platz> plaetze = new ArrayList<>(List.of(new Platz(3L, sitz, reihe, istVerkauft, reservierungsnummer)));
+    private final long platzId = 3L;
+    private final List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer)));
     private final String saalName = "Großer Saal";
     private final long saalId = 5L;
     private final String filmnameString = "Back to the Futura";
+    private final PlatzEntity platzEntity = new PlatzEntity(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummerString);
+    private final List<PlatzEntity> platzEntities = List.of(platzEntity);
 
     @Test
     public void saalplanToSaalplanEntity() {
@@ -46,7 +49,7 @@ class SaalplanMapperTest {
         // assert
         assertThat(saalplanEntity.getId()).isEqualTo(saalplanId);
         assertThat(saalplanEntity.getAnfangszeit()).isEqualTo(anfangszeit);
-        assertThat(saalplanEntity.getPlaetze()).isEqualTo(plaetze);
+        assertThat(saalplanEntity.getPlaetze()).isEqualTo(platzEntities);
         assertThat(saalplanEntity.getSaal().getName()).isEqualTo(saalplan.getVorstellung().saal().name());
     }
 
@@ -54,7 +57,6 @@ class SaalplanMapperTest {
     public void saalplanEntityToSaalplan() {
         // arrange
         SaalEntity saalEntity = new SaalEntity(saalId, saalName);
-        List<PlatzEntity> platzEntities = new ArrayList<>(List.of(new PlatzEntity(4L, platznummer, reihennummer, istVerkauft, reservierungsnummerString)));
         SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, anfangszeit, filmnameString, platzEntities, saalEntity);
 
         // act
@@ -63,7 +65,12 @@ class SaalplanMapperTest {
         // assert
         assertThat(saalplan.getId()).isEqualTo(saalplanId);
         assertThat(saalplan.getVorstellung().anfangszeit()).isEqualTo(beginn);
-        assertThat(saalplan.getPlaetze()).isEqualTo(plaetze);
+        Platz mappedPlatz = saalplan.getPlaetze().get(reihe).getFirst();
+        assertThat(mappedPlatz.getReihe()).isEqualTo(reihe);
+        assertThat(mappedPlatz.getSitz()).isEqualTo(sitz);
+        assertThat(mappedPlatz.getId()).isEqualTo(platzId);
+        assertThat(mappedPlatz.istVerkauft()).isEqualTo(istVerkauft);
+        assertThat(mappedPlatz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
         assertThat(saalplan.getVorstellung().saal().name()).isEqualTo(saalplanEntity.getSaal().getName());
     }
 }
