@@ -1,9 +1,13 @@
 package de.wps.dddschulung.kartenverkauf.persistence;
 
+import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+
 @Repository
 public interface SaalplanRepository extends JpaRepository<SaalplanEntity, Long> {
+    SaalplanEntity findBySaalAndAnfangszeit(SaalEntity saalEntity, LocalDateTime anfangszeit);
 }

@@ -20,7 +20,7 @@ public interface SaalplanMapper {
 
     PlatzMapper platzMapper = new PlatzMapperImpl();
 
-    @Mapping(target = "anfangszeit", source = "vorstellung", qualifiedByName = "VorstellungToLocalDateTime")
+    @Mapping(target = "zeitpunkt", source = "vorstellung", qualifiedByName = "VorstellungToLocalDateTime")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
     @Mapping(target = "saal", source = "vorstellung", qualifiedByName = "VorstellungToSaalEntity")
     @Mapping(target = "originalTitel", source = "vorstellung", qualifiedByName = "VorstellungToOriginalTitel")
@@ -37,7 +37,7 @@ public interface SaalplanMapper {
 
     @Named("VorstellungToLocalDateTime")
     default LocalDateTime mapVorstellungToLocalDateTime(Vorstellung vorstellung) {
-        return vorstellung == null ? null : vorstellung.anfangszeit().anfangszeit();
+        return vorstellung == null ? null : vorstellung.anfangszeit().zeitpunkt();
     }
 
     @Named("SaalplanEntityToVorstellung")
