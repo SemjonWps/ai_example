@@ -28,7 +28,6 @@ class SaalplanMapperTest {
     private final String reservierungsnummerString = "reservierungsnummer";
     private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer(reservierungsnummerString);
     private final long platzId = 3L;
-    private final List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer)));
     private final String saalName = "Großer Saal";
     private final long saalId = 5L;
     private final String filmnameString = "Back to the Futura";
@@ -38,6 +37,7 @@ class SaalplanMapperTest {
     @Test
     public void saalplanToSaalplanEntity() {
         // arrange
+        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer)));
         Filmname filmname = new Filmname(filmnameString);
         Saal saal = new Saal(saalId, saalName);
         Vorstellung vorstellung = new Vorstellung(saal, beginn, filmname);
