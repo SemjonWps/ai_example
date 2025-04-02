@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "filme")
+@Table(name = "filme", schema = "programm")
 @Data
 @NoArgsConstructor
 public class Film {
@@ -26,7 +26,7 @@ public class Film {
     private String regie;
     private String sprache;
     @OneToMany
-    @JoinColumn(name = "filmId")
+    @JoinColumn(name = "film_id")
     @JsonIgnore
     private List<Vorstellung> vorstellungen;
 }

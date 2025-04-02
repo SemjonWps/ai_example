@@ -1,10 +1,6 @@
 package de.wps.dddschulung.kartenverkauf.persistence.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -12,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Entity
-@Table(name = "plaetze")
+@Table(name = "plaetze", schema = "kartenverkauf")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +22,7 @@ public class PlatzEntity {
     @Accessors(fluent = true)
     private boolean istVerkauft;
     private String reservierungsnummer;
+    @OneToOne
+    @JoinColumn(name = "vorstellung_id")
+    private VorstellungEntity vorstellung;
 }

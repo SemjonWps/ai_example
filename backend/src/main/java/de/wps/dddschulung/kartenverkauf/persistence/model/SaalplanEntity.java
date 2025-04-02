@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "saalplaene", uniqueConstraints = @UniqueConstraint(name = "unique_anfangszeit_saal", columnNames = {"anfangszeit", "saal"}))
+@Table(name = "saalplaene", schema = "kartenverkauf", uniqueConstraints = @UniqueConstraint(name = "unique_anfangszeit_saal", columnNames = {"anfangszeit", "saal"}))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,7 +19,13 @@ public class SaalplanEntity {
     private long id;
     private LocalDateTime anfangszeit;
     private String originalTitel;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "saalplan_plaetze",
+            schema = "kartenverkauf",
+            joinColumns = @JoinColumn(name = "saalplan_id"),
+            inverseJoinColumns = @JoinColumn(name = "plaetze_id")
+    )
     private List<PlatzEntity> plaetze;
     private String saal;
 }
