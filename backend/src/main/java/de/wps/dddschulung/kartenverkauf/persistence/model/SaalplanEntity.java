@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name = "saalplaene", uniqueConstraints = @UniqueConstraint(name = "unique_anfangszeit_saal", columnNames = {"anfangszeit", "saal"}))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
