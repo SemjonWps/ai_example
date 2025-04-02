@@ -39,7 +39,11 @@ bevor sie in einer Endlosschleife der Zeit gefangen bleibt.', 'Sci-Fi, Adventure
         'Die Erde wird von einer Horde außerirdischer Clowns angegriffen, die nichts anderes wollen, als die Menschheit mit tödlichen Gags zu unterwerfen.
 Nur eine Gruppe rebellischer Spaßmacher kann sich der Bedrohung entgegenstellen. Ein intergalaktisches Spektakel voller Ballontier-Kriege,
 Killer-Jojos und einem epischen Showdown in der Zirkusarena des Todes.', 'Sci-Fi, Horror, Comedy', 'Penny Wisecrack',
-        'Tim Burtonisch', 'Englisch');
+        'Tim Burtonisch', 'Englisch'),
+       ('Fast and the Curious', 135, 'assets/fast_and_the_curious.png', 16,
+        'Fast and the Curious ist ein actiongeladener Film über eine Bande von hochintelligenten Straßenkatzen, die illegale Straßenrennen fahren und geheime Raubüberfälle planen. Angeführt von der waghalsigen und charismatischen Kätzin Velo, entdeckt das Team, dass eine rivalisierende Hunde-Gang versucht, die Straßen zu übernehmen. Während atemberaubender Verfolgungsjagden, waghalsiger Stunts und cleverer Pläne müssen die Katzen nicht nur ihre Revierhoheit verteidigen, sondern auch ein letztes, spektakuläres Rennen gewinnen, um ihre Freiheit zu sichern. Ein rasanter Mix aus Action, Humor und katzenhafter Cleverness!',
+        'Action, Adventure, Tierfilm', 'Cat Moss',
+        'Rob Kitten', 'Deutsch');
 
 INSERT INTO saele
     (name)
@@ -55,7 +59,7 @@ VALUES ('2025-03-17 15:30:00', 2, 450, 2),
        ('2025-03-19 14:30:00', 3, 999, 2),
        ('2025-03-19 15:30:00', 7, 500, 3),
        ('2025-03-16 14:30:00', 1, 550, 1),
-       ('2025-03-20 14:30:00', 4, 600, 1),
+       ('2025-03-20 14:30:00', 9, 750, 1),
        ('2025-03-16 15:30:00', 4, 500, 2),
        ('2025-03-17 14:30:00', 1, 550, 1),
        ('2025-03-16 14:30:00', 3, 999, 2),
@@ -65,4 +69,7 @@ VALUES ('2025-03-17 15:30:00', 2, 450, 2),
        ('2025-03-22 15:30:00', 8, 800, 2),
        ('2025-03-21 14:30:00', 1, 1000, 3),
        ('2025-03-21 15:30:00', 6, 750, 1),
-       ('2025-03-22 15:45:00', 3, 700, 3);
+       ('2025-03-22 15:45:00', 3, 700, 3),
+       ('2025-03-23 15:30:00', 9, 750, 1),
+       ('2025-03-23 15:45:00', 9, 750, 2),
+       ('2025-03-23 11:30:00', 4, 650, 1);
