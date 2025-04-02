@@ -2,10 +2,7 @@ package de.wps.dddschulung.kartenverkauf.mapper;
 
 import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.domainobjects.Saalplan;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Beginn;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Filmname;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Saal;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;
+import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
@@ -16,6 +13,7 @@ import org.mapstruct.Named;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SaalplanMapper {
@@ -24,13 +22,18 @@ public interface SaalplanMapper {
 
     @Mapping(target = "anfangszeit", source = "vorstellung", qualifiedByName = "VorstellungToLocalDateTime")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
-    @Mapping(target = "saal", source = "saal", qualifiedByName = "SaalToSaalEntity")
+    @Mapping(target = "saal", source = "vorstellung", qualifiedByName = "VorstellungToSaalEntity")
+    @Mapping(target = "originalTitel", source = "vorstellung", qualifiedByName = "VorstellungToOriginalTitel")
     SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan);
 
     @Mapping(target = "vorstellung", source = "saalplanEntity", qualifiedByName = "SaalplanEntityToVorstellung")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlatzEntitiesToPlaetze")
-    @Mapping(target = "saal", source = "saal", qualifiedByName = "SaalEntityToSaal")
     Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
+
+    @Named("VorstellungToOriginalTitel")
+    default String mapVorstellungToOriginalTitel(Vorstellung vorstellung) {
+        return vorstellung == null ? null : vorstellung.filmname().originalTitel();
+    }
 
     @Named("VorstellungToLocalDateTime")
     default LocalDateTime mapVorstellungToLocalDateTime(Vorstellung vorstellung) {
@@ -46,9 +49,9 @@ public interface SaalplanMapper {
     }
 
     @Named("PlaetzeToPlatzEntities")
-    default List<PlatzEntity> mapPlatzEntities(List<Platz> plaetze) {
+    default List<PlatzEntity> mapPlaetzeToPlatzEntities(Map<Reihe, List<Platz>> plaetze) {
         List<PlatzEntity> platzEntities = new ArrayList<>();
-        for (Platz platz : plaetze) {
+        for (Platz platz : plaetze.values().stream().flatMap(List::stream).toList()) {
             platzEntities.add(platzMapper.platzToPlatzEntity(platz));
         }
         return platzEntities;
@@ -63,13 +66,8 @@ public interface SaalplanMapper {
         return plaetze;
     }
 
-    @Named("SaalToSaalEntity")
-    default SaalEntity mapSaalToSaalEntity(Saal saal) {
-        return saal == null ? null : new SaalEntity(saal.id(), saal.name());
-    }
-
-    @Named("SaalEntityToSaal")
-    default Saal mapSaalEntityToSaal(SaalEntity saalEntity) {
-        return saalEntity == null ? null : new Saal(saalEntity.getId(), saalEntity.getName());
+    @Named("VorstellungToSaalEntity")
+    default SaalEntity mapVorstellungToSaalEntity(Vorstellung vorstellung) {
+        return vorstellung == null ? null : new SaalEntity(vorstellung.saal().id(), vorstellung.saal().name());
     }
 }

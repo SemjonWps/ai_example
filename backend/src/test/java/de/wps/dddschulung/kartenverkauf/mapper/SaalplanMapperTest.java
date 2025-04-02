@@ -20,20 +20,24 @@ class SaalplanMapperTest {
     private final long saalplanId = 2L;
     private final LocalDateTime anfangszeit = LocalDateTime.parse("2025-03-17T15:30:00");
     private final Beginn beginn = new Beginn(anfangszeit);
-    private final Filmname filmname = new Filmname("Back to the Futura");
-    private final Sitz sitz = new Sitz(1);
-    private final Reihe reihe = new Reihe(42);
+    private final int platznummer = 1;
+    private final Sitz sitz = new Sitz(platznummer);
+    private final int reihennummer = 42;
+    private final Reihe reihe = new Reihe(reihennummer);
     private final boolean istVerkauft = false;
-    private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
+    private final String reservierungsnummerString = "reservierungsnummer";
+    private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer(reservierungsnummerString);
     private final List<Platz> plaetze = new ArrayList<>(List.of(new Platz(3L, sitz, reihe, istVerkauft, reservierungsnummer)));
-    private final List<PlatzEntity> platzEntities = new ArrayList<>(List.of(new PlatzEntity(4L, sitz.platznummer(), reihe.reihennummer(), istVerkauft, reservierungsnummer.reservierungsnummer())));
-    private final Saal saal = new Saal("Großer Saal");
-    private final SaalEntity saalEntity = new SaalEntity(5L, "Kleiner Saal");
-    Vorstellung vorstellung = new Vorstellung(saal, beginn, filmname);
+    private final String saalName = "Großer Saal";
+    private final long saalId = 5L;
+    private final String filmnameString = "Back to the Futura";
 
     @Test
     public void saalplanToSaalplanEntity() {
         // arrange
+        Filmname filmname = new Filmname(filmnameString);
+        Saal saal = new Saal(saalId, saalName);
+        Vorstellung vorstellung = new Vorstellung(saal, beginn, filmname);
         Saalplan saalplan = new Saalplan(saalplanId, vorstellung, plaetze);
 
         // act
@@ -49,7 +53,9 @@ class SaalplanMapperTest {
     @Test
     public void saalplanEntityToSaalplan() {
         // arrange
-        SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, anfangszeit, platzEntities, saalEntity);
+        SaalEntity saalEntity = new SaalEntity(saalId, saalName);
+        List<PlatzEntity> platzEntities = new ArrayList<>(List.of(new PlatzEntity(4L, platznummer, reihennummer, istVerkauft, reservierungsnummerString)));
+        SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, anfangszeit, filmnameString, platzEntities, saalEntity);
 
         // act
         Saalplan saalplan = saalplanMapper.saalplanEntityToSaalplan(saalplanEntity);
