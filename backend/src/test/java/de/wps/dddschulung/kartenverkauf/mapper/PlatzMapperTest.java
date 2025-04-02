@@ -5,6 +5,7 @@ import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
 import de.wps.dddschulung.kartenverkauf.persistence.mapper.PlatzMapper;
+import de.wps.dddschulung.kartenverkauf.persistence.mapper.PlatzMapperImpl;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;

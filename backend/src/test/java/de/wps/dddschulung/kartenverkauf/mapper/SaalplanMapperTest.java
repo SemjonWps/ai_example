@@ -4,8 +4,8 @@ import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.*;
 import de.wps.dddschulung.kartenverkauf.persistence.mapper.SaalplanMapper;
+import de.wps.dddschulung.kartenverkauf.persistence.mapper.SaalplanMapperImpl;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
-import de.wps.dddschulung.kartenverkauf.persistence.model.SaalEntity;
 import de.wps.dddschulung.kartenverkauf.persistence.model.SaalplanEntity;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,6 @@ class SaalplanMapperTest {
     private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer(reservierungsnummerString);
     private final long platzId = 3L;
     private final String saalName = "Großer Saal";
-    private final long saalId = 5L;
     private final String filmnameString = "Back to the Futura";
     private final PlatzEntity platzEntity = new PlatzEntity(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummerString);
     private final List<PlatzEntity> platzEntities = List.of(platzEntity);
@@ -51,14 +50,13 @@ class SaalplanMapperTest {
         assertThat(saalplanEntity.getId()).isEqualTo(saalplanId);
         assertThat(saalplanEntity.getAnfangszeit()).isEqualTo(anfangszeit);
         assertThat(saalplanEntity.getPlaetze()).isEqualTo(platzEntities);
-        assertThat(saalplanEntity.getSaal().getName()).isEqualTo(saalplan.getVorstellung().saal().name());
+        assertThat(saalplanEntity.getSaal()).isEqualTo(saalplan.getVorstellung().saal().name());
     }
 
     @Test
     public void saalplanEntityToSaalplan() {
         // arrange
-        SaalEntity saalEntity = new SaalEntity(saalId, saalName);
-        SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, anfangszeit, filmnameString, platzEntities, saalEntity);
+        SaalplanEntity saalplanEntity = new SaalplanEntity(saalplanId, anfangszeit, filmnameString, platzEntities, saalName);
 
         // act
         Saalplan saalplan = saalplanMapper.saalplanEntityToSaalplan(saalplanEntity);
@@ -72,6 +70,6 @@ class SaalplanMapperTest {
         assertThat(mappedPlatz.getId()).isEqualTo(platzId);
         assertThat(mappedPlatz.istVerkauft()).isEqualTo(istVerkauft);
         assertThat(mappedPlatz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
-        assertThat(saalplan.getVorstellung().saal().name()).isEqualTo(saalplanEntity.getSaal().getName());
+        assertThat(saalplan.getVorstellung().saal().name()).isEqualTo(saalplanEntity.getSaal());
     }
 }

@@ -20,7 +20,5 @@ public class SaalplanEntity {
     private String originalTitel;
     @OneToMany
     private List<PlatzEntity> plaetze;
-    @OneToOne
-    @JoinColumn(name = "saal_id")
-    private SaalEntity saal;
+    private String saal;
 }
