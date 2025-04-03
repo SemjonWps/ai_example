@@ -1,6 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.persistence.repositories;
 
 
+import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
 import de.wps.dddschulung.kartenverkauf.domain.repositories.SaalplanStapel;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
@@ -19,13 +20,13 @@ class SaalplanStapelImplTest {
     @Autowired
     private SaalplanStapel saalplanStapel;
 
+    Saalplan saalplan;
+    UUID vorstellungUUID = UUID.fromString("95b21a30-64bf-4df1-a0a2-e769bd7c5ea1");
+
     @Test
     public void holeSaalplan() {
-        // arrange
-        UUID vorstellungUUID = UUID.fromString("95b21a30-64bf-4df1-a0a2-e769bd7c5ea1");
-
         // act
-        Saalplan saalplan = saalplanStapel.holeSaalplan(vorstellungUUID);
+        saalplan = saalplanStapel.holeSaalplan(vorstellungUUID);
 
         // assert
         assertThat(saalplan.getVorstellungUUID()).isEqualTo(vorstellungUUID);
@@ -34,6 +35,20 @@ class SaalplanStapelImplTest {
         assertThat(reihen).hasSize(reihenAnzahl);
         int platzAnzahlInReihe = 12;
         saalplan.getPlaetze().forEach((reihe, plaetzeListe) -> assertThat(plaetzeListe).hasSize(platzAnzahlInReihe));
+    }
+
+    @Test
+    public void legeZurueck() {
+        // arrange
+        saalplan = saalplanStapel.holeSaalplan(vorstellungUUID);
+        Reihe reihe = new Reihe(1);
+
+        // act
+        Platz zuAendernderPlatz = saalplan.getPlaetze().get(reihe).getFirst();
+        zuAendernderPlatz.markiereAlsVerkauft();
+        saalplanStapel.legeZurueck(saalplan);
+
+        // TODO assert??
     }
 
 }

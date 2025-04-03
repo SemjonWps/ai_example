@@ -21,6 +21,7 @@ public class SaalplanStapelImpl implements SaalplanStapel {
     }
 
     public void legeZurueck(Saalplan saalplan) {
-
+        SaalplanEntity saalplanEntity = saalplanMapper.saalplanToSaalplanEntity(saalplan);
+        saalplanRepository.save(saalplanEntity);
     }
 }

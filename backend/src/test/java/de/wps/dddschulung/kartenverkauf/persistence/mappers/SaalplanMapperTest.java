@@ -34,7 +34,7 @@ class SaalplanMapperTest {
     @Test
     public void saalplanToSaalplanEntity() {
         // arrange
-        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer)));
+        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, sitz, reihe, istVerkauft, reservierungsnummer, saalplanId)));
         Saalplan saalplan = new Saalplan(saalplanId, vorstellungUUID, plaetze);
 
         // act
