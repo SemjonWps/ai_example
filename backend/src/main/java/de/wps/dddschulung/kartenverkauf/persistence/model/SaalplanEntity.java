@@ -17,7 +17,7 @@ public class SaalplanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "saalplan_id")
     private List<PlatzEntity> plaetze;
     private UUID vorstellungUUID;

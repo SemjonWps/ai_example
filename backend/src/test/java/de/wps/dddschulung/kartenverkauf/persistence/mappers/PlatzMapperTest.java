@@ -17,6 +17,7 @@ class PlatzMapperTest {
     PlatzMapper platzMapper = new PlatzMapperImpl();
 
     long id = 1L;
+    long saalplanId = 2L;
     Sitz sitz = new Sitz(42);
     Reihe reihe = new Reihe(23);
     boolean istVerkauft = false;
@@ -25,7 +26,7 @@ class PlatzMapperTest {
     @Test
     public void testPlatzEntityToPlatz() {
         // arrange
-        PlatzEntity platzEntity = new PlatzEntity(id, sitz.platznummer(), reihe.reihennummer(), istVerkauft, reservierungsnummer.reservierungsnummer());
+        PlatzEntity platzEntity = new PlatzEntity(id, sitz.platznummer(), reihe.reihennummer(), istVerkauft, reservierungsnummer.reservierungsnummer(), saalplanId);
 
         // act
         Platz platz = platzMapper.platzEntityToPlatz(platzEntity);

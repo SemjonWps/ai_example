@@ -81,11 +81,11 @@ VALUES ('2025-03-17 15:30:00', 2, 450, 2),
 
 INSERT INTO kartenverkauf.vorstellungen
     (uuid, anfangszeit, saal, filmname)
-VALUES ('654ebb36-304c-4aca-89a7-bdc6f6a93313', '2025-03-17 15:30:00', 'Großer Saal', 'Back to the Futura');
+VALUES ('95b21a30-64bf-4df1-a0a2-e769bd7c5ea1', '2025-03-17 15:30:00', 'Großer Saal', 'Back to the Futura');
 
 INSERT INTO kartenverkauf.saalplaene
     (vorstellungUUID)
-VALUES ('654ebb36-304c-4aca-89a7-bdc6f6a93313');
+VALUES ('95b21a30-64bf-4df1-a0a2-e769bd7c5ea1');
 
 INSERT INTO kartenverkauf.plaetze
 (platznummer, reihennummer, ist_verkauft, reservierungsnummer, saalplan_id)
@@ -137,56 +137,3 @@ VALUES (1, 1, false, null, 1L),
        (10, 4, false, null, 1L),
        (11, 4, false, null, 1L),
        (12, 4, false, null, 1L);
-
-
-/*INSERT INTO kartenverkauf.saalplan_plaetze
-    (saalplan_id, plaetze_id)
-VALUES (1L, 1L),
-       (1L, 2L),
-       (1L, 3L),
-       (1L, 4L),
-       (1L, 5L),
-       (1L, 6L),
-       (1L, 7L),
-       (1L, 8L),
-       (1L, 9L),
-       (1L, 10L),
-       (1L, 11L),
-       (1L, 12L),
-       (1L, 13L),
-       (1L, 14L),
-       (1L, 15L),
-       (1L, 16L),
-       (1L, 17L),
-       (1L, 18L),
-       (1L, 19L),
-       (1L, 20L),
-       (1L, 21L),
-       (1L, 22L),
-       (1L, 23L),
-       (1L, 24L),
-       (1L, 25L),
-       (1L, 26L),
-       (1L, 27L),
-       (1L, 28L),
-       (1L, 29L),
-       (1L, 30L),
-       (1L, 31L),
-       (1L, 32L),
-       (1L, 33L),
-       (1L, 34L),
-       (1L, 35L),
-       (1L, 36L),
-       (1L, 37L),
-       (1L, 38L),
-       (1L, 39L),
-       (1L, 40L),
-       (1L, 41L),
-       (1L, 42L),
-       (1L, 43L),
-       (1L, 44L),
-       (1L, 45L),
-       (1L, 46L),
-       (1L, 47L),
-       (1L, 48L);*/
-

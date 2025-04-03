@@ -28,7 +28,7 @@ class SaalplanMapperTest {
     private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer(reservierungsnummerString);
     private final long platzId = 3L;
     private final UUID vorstellungUUID = UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74");
-    private final PlatzEntity platzEntity = new PlatzEntity(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummerString);
+    private final PlatzEntity platzEntity = new PlatzEntity(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummerString, saalplanId);
     private final List<PlatzEntity> platzEntities = List.of(platzEntity);
 
     @Test
