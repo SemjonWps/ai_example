@@ -22,4 +22,5 @@ public class PlatzEntity {
     @Accessors(fluent = true)
     private boolean istVerkauft;
     private String reservierungsnummer;
+    private long saalplan_id;
 }

@@ -18,12 +18,7 @@ public class SaalplanEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "saalplan_plaetze",
-            schema = "kartenverkauf",
-            joinColumns = @JoinColumn(name = "saalplan_id"),
-            inverseJoinColumns = @JoinColumn(name = "plaetze_id")
-    )
+    @JoinColumn(name = "saalplan_id")
     private List<PlatzEntity> plaetze;
     private UUID vorstellungUUID;
 }
