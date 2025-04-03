@@ -26,7 +26,7 @@ public class Film {
     private String regie;
     private String sprache;
     @OneToMany
-    @JoinColumn(name = "film_id")
+    @JoinColumn(name = "filmId")
     @JsonIgnore
     private List<Vorstellung> vorstellungen;
 }
