@@ -22,7 +22,4 @@ public class PlatzEntity {
     @Accessors(fluent = true)
     private boolean istVerkauft;
     private String reservierungsnummer;
-    @OneToOne
-    @JoinColumn(name = "vorstellung_id")
-    private VorstellungEntity vorstellung;
 }

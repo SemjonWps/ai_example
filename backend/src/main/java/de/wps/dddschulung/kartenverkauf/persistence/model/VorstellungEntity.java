@@ -1,6 +1,8 @@
 package de.wps.dddschulung.kartenverkauf.persistence.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,10 +17,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class VorstellungEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private UUID uuid;
     private LocalDateTime anfangszeit;
     private String saal;
-
+    private String filmname;
 }

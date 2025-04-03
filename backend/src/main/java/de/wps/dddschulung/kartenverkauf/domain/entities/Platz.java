@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
-import java.util.UUID;
-
 @Getter
 @AllArgsConstructor
 public class Platz {
@@ -19,7 +17,6 @@ public class Platz {
     @Accessors(fluent = true)
     private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;
-    private UUID vorstellungUUID;
 
     public void markiereAlsVerkauft() {
         istVerkauft = true;
@@ -31,10 +28,6 @@ public class Platz {
 
     public boolean istBelegt() {
         return istVerkauft || reservierungsnummer != null;
-    }
-
-    public boolean istVerkauft() {
-        return istVerkauft;
     }
 
     public void markiereAlsReserviert(Reservierungsnummer reservierungsnummer) {

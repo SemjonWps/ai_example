@@ -1,7 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.domain.repositories;
 
 import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;
+import de.wps.dddschulung.kartenverkauf.domain.entities.Vorstellung;
 
 public interface SaalplanStapel {
 

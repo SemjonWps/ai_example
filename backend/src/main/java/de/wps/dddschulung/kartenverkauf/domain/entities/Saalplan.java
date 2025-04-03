@@ -3,25 +3,21 @@ package de.wps.dddschulung.kartenverkauf.domain.entities;
 import de.wps.dddschulung.kartenverkauf.domain.ZusammenhaengendePlaetze;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Vorstellung;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
 
 @Getter
 public class Saalplan {
     private final Long id;
-    private final Vorstellung vorstellung;
+    private final UUID vorstellungUUID;
     private final Map<Reihe, List<Platz>> plaetze;
 
-    public Saalplan(Long id, Vorstellung vorstellung, List<Platz> plaetze) {
+    public Saalplan(Long id, UUID vorstellungUUID, List<Platz> plaetze) {
         this.id = id;
-        this.vorstellung = vorstellung;
+        this.vorstellungUUID = vorstellungUUID;
         this.plaetze = plaetze.stream().collect(groupingBy(Platz::getReihe));
     }
 

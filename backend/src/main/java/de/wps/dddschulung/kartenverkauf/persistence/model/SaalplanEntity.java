@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "saalplaene", schema = "kartenverkauf", uniqueConstraints = @UniqueConstraint(name = "unique_anfangszeit_saal", columnNames = {"anfangszeit", "saal"}))
@@ -16,7 +17,6 @@ public class SaalplanEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String originalTitel;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "saalplan_plaetze",
@@ -25,6 +25,5 @@ public class SaalplanEntity {
             inverseJoinColumns = @JoinColumn(name = "plaetze_id")
     )
     private List<PlatzEntity> plaetze;
-    @OneToOne
-    private VorstellungEntity vorstellung;
+    private UUID vorstellungUUID;
 }
