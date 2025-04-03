@@ -37,15 +37,17 @@ class PlatzMapperTest {
         assertThat(platz.getReihe()).isEqualTo(reihe);
         assertThat(platz.istVerkauft()).isEqualTo(istVerkauft);
         assertThat(platz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(platz.getSaalplan_id()).isEqualTo(saalplanId);
     }
 
     @Test
     public void testPlatzToPlatzEntity() {
         // arrange
-        Platz platz = new Platz(id, sitz, reihe, istVerkauft, reservierungsnummer);
+        Platz platz = new Platz(id, sitz, reihe, istVerkauft, reservierungsnummer, saalplanId);
 
         // act
         PlatzEntity platzEntity = platzMapper.platzToPlatzEntity(platz);
+        System.out.println(platzEntity.getSaalplan_id());
 
         // assert
         assertThat(platzEntity.getId()).isEqualTo(id);
@@ -53,6 +55,7 @@ class PlatzMapperTest {
         assertThat(platzEntity.getReihennummer()).isEqualTo(reihe.reihennummer());
         assertThat(platzEntity.istVerkauft()).isEqualTo(istVerkauft);
         assertThat(platzEntity.getReservierungsnummer()).isEqualTo(reservierungsnummer.reservierungsnummer());
+        assertThat(platzEntity.getSaalplan_id()).isEqualTo(saalplanId);
     }
 
 }

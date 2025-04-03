@@ -17,6 +17,7 @@ public class Platz {
     @Accessors(fluent = true)
     private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;
+    private Long saalplan_id;
 
     public void markiereAlsVerkauft() {
         istVerkauft = true;
