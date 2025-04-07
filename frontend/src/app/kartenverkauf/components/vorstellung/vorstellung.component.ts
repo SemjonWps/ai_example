@@ -8,7 +8,8 @@ import {DatePipe} from '@angular/common';
     DatePipe
   ],
   templateUrl: './vorstellung.component.html',
-  styleUrl: './vorstellung.component.css'
+  styleUrl: './vorstellung.component.css',
+  standalone: true,
 })
 export class VorstellungComponent {
 

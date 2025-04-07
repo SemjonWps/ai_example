@@ -10,7 +10,8 @@ import {VorstellungenComponent} from '../vorstellungen/vorstellungen.component';
     VorstellungenComponent
   ],
   templateUrl: './programmeintrag.component.html',
-  styleUrl: './programmeintrag.component.css'
+  styleUrl: './programmeintrag.component.css',
+  standalone: true,
 })
 export class ProgrammeintragComponent {
 

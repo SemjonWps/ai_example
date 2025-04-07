@@ -9,7 +9,8 @@ import {DatePipe, NgForOf} from "@angular/common";
     NgForOf
   ],
   templateUrl: './vorstellungen.component.html',
-  styleUrl: './vorstellungen.component.css'
+  styleUrl: './vorstellungen.component.css',
+  standalone: true,
 })
 export class VorstellungenComponent {
 

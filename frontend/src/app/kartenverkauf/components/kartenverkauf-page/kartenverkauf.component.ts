@@ -11,12 +11,13 @@ import {FormControl} from '@angular/forms';
     PlatzanzahlComponent
   ],
   templateUrl: './kartenverkauf.component.html',
-  styleUrl: './kartenverkauf.component.css'
+  styleUrl: './kartenverkauf.component.css',
+  standalone: true,
 })
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: Vorstellung | undefined;
-  platzanzahlControl: FormControl<number> = new FormControl<number>(0, {nonNullable: true});
+  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(0);
 
   ngOnInit(): void {
     this.vorstellung = {

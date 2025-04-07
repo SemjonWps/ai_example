@@ -14,7 +14,8 @@ import {format} from 'date-fns';
     NgForOf
   ],
   templateUrl: './programm.component.html',
-  styleUrl: './programm.component.css'
+  styleUrl: './programm.component.css',
+  standalone: true,
 })
 export class ProgrammComponent {
 

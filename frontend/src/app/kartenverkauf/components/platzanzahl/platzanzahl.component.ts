@@ -7,11 +7,12 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
     ReactiveFormsModule
   ],
   templateUrl: './platzanzahl.component.html',
-  styleUrl: './platzanzahl.component.css'
+  styleUrl: './platzanzahl.component.css',
+  standalone: true,
 })
 export class PlatzanzahlComponent {
 
   @Input()
-  platzanzahlControl!: FormControl<number>
+  platzanzahlControl!: FormControl<number | null>
 
 }
