@@ -1,11 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
 import {Vorstellung} from '../../dtos/kartenverkauf';
+import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-kartenverkauf',
   imports: [
-    VorstellungComponent
+    VorstellungComponent,
+    PlatzanzahlComponent
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css'
@@ -13,6 +16,7 @@ import {Vorstellung} from '../../dtos/kartenverkauf';
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: Vorstellung | undefined;
+  platzanzahlControl: FormControl<number> = new FormControl<number>(0, {nonNullable: true});
 
   ngOnInit(): void {
     this.vorstellung = {
