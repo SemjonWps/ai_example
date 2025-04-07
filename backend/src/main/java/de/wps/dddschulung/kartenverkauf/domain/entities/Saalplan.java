@@ -21,10 +21,14 @@ public class Saalplan {
         this.plaetze = plaetze.stream().collect(groupingBy(Platz::getReihe));
     }
 
+    /**
+     * @param anzahlPlaetze die Anzahl der gewünschten freien zusammenhängenden Plätze
+     * @return die ersten freien zusammenhängenden Plätze startend von der hintersten Reihe oder eine leere Liste, wenn es keine anzahlPlaetze zusammenhängende Plätze gibt
+     */
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var result = new ArrayList<Platz>();
 
-        for (var reihe : plaetze.values()) {
+        for (var reihe : plaetze.values().stream().sorted(Comparator.<List<Platz>>comparingInt(plaetze -> plaetze.getFirst().getReihe().reihennummer()).reversed()).toList()) {
             for (Platz platz : reihe) {
                 if (platz.istFrei()) {
                     result.add(platz);

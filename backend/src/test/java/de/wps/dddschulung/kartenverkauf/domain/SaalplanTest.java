@@ -29,7 +29,7 @@ public class SaalplanTest {
 
         saalplan = new Saalplan(saalplanId, null, new ArrayList<>());
 
-        for (int reihe = 1; reihe <= 3; reihe++) {
+        for (int reihe = 1; reihe <= 4; reihe++) {
             for (int platznummer = 1; platznummer <= 6; platznummer++) {
                 platzListe.add(new Platz((long) ((reihe * 10) + platznummer), new Sitz(platznummer), new Reihe(reihe), true, null, saalplanId));
             }
@@ -42,17 +42,27 @@ public class SaalplanTest {
     }
 
     @Test
-    public void sucheZusammenhaengendePlaetze_existsZusammenhaengendePlaetze_returnsCorrectPlaetze() throws NoSuchFieldException, IllegalAccessException {
+    public void sucheZusammenhaengendePlaetze_existsZusammenhaengendePlaetzeInSecondToLastReihe_returnsCorrectPlaetze() throws NoSuchFieldException, IllegalAccessException {
         // arrange
         var anzahlGewuenschtePlaetze = 4;
+        var vorletzteReihe = 3;
         var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("istVerkauft");
         belegtFeld.setAccessible(true);
+
+        // Reihe 1 mit 4 freien Plätzen
         belegtFeld.set(platzListe.get(0), false);
         belegtFeld.set(platzListe.get(1), false);
         belegtFeld.set(platzListe.get(2), false);
         belegtFeld.set(platzListe.get(3), false);
-        belegtFeld.set(platzListe.get(8), false);
-        belegtFeld.set(platzListe.get(9), false);
+        // Reihe 3 mit 4 freien Plätzen
+        belegtFeld.set(platzListe.get(12), false);
+        belegtFeld.set(platzListe.get(13), false);
+        belegtFeld.set(platzListe.get(14), false);
+        belegtFeld.set(platzListe.get(15), false);
+        // Reihe 4 mit 3 freien Plätzen
+        belegtFeld.set(platzListe.get(18), false);
+        belegtFeld.set(platzListe.get(19), false);
+        belegtFeld.set(platzListe.get(20), false);
         befuelleSaalplan();
 
         // act
@@ -64,7 +74,7 @@ public class SaalplanTest {
         assertThat(plaetzeSet).hasSize(anzahlGewuenschtePlaetze);
         assertThat(zusammenhaengendePlaetze.plaetze().getLast().getSitz().platznummer() - zusammenhaengendePlaetze.plaetze().getFirst().getSitz().platznummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
         assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(Platz::istFrei);
-        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.getReihe().reihennummer() == 1);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.getReihe().reihennummer() == vorletzteReihe);
     }
 
     @Test
