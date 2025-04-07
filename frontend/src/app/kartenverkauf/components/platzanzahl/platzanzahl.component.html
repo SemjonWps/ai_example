@@ -1,2 +1,3 @@
 <h2>Anzahl der Plätze</h2>
-<input formControlName="platzanzahlControl" />
+<input [formControl]="platzanzahlControl" name="platzanzahlControl" type="number" required min="1"/>
+<button (click)="uebermittlePlatzanzahl()">Zusammenhängende Plätze suchen</button>

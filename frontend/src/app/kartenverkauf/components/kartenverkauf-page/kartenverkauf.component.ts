@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
 import {Vorstellung} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-kartenverkauf',
@@ -17,7 +17,7 @@ import {FormControl} from '@angular/forms';
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: Vorstellung | undefined;
-  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(0);
+  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null, [Validators.requiredTrue, Validators.min(1)]);
 
   ngOnInit(): void {
     this.vorstellung = {

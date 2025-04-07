@@ -12,7 +12,11 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 })
 export class PlatzanzahlComponent {
 
-  @Input()
-  platzanzahlControl!: FormControl<number | null>
+  @Input({required: true})
+  platzanzahlControl!: FormControl<number | null>;
 
+  uebermittlePlatzanzahl() {
+    console.log(this.platzanzahlControl.valid);
+    console.log(this.platzanzahlControl)
+  }
 }
