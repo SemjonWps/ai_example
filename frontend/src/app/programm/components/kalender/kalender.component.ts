@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {DatePipe, NgForOf} from '@angular/common';
-import {DatumService} from '../../services/datum.service';
+import {DatumService} from '../../../common/services/datum.service';
 import {format, isBefore, startOfDay} from 'date-fns';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {distinctUntilChanged, map} from 'rxjs';

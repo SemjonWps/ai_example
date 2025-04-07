@@ -1,0 +1,15 @@
+<h2>Vorstellung</h2>
+<div class="vorstellungcontainer">
+  <div class="vorstellungsinfo">
+    {{ vorstellung?.anfangszeit | date : 'EE' }}
+    <br>
+    {{ vorstellung?.anfangszeit | date : 'dd.MM.' }}
+  </div>
+  <div class="vorstellungsinfo">
+    {{ vorstellung?.anfangszeit | date : 'HH:mm' }}
+    {{ vorstellung?.saal }}
+  </div>
+  <div class="filmname">
+    {{ vorstellung?.filmname }}
+  </div>
+</div>

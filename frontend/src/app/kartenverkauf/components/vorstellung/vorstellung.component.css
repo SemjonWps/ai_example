@@ -1,0 +1,29 @@
+.vorstellungcontainer {
+  display: flex;
+  align-items: center;
+}
+
+.vorstellungsinfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border: 2px solid grey;
+  border-radius: 8px;
+  background-color: lightgrey;
+  margin: 5px;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+}
+
+.filmname {
+  margin-left: 5px;
+  font-size: x-large;
+}
+
+h2 {
+  margin-left: 5px;
+}
+
+

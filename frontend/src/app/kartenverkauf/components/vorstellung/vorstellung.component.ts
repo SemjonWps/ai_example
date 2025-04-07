@@ -1,0 +1,18 @@
+import {Component, Input} from '@angular/core';
+import {Vorstellung} from '../../dtos/kartenverkauf';
+import {DatePipe} from '@angular/common';
+
+@Component({
+  selector: 'app-vorstellung',
+  imports: [
+    DatePipe
+  ],
+  templateUrl: './vorstellung.component.html',
+  styleUrl: './vorstellung.component.css'
+})
+export class VorstellungComponent {
+
+  @Input()
+  vorstellung: Vorstellung | undefined;
+
+}
