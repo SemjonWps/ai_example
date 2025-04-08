@@ -16,7 +16,5 @@ export class PlatzanzahlComponent {
   platzanzahlControl!: FormControl<number | null>;
 
   uebermittlePlatzanzahl() {
-    console.log(this.platzanzahlControl.valid);
-    console.log(this.platzanzahlControl)
   }
 }

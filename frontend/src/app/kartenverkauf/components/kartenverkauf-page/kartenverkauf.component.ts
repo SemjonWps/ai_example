@@ -17,7 +17,7 @@ import {FormControl, Validators} from '@angular/forms';
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: Vorstellung | undefined;
-  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null, [Validators.requiredTrue, Validators.min(1)]);
+  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null, [Validators.required, Validators.min(1)]);
 
   ngOnInit(): void {
     this.vorstellung = {
