@@ -19,7 +19,7 @@ public class KartenverkaufController {
     @GetMapping()
     public Angebot holeAngebot(@RequestParam int platzanzahl, @RequestParam String vorstellungUuid) {
         Saalplan saalplan = saalplanStapel.holeSaalplan(UUID.fromString(vorstellungUuid));
-
+        return null;
 
     }
 }
