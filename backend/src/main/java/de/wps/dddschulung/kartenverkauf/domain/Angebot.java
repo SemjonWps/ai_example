@@ -1,15 +1,15 @@
 package de.wps.dddschulung.kartenverkauf.domain;
 
-import de.wps.dddschulung.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
-import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-import java.util.List;
-
+@AllArgsConstructor
+@Getter
 public class Angebot {
     private Geldbetrag gesamtpreis;
-    private SitzplatzStatus[][] saalplanBestuhlung;
+    private Platzbelegungen platzbelegungen;
     private Reihe reihe;
-    private List<Sitz> zusammenhaengendePlaetze;
+    private ZusammenhaengendePlaetze zusammenhaengendePlaetze;
 }
