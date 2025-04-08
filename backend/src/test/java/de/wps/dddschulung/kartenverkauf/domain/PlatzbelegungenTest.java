@@ -93,4 +93,24 @@ class PlatzbelegungenTest {
         assertThat(platzbelegungen.getPlatzbelegungen()[1][1]).isEqualTo(SitzplatzStatus.ANGEBOTEN);
         assertThat(platzbelegungen.getPlatzbelegungen()[1][2]).isEqualTo(SitzplatzStatus.ANGEBOTEN);
     }
+
+    @Test
+    public void markiereAlsAngeboten_leererInput_keinePlaetzeWerdenMarkiert() {
+        // arrange
+        Platzbelegungen platzbelegungen = new Platzbelegungen(erstellePlatzbelegungenMap());
+        List<Platz> zusammenhaengendePlaetzeListe = new ArrayList<>();
+        ZusammenhaengendePlaetze zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(zusammenhaengendePlaetzeListe);
+
+        // act
+        platzbelegungen.markiereAlsAngeboten(zusammenhaengendePlaetze);
+
+        // assert
+        assertThat(platzbelegungen.getPlatzbelegungen()[0][0]).isEqualTo(SitzplatzStatus.FREI);
+        assertThat(platzbelegungen.getPlatzbelegungen()[0][1]).isEqualTo(SitzplatzStatus.BELEGT);
+        assertThat(platzbelegungen.getPlatzbelegungen()[0][2]).isEqualTo(SitzplatzStatus.FREI);
+        assertThat(platzbelegungen.getPlatzbelegungen()[1][0]).isEqualTo(SitzplatzStatus.BELEGT);
+        assertThat(platzbelegungen.getPlatzbelegungen()[1][1]).isEqualTo(SitzplatzStatus.FREI);
+        assertThat(platzbelegungen.getPlatzbelegungen()[1][2]).isEqualTo(SitzplatzStatus.FREI);
+    }
+
 }
