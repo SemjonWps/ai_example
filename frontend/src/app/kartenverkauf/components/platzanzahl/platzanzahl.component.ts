@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import {isPresent} from '../../../common/utils';
 
 @Component({
   selector: 'app-platzanzahl',
@@ -12,9 +13,14 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 })
 export class PlatzanzahlComponent {
 
-  @Input({required: true})
-  platzanzahlControl!: FormControl<number | null>;
+  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null, [Validators.required, Validators.min(1)]);
+
+  @Output() onPlatzanzahlButtonClick: EventEmitter<number> = new EventEmitter();
 
   uebermittlePlatzanzahl() {
+    if (!isPresent(this.platzanzahlControl.value)) {
+      return;
+    }
+    this.onPlatzanzahlButtonClick.emit(this.platzanzahlControl.value);
   }
 }

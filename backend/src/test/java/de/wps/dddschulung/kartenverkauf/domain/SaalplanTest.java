@@ -2,7 +2,6 @@ package de.wps.dddschulung.kartenverkauf.domain;
 
 import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
-import de.wps.dddschulung.kartenverkauf.domain.entities.Vorstellung;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
@@ -18,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 public class SaalplanTest {
 
-    private Vorstellung vorstellung;
     private final UUID vorstellungUUID = UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74");
     private final List<Platz> platzListe = new ArrayList<>();
     private final long saalplanId = 1L;

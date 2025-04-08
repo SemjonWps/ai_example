@@ -21,4 +21,5 @@ public class VorstellungEntity {
     private LocalDateTime anfangszeit;
     private String saal;
     private String filmname;
+    private int eintrittspreis;
 }

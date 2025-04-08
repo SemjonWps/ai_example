@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Vorstellung} from '../../dtos/kartenverkauf';
+import {VorstellungDto} from '../../dtos/kartenverkauf';
 import {DatePipe} from '@angular/common';
 
 @Component({
@@ -14,6 +14,6 @@ import {DatePipe} from '@angular/common';
 export class VorstellungComponent {
 
   @Input()
-  vorstellung: Vorstellung | undefined;
+  vorstellung: VorstellungDto | undefined;
 
 }
