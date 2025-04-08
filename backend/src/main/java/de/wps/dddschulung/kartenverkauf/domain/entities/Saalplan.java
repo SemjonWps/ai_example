@@ -69,14 +69,12 @@ public class Saalplan {
     }
 
     /**
-     * Berechnet die Platzbelegung unter Berücksichtigung der angefragten zusammenhängenden Plätze. <br>
+     * Berechnet die Platzbelegungen unter Berücksichtigung der angefragten zusammenhängenden Plätze. <br>
      * requirements: <br>
      * - Zusammenhängende Plätze dürfen nicht belegt sein. <br>
-     * - Saalplan muss mindestens einen Platz enthalten.
      *
      * @param zusammenhaengendePlaetze Die angefragten Plätze
-     * @return Platzbelegung
-     * @throws IllegalStateException    Wenn Saalplan keine Plätze enthält
+     * @return Platzbelegungen
      * @throws IllegalArgumentException Wenn zusammenhaendePlaetze belegte Plätze enthält
      */
     public Platzbelegungen holePlatzbelegungen(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
