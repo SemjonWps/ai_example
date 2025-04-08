@@ -1,7 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.domain.entities;
 
+import de.wps.dddschulung.kartenverkauf.domain.Platzbelegungen;
 import de.wps.dddschulung.kartenverkauf.domain.ZusammenhaengendePlaetze;
-import de.wps.dddschulung.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import lombok.Getter;
@@ -79,28 +79,13 @@ public class Saalplan {
      * @throws IllegalStateException    Wenn Saalplan keine Plätze enthält
      * @throws IllegalArgumentException Wenn zusammenhaendePlaetze belegte Plätze enthält
      */
-    public SitzplatzStatus[][] holePlatzbelegungen(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
+    public Platzbelegungen holePlatzbelegungen(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         if (zusammenhaengendePlaetze.plaetze().stream().anyMatch(Platz::istBelegt)) {
             throw new IllegalArgumentException("Nicht alle zusammenhängenden Plätze sind frei.");
         }
-        List<Platz> plaetzeInReihe = plaetze.values().stream().findFirst().orElseThrow(() -> new IllegalStateException("Keine Plätze in Saalplan vorhanden."));
-        int reihenzahl = plaetze.size();
-        int plaetzeProReihe = plaetzeInReihe.size();
-        SitzplatzStatus[][] platzbelegungen = new SitzplatzStatus[reihenzahl][plaetzeProReihe];
 
-        plaetze.forEach((reihe, plaetzeListe) -> {
-            plaetzeListe.forEach(platz -> {
-                int reihennummer = platz.getReihe().reihennummer();
-                int platznummer = platz.getSitz().platznummer();
-                platzbelegungen[reihennummer][platznummer] = platz.istBelegt() ? SitzplatzStatus.BELEGT : SitzplatzStatus.FREI;
-            });
-        });
-
-        zusammenhaengendePlaetze.plaetze().forEach(platz -> {
-            int reihennummer = platz.getReihe().reihennummer();
-            int platznummer = platz.getSitz().platznummer();
-            platzbelegungen[reihennummer][platznummer] = SitzplatzStatus.ANGEBOTEN;
-        });
+        Platzbelegungen platzbelegungen = new Platzbelegungen(plaetze);
+        platzbelegungen.markiereAlsAngeboten(zusammenhaengendePlaetze);
 
         return platzbelegungen;
     }
