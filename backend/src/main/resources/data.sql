@@ -80,8 +80,8 @@ VALUES ('2025-03-17 15:30:00', 2, 450, 2),
 
 
 INSERT INTO kartenverkauf.vorstellungen
-    (uuid, anfangszeit, saal, filmname)
-VALUES ('95b21a30-64bf-4df1-a0a2-e769bd7c5ea1', '2025-03-17 15:30:00', 'Großer Saal', 'Back to the Futura');
+    (uuid, anfangszeit, saal, filmname, eintrittspreis)
+VALUES ('95b21a30-64bf-4df1-a0a2-e769bd7c5ea1', '2025-03-17 15:30:00', 'Großer Saal', 'Back to the Futura', 750);
 
 INSERT INTO kartenverkauf.saalplaene
     (vorstellungUUID)

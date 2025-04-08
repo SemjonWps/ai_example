@@ -10,10 +10,12 @@ import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reihe;
 import de.wps.dddschulung.kartenverkauf.persistence.repositories.VorstellungRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 @AllArgsConstructor
 public class AngebotService {
     private final SaalplanStapel saalplanStapel;

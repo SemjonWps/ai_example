@@ -1,12 +1,9 @@
 package de.wps.dddschulung.kartenverkauf.api;
 
 import de.wps.dddschulung.kartenverkauf.domain.Angebot;
-import de.wps.dddschulung.kartenverkauf.domain.entities.Saalplan;
-import de.wps.dddschulung.kartenverkauf.domain.repositories.SaalplanStapel;
+import de.wps.dddschulung.kartenverkauf.services.AngebotService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/kartenverkauf")
@@ -14,12 +11,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KartenverkaufController {
 
-    private final SaalplanStapel saalplanStapel;
+    private final AngebotService angebotService;
 
     @GetMapping()
     public Angebot holeAngebot(@RequestParam int platzanzahl, @RequestParam String vorstellungUuid) {
-        Saalplan saalplan = saalplanStapel.holeSaalplan(UUID.fromString(vorstellungUuid));
-        return null;
-
+        return angebotService.holeAngebot(platzanzahl, vorstellungUuid);
     }
 }
