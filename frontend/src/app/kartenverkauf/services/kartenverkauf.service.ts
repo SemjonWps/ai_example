@@ -14,7 +14,7 @@ export class KartenverkaufService {
 
   }
 
-  public holeZusammenhaengendePlaetze(anzahl: number, vorstellungUuid: string): Observable<AngebotDto> {
-    return this.http.get<any>(this.kartenverkaufUrl, {params: {anzahl, vorstellungUuid}})
+  public holeZusammenhaengendePlaetze(platzanzahl: number, vorstellungUuid: string): Observable<AngebotDto> {
+    return this.http.get<AngebotDto>(this.kartenverkaufUrl, {params: {platzanzahl, vorstellungUuid}})
   }
 }

@@ -15,6 +15,7 @@ public class KartenverkaufController {
 
     @GetMapping()
     public Angebot holeAngebot(@RequestParam int platzanzahl, @RequestParam String vorstellungUuid) {
+        System.out.println("------------");
         return angebotService.holeAngebot(platzanzahl, vorstellungUuid);
     }
 }

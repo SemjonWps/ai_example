@@ -27,7 +27,7 @@ export class KartenverkaufComponent implements OnInit {
       anfangszeit: '2025-04-01 20:00:00',
       saal: 'Großer Saal',
       filmname: 'Back to the Futura',
-      uuid: 'a095c8f6-6fa2-4f2e-acf1-52cee0698e74',
+      uuid: '95b21a30-64bf-4df1-a0a2-e769bd7c5ea1',
     }
   }
 
@@ -35,6 +35,10 @@ export class KartenverkaufComponent implements OnInit {
     if (!isPresent(this.vorstellung)) {
       return;
     }
-    this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid)
+    this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid).subscribe(
+      data => {
+        console.log(data)
+      }
+    )
   }
 }
