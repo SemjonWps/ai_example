@@ -5,6 +5,6 @@ import de.wps.dddschulung.kartenverkauf.domain.entities.Platz;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface PlatzMapper {
+public interface PlatzDtoMapper {
     PlatzDto platzToPlatzDto(Platz platz);
 }

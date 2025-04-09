@@ -1,7 +1,7 @@
 package de.wps.dddschulung.kartenverkauf.services;
 
-import de.wps.dddschulung.kartenverkauf.api.mappers.PlatzMapper;
-import de.wps.dddschulung.kartenverkauf.api.mappers.PlatzMapperImpl;
+import de.wps.dddschulung.kartenverkauf.api.mappers.PlatzDtoMapper;
+import de.wps.dddschulung.kartenverkauf.api.mappers.PlatzDtoMapperImpl;
 import de.wps.dddschulung.kartenverkauf.api.model.PlatzDto;
 import de.wps.dddschulung.kartenverkauf.domain.Angebot;
 import de.wps.dddschulung.kartenverkauf.domain.Platzbelegungen;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class AngebotService {
     private final SaalplanStapel saalplanStapel;
     private final VorstellungRepository vorstellungRepository;
-    private final PlatzMapper platzMapper = new PlatzMapperImpl();
+    private final PlatzDtoMapper platzDtoMapper = new PlatzDtoMapperImpl();
 
     public Angebot holeAngebot(int platzanzahl, String vorstellungUuid) {
         UUID uuid = UUID.fromString(vorstellungUuid);
@@ -35,7 +35,7 @@ public class AngebotService {
             return new Angebot(new Geldbetrag(0), platzbelegungen, null);
         }
 
-        List<PlatzDto> platzDtos = plaetze.stream().map(platzMapper::platzToPlatzDto).toList();
+        List<PlatzDto> platzDtos = plaetze.stream().map(platzDtoMapper::platzToPlatzDto).toList();
         Geldbetrag gesamtbetrag = new Geldbetrag(this.vorstellungRepository.findEintrittspreisByUuid(uuid) * platzanzahl);
 
         return new Angebot(gesamtbetrag, platzbelegungen, platzDtos);
