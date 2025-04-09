@@ -1,5 +1,6 @@
 package de.wps.dddschulung.kartenverkauf.services;
 
+import de.wps.dddschulung.kartenverkauf.api.model.PlatzDto;
 import de.wps.dddschulung.kartenverkauf.domain.Angebot;
 import de.wps.dddschulung.kartenverkauf.domain.Platzbelegungen;
 import de.wps.dddschulung.kartenverkauf.domain.ZusammenhaengendePlaetze;
@@ -54,9 +55,8 @@ class AngebotServiceTest {
         // assert
         assertThat(angebot).isNotNull();
         assertThat(angebot.getPlatzbelegungen()).isEqualTo(platzbelegungen);
-        assertThat(angebot.getZusammenhaengendePlaetze()).isEqualTo(null);
+        assertThat(angebot.getPlatzDtos()).isEqualTo(null);
         assertThat(angebot.getGesamtpreis()).isEqualTo(new Geldbetrag(0));
-        assertThat(angebot.getReihe()).isEqualTo(null);
     }
 
     @Test
@@ -78,8 +78,7 @@ class AngebotServiceTest {
         // assert
         assertThat(angebot).isNotNull();
         assertThat(angebot.getPlatzbelegungen()).isEqualTo(platzbelegungen);
-        assertThat(angebot.getZusammenhaengendePlaetze()).isEqualTo(zusammenhaengendePlaetze);
+        assertThat(angebot.getPlatzDtos()).containsExactly(new PlatzDto(new Reihe(1), new Sitz(11)), new PlatzDto(new Reihe(1), new Sitz(12)));
         assertThat(angebot.getGesamtpreis()).isEqualTo(new Geldbetrag(1500));
-        assertThat(angebot.getReihe()).isEqualTo(reihe);
     }
 }
