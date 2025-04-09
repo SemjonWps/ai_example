@@ -6,9 +6,17 @@ export interface VorstellungDto {
 }
 
 export interface AngebotDto {
-  preis: number
+  gesamtpreis: Geldbetrag
   zusammenhaengendePlaetze: angebotenerPlatzDto[]
-  saalplan: sitzplatzStatus[][]
+  platzbelegungen: Platzbelegungen
+}
+
+export interface Platzbelegungen {
+  platzbelegungen: sitzplatzStatus[][]
+}
+
+export interface Geldbetrag {
+  betragInEuroCent: number
 }
 
 export interface angebotenerPlatzDto {

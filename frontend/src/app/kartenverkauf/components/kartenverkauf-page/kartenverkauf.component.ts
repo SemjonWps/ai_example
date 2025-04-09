@@ -1,15 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
-import {VorstellungDto} from '../../dtos/kartenverkauf';
+import {AngebotDto, VorstellungDto} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
 import {KartenverkaufService} from '../../services/kartenverkauf.service';
 import {isPresent} from '../../../common/utils';
+import {SaalplanComponent} from '../saalplan/saalplan.component';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-kartenverkauf',
   imports: [
     VorstellungComponent,
-    PlatzanzahlComponent
+    PlatzanzahlComponent,
+    SaalplanComponent,
+    NgIf
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css',
@@ -18,6 +22,8 @@ import {isPresent} from '../../../common/utils';
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: VorstellungDto | undefined;
+  zeigeKomponente = false;
+  angebot: AngebotDto | undefined;
 
   constructor(private kartenverkaufService: KartenverkaufService) {
   }
@@ -38,6 +44,8 @@ export class KartenverkaufComponent implements OnInit {
     this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid).subscribe(
       data => {
         console.log(data)
+        this.angebot = data;
+        this.zeigeKomponente = true;
       }
     )
   }
