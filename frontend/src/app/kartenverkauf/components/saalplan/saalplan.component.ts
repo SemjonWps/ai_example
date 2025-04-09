@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AngebotDto} from '../../dtos/kartenverkauf';
+import {Platzbelegungen} from '../../dtos/kartenverkauf';
 
 @Component({
   selector: 'app-saalplan',
@@ -10,6 +10,6 @@ import {AngebotDto} from '../../dtos/kartenverkauf';
 export class SaalplanComponent {
 
   @Input()
-  angebot: AngebotDto | undefined;
+  platzbelegungen: Platzbelegungen | undefined;
 
 }

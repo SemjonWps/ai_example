@@ -22,7 +22,7 @@ import {NgIf} from '@angular/common';
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: VorstellungDto | undefined;
-  zeigeKomponente = false;
+  zeigeSaalplanKomponente = false;
   angebot: AngebotDto | undefined;
 
   constructor(private kartenverkaufService: KartenverkaufService) {
@@ -45,7 +45,7 @@ export class KartenverkaufComponent implements OnInit {
       data => {
         console.log(data)
         this.angebot = data;
-        this.zeigeKomponente = true;
+        this.zeigeSaalplanKomponente = true;
       }
     )
   }

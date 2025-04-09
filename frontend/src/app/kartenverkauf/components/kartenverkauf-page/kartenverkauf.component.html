@@ -1,3 +1,3 @@
 <app-vorstellung [vorstellung]="vorstellung"></app-vorstellung>
 <app-platzanzahl (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"></app-platzanzahl>
-<app-saalplan [angebot]="angebot" *ngIf="zeigeKomponente"></app-saalplan>
+<app-saalplan [platzbelegungen]="angebot?.platzbelegungen" *ngIf="zeigeSaalplanKomponente"></app-saalplan>
