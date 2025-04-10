@@ -47,12 +47,11 @@ export class SaalplanComponent {
   }
 
   getFarbeFuerPlatzbelegung(sitzplatzStatus: SitzplatzStatus): String {
-    console.log(sitzplatzStatus)
     switch (sitzplatzStatus) {
       case 'FREI':
         return 'white';
       case 'BELEGT':
-        return 'gray';
+        return 'lightgray';
       case 'ANGEBOTEN':
         return 'lightgreen';
       default:
