@@ -60,7 +60,7 @@ class SaalplanMapperTest {
         assertThat(mappedPlatz.getReihe()).isEqualTo(reihe);
         assertThat(mappedPlatz.getSitz()).isEqualTo(sitz);
         assertThat(mappedPlatz.getId()).isEqualTo(platzId);
-        assertThat(mappedPlatz.istVerkauft()).isEqualTo(istVerkauft);
+        assertThat(mappedPlatz.isIstVerkauft()).isEqualTo(istVerkauft);
         assertThat(mappedPlatz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
         assertThat(saalplan.getVorstellungUUID()).isEqualTo(vorstellungUUID);
     }

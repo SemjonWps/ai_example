@@ -5,7 +5,6 @@ import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.experimental.Accessors;
 
 @Getter
 @AllArgsConstructor
@@ -13,8 +12,6 @@ public class Platz {
     private Long id;
     private Sitz sitz;
     private Reihe reihe;
-    @Getter
-    @Accessors(fluent = true)
     private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;
     private Long saalplan_id;

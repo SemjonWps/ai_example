@@ -150,11 +150,11 @@ public class SaalplanTest {
         saalplan.markiereAlsVerkauft(reservierungsnummer);
 
         // assert
-        assertThat(platz1.istVerkauft()).isTrue();
-        assertThat(platz2.istVerkauft()).isTrue();
-        assertThat(platz3.istVerkauft()).isFalse();
-        assertThat(platz4.istVerkauft()).isFalse();
-        assertThat(platz5.istVerkauft()).isFalse();
+        assertThat(platz1.isIstVerkauft()).isTrue();
+        assertThat(platz2.isIstVerkauft()).isTrue();
+        assertThat(platz3.isIstVerkauft()).isFalse();
+        assertThat(platz4.isIstVerkauft()).isFalse();
+        assertThat(platz5.isIstVerkauft()).isFalse();
     }
 
     @Test

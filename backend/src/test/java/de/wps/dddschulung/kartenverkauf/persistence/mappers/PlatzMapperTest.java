@@ -6,12 +6,9 @@ import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.dddschulung.kartenverkauf.domain.valueobjects.Sitz;
 import de.wps.dddschulung.kartenverkauf.persistence.model.PlatzEntity;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 class PlatzMapperTest {
 
     PlatzMapper platzMapper = new PlatzMapperImpl();
@@ -20,7 +17,7 @@ class PlatzMapperTest {
     long saalplanId = 2L;
     Sitz sitz = new Sitz(42);
     Reihe reihe = new Reihe(23);
-    boolean istVerkauft = false;
+    boolean istVerkauft = true;
     Reservierungsnummer reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
 
     @Test
@@ -35,7 +32,7 @@ class PlatzMapperTest {
         assertThat(platz.getSitz()).isEqualTo(sitz);
         assertThat(platz.getId()).isEqualTo(id);
         assertThat(platz.getReihe()).isEqualTo(reihe);
-        assertThat(platz.istVerkauft()).isEqualTo(istVerkauft);
+        assertThat(platz.isIstVerkauft()).isEqualTo(istVerkauft);
         assertThat(platz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
         assertThat(platz.getSaalplan_id()).isEqualTo(saalplanId);
     }
@@ -53,7 +50,7 @@ class PlatzMapperTest {
         assertThat(platzEntity.getId()).isEqualTo(id);
         assertThat(platzEntity.getPlatznummer()).isEqualTo(sitz.platznummer());
         assertThat(platzEntity.getReihennummer()).isEqualTo(reihe.reihennummer());
-        assertThat(platzEntity.istVerkauft()).isEqualTo(istVerkauft);
+        assertThat(platzEntity.isIstVerkauft()).isEqualTo(istVerkauft);
         assertThat(platzEntity.getReservierungsnummer()).isEqualTo(reservierungsnummer.reservierungsnummer());
         assertThat(platzEntity.getSaalplan_id()).isEqualTo(saalplanId);
     }

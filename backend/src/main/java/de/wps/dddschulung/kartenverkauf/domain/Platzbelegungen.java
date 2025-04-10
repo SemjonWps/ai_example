@@ -14,8 +14,8 @@ public class Platzbelegungen {
 
     public Platzbelegungen(Map<Reihe, List<Platz>> plaetze) {
         List<Platz> plaetzeInReihe = plaetze.values().stream().findFirst().orElseThrow(() -> new IllegalArgumentException("Keine Plätze in Saalplan vorhanden."));
-        int reihenzahl = plaetze.size();
         int plaetzeProReihe = plaetzeInReihe.size();
+        int reihenzahl = plaetze.size();
         platzbelegungen = new SitzplatzStatus[reihenzahl][plaetzeProReihe];
 
         plaetze.forEach((reihe, plaetzeListe) -> {
