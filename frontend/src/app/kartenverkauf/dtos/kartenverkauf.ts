@@ -7,7 +7,7 @@ export interface VorstellungDto {
 
 export interface AngebotDto {
   gesamtpreis: Geldbetrag
-  zusammenhaengendePlaetze: AngebotenerPlatzDto[]
+  platzDtos: AngebotenerPlatzDto[]
   platzbelegungen: Platzbelegungen
 }
 

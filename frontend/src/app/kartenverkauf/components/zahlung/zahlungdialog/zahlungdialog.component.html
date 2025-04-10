@@ -1,7 +1,22 @@
-<div class="zahlungDialogContainer" (click)="closeModal()">
-  <div class="zahlungDialog" (click)="$event.stopPropagation()">
-    <h2>Zahlung</h2>
-    <p>This is the content of the modal. It can include text, images, forms, or any other Angular component.</p>
-    <button (click)="closeModal()">Close</button>
+<div class="zahlungDialogModal" (click)="schliesseDialog()">
+  <div class="zahlungDialog">
+    <h1>Zahlung</h1>
+    <div class="flex-container">
+      <div>
+        <img src="assets/bezahlung.jpg"/>
+      </div>
+      <div id="vorstellungInfos">
+        {{ vorstellung?.filmname }}
+        <br>
+        {{ vorstellung?.anfangszeit | date : 'dd.MM.YYYY' }}
+        <br>
+        {{ vorstellung?.anfangszeit | date : 'HH:mm' }} Uhr
+        <br>
+        {{ vorstellung?.saal }}
+        <br>
+        {{ angebot?.platzDtos?.length }} Plätze
+      </div>
+    </div>
+    <button (click)="schliesseDialog()">Jetzt bezahlen</button>
   </div>
 </div>

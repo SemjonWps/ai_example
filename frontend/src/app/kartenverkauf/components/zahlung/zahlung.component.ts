@@ -13,10 +13,10 @@ export class ZahlungComponent {
   gesamtpreis!: Geldbetrag;
 
   @Output()
-  weiterMitZahlung = new EventEmitter();
+  oeffneZahlungDialog = new EventEmitter();
 
-  oeffneZahlungDialog() {
-    this.weiterMitZahlung.emit();
+  weiterMitZahlung() {
+    this.oeffneZahlungDialog.emit();
   }
 
 

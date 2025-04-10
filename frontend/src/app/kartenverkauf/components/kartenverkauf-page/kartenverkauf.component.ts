@@ -58,7 +58,10 @@ export class KartenverkaufComponent implements OnInit {
   }
 
   oeffneZahlungDialog() {
-    console.log("......")
     this.zeigeZahlungDialogKomponente = true;
+  }
+
+  schliesseZahlungDialog() {
+    this.zeigeZahlungDialogKomponente = false;
   }
 }
