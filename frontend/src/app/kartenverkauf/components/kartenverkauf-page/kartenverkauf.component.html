@@ -1,3 +1,6 @@
 <app-vorstellung [vorstellung]="vorstellung"></app-vorstellung>
 <app-platzanzahl (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"></app-platzanzahl>
 <app-saalplan [platzbelegungen]="angebot?.platzbelegungen" *ngIf="zeigeSaalplanKomponente"></app-saalplan>
+<app-zahlung [gesamtpreis]="angebot!.gesamtpreis" *ngIf="zeigeZahlungKomponente"
+             (weiterMitZahlung)="oeffneZahlungDialog()"></app-zahlung>
+<app-zahlungdialog *ngIf="zeigeZahlungDialogKomponente"></app-zahlungdialog>

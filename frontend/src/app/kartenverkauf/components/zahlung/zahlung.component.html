@@ -1,0 +1,12 @@
+<h2>Zahlung</h2>
+<div class="zahlungscontainer">
+  <div id="gesamtpreis">
+    {{ gesamtpreis.betragInEuroCent / 100 }} Euro
+  </div>
+  <div>
+    <button id="zahlungsbutton"
+            (click)="oeffneZahlungDialog()">
+      Weiter zur Zahlung
+    </button>
+  </div>
+</div>

@@ -6,6 +6,8 @@ import {KartenverkaufService} from '../../services/kartenverkauf.service';
 import {isPresent} from '../../../common/utils';
 import {SaalplanComponent} from '../saalplan/saalplan.component';
 import {NgIf} from '@angular/common';
+import {ZahlungComponent} from '../zahlung/zahlung.component';
+import {ZahlungdialogComponent} from '../zahlung/zahlungdialog/zahlungdialog.component';
 
 @Component({
   selector: 'app-kartenverkauf',
@@ -13,7 +15,9 @@ import {NgIf} from '@angular/common';
     VorstellungComponent,
     PlatzanzahlComponent,
     SaalplanComponent,
-    NgIf
+    NgIf,
+    ZahlungComponent,
+    ZahlungdialogComponent
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css',
@@ -22,8 +26,10 @@ import {NgIf} from '@angular/common';
 export class KartenverkaufComponent implements OnInit {
 
   vorstellung: VorstellungDto | undefined;
-  zeigeSaalplanKomponente = false;
   angebot: AngebotDto | undefined;
+  zeigeSaalplanKomponente = false;
+  zeigeZahlungKomponente = false;
+  zeigeZahlungDialogKomponente = false;
 
   constructor(private kartenverkaufService: KartenverkaufService) {
   }
@@ -45,8 +51,14 @@ export class KartenverkaufComponent implements OnInit {
       data => {
         console.log(data)
         this.angebot = data;
-        this.zeigeSaalplanKomponente = true;
+        this.zeigeSaalplanKomponente = this.angebot.platzbelegungen.platzbelegungen !== undefined;
+        this.zeigeZahlungKomponente = this.angebot.gesamtpreis !== undefined;
       }
     )
+  }
+
+  oeffneZahlungDialog() {
+    console.log("......")
+    this.zeigeZahlungDialogKomponente = true;
   }
 }
