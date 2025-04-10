@@ -36,6 +36,8 @@ public class Saalplan {
                     if (result.size() == anzahlPlaetze) {
                         return new ZusammenhaengendePlaetze(result);
                     }
+                } else {
+                    result.clear();
                 }
             }
             result.clear();
