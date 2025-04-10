@@ -1,5 +1,10 @@
 #saalplan {
-  width: 800px;
-  height: 600px;
-  border: 1px solid black;
+  border: 1px solid gray;
+}
+
+#kinoleinwand {
+  stroke-width: 1px;
+  stroke: gray;
+  fill: none;
+  height: 15px;
 }

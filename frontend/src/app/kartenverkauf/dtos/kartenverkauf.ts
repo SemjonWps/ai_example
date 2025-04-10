@@ -7,27 +7,27 @@ export interface VorstellungDto {
 
 export interface AngebotDto {
   gesamtpreis: Geldbetrag
-  zusammenhaengendePlaetze: angebotenerPlatzDto[]
+  zusammenhaengendePlaetze: AngebotenerPlatzDto[]
   platzbelegungen: Platzbelegungen
 }
 
 export interface Platzbelegungen {
-  platzbelegungen: sitzplatzStatus[][]
+  platzbelegungen: SitzplatzStatus[][]
 }
 
 export interface Geldbetrag {
   betragInEuroCent: number
 }
 
-export interface angebotenerPlatzDto {
+export interface AngebotenerPlatzDto {
   reihennummer: number
   platznummer: number
 }
 
-export enum sitzplatzStatus {
-  BELEGT,
-  FREI,
-  ANGEBOTEN,
+export enum SitzplatzStatus {
+  BELEGT = 'BELEGT',
+  FREI = 'FREI',
+  ANGEBOTEN = 'ANGEBOTEN',
 }
 
 
