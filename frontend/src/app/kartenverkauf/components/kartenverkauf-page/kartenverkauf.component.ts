@@ -8,6 +8,7 @@ import {SaalplanComponent} from '../saalplan/saalplan.component';
 import {NgIf} from '@angular/common';
 import {ZahlungComponent} from '../zahlung/zahlung.component';
 import {ZahlungdialogComponent} from '../zahlung/zahlungdialog/zahlungdialog.component';
+import {KinokarteComponent} from '../kinokarte/kinokarte.component';
 
 @Component({
   selector: 'app-kartenverkauf',
@@ -17,7 +18,8 @@ import {ZahlungdialogComponent} from '../zahlung/zahlungdialog/zahlungdialog.com
     SaalplanComponent,
     NgIf,
     ZahlungComponent,
-    ZahlungdialogComponent
+    ZahlungdialogComponent,
+    KinokarteComponent
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css',
@@ -27,9 +29,10 @@ export class KartenverkaufComponent implements OnInit {
 
   vorstellung: VorstellungDto | undefined;
   angebot: AngebotDto | undefined;
-  zeigeSaalplanKomponente = false;
-  zeigeZahlungKomponente = false;
-  zeigeZahlungDialogKomponente = false;
+  zeigeSaalplanKomponente: boolean = false;
+  zeigeZahlungKomponente: boolean = false;
+  zeigeZahlungDialogKomponente: boolean = false;
+  zeigeKinokarteKomponente: boolean = false;
 
   constructor(private kartenverkaufService: KartenverkaufService) {
   }
@@ -49,7 +52,6 @@ export class KartenverkaufComponent implements OnInit {
     }
     this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid).subscribe(
       data => {
-        console.log(data)
         this.angebot = data;
         this.zeigeSaalplanKomponente = this.angebot.platzbelegungen.platzbelegungen !== undefined;
         this.zeigeZahlungKomponente = this.angebot.gesamtpreis !== undefined;
@@ -63,5 +65,6 @@ export class KartenverkaufComponent implements OnInit {
 
   schliesseZahlungDialog() {
     this.zeigeZahlungDialogKomponente = false;
+    this.zeigeKinokarteKomponente = true;
   }
 }

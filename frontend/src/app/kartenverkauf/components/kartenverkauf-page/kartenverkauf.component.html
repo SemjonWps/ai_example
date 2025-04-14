@@ -1,14 +1,26 @@
-<app-vorstellung [vorstellung]="vorstellung"></app-vorstellung>
-<app-platzanzahl (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"></app-platzanzahl>
-<app-saalplan [platzbelegungen]="angebot?.platzbelegungen"
-              *ngIf="zeigeSaalplanKomponente"
-></app-saalplan>
-<app-zahlung [gesamtpreis]="angebot!.gesamtpreis"
-             *ngIf="zeigeZahlungKomponente"
-             (oeffneZahlungDialog)="oeffneZahlungDialog()"
-></app-zahlung>
-<app-zahlungdialog [angebot]="angebot"
-                   [vorstellung]="vorstellung"
-                   *ngIf="zeigeZahlungDialogKomponente"
-                   (schliesse)="schliesseZahlungDialog()"
-></app-zahlungdialog>
+<app-vorstellung
+  [vorstellung]="vorstellung"
+/>
+<app-platzanzahl
+  (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"
+/>
+<app-saalplan
+  [platzbelegungen]="angebot?.platzbelegungen"
+  *ngIf="zeigeSaalplanKomponente"
+/>
+<app-zahlung
+  [gesamtpreis]="angebot!.gesamtpreis"
+  *ngIf="zeigeZahlungKomponente"
+  (oeffneZahlungDialog)="oeffneZahlungDialog()"
+/>
+<app-zahlungdialog
+  [angebot]="angebot"
+  [vorstellung]="vorstellung"
+  *ngIf="zeigeZahlungDialogKomponente"
+  (schliesse)="schliesseZahlungDialog()"
+/>
+<app-kinokarte
+  [angebot]="angebot"
+  [vorstellung]="vorstellung"
+  *ngIf="zeigeKinokarteKomponente"
+/>

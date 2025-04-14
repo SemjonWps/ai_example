@@ -1,0 +1,18 @@
+<h2>Kinokarte</h2>
+<div class="kinokarte">
+  <div>
+    {{ vorstellung?.anfangszeit | date : 'dd.MM.YYYY HH:mm' }} Uhr
+    <br>
+    {{ vorstellung?.saal }}
+    <br>
+    {{ vorstellung?.filmname }}
+    <br>
+    {{ plaetze }}
+    <br>
+    <br>
+    {{ angebot?.platzDtos?.length }} Plätze
+    <br>
+    {{ preisInEuro }} Euro
+  </div>
+  <div></div>
+</div>

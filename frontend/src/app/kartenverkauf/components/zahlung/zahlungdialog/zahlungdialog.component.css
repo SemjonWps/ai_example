@@ -10,23 +10,25 @@
 }
 
 .zahlungDialog {
-  background-color: white;
   padding: 50px 70px 70px 70px;
   border-radius: 10px;
   text-align: center;
   max-width: 900px;
   width: 100%;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: #f5f3f2;
 }
 
 .flex-container {
   display: flex;
   margin-top: 55px;
   margin-bottom: 45px;
+  justify-content: center;
+  align-items: center;
 }
 
 img {
-  width: 600px;
+  width: 300px;
   object-fit: cover;
   margin-right: 65px;
 }

@@ -20,8 +20,8 @@ export interface Geldbetrag {
 }
 
 export interface AngebotenerPlatzDto {
-  reihennummer: number
-  platznummer: number
+  reihe: { reihennummer: number },
+  sitz: { platznummer: number }
 }
 
 export enum SitzplatzStatus {

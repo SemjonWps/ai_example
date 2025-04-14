@@ -1,0 +1,8 @@
+.kinokarte {
+  display: flex;
+  border: 1px solid grey;
+  width: fit-content;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+}
