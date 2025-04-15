@@ -51,7 +51,7 @@ export class KartenverkaufComponent implements OnInit {
       return;
     }
     this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid).subscribe(
-      data => {
+      (data: Angebot) => {
         this.angebot = data;
         this.zeigeSaalplanKomponente = this.angebot.platzbelegungen.platzbelegungen !== undefined;
         this.zeigeZahlungKomponente = this.angebot.gesamtpreis !== undefined;

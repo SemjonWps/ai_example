@@ -10,9 +10,9 @@
     {{ createPlaetzeString() }}
     <br>
     <br>
-    {{ angebot?.platzDtos?.length }} Plätze
+    {{ angebot.platzDtos.length }} Plätze
     <br>
-    {{ angebot!.gesamtpreis.betragInEuroCent | geldbetrag }}
+    {{ angebot.gesamtpreis.betragInEuroCent | geldbetrag }}
   </div>
   <img class="qr-code" src="assets/qr-code.png" alt="https://www.wps.de"/>
 </div>

@@ -15,18 +15,18 @@ import {isPresent} from '../../../common/utils';
 })
 export class KinokarteComponent {
 
-  @Input()
-  angebot: Angebot | undefined;
+  @Input({required: true})
+  angebot!: Angebot;
   @Input()
   vorstellung: Vorstellung | undefined;
 
 
   createPlaetzeString(): string {
-    if (isPresent(this.angebot?.platzDtos.at(0))) {
+    if (isPresent(this.angebot.platzDtos.at(0))) {
       return "Reihe " + this.angebot.platzDtos.at(0)!.reihe.reihennummer + ", Platz " + this.angebot.platzDtos
         .map(platz => platz.sitz.platznummer.toString())
         .reduce((previousValue: string, currentValue: string) => previousValue === "" ? currentValue : previousValue + ", " + currentValue)
     }
-    return "";
+    throw new Error("Angebot enthält keine Plätze");
   }
 }
