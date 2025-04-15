@@ -6,3 +6,8 @@
   justify-content: center;
   align-items: center;
 }
+
+.qr-code {
+  width: 180px;
+  margin-left: 50px;
+}

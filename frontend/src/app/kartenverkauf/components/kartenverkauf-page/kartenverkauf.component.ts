@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
-import {AngebotDto, VorstellungDto} from '../../dtos/kartenverkauf';
+import {Angebot, Vorstellung} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
 import {KartenverkaufService} from '../../services/kartenverkauf.service';
 import {isPresent} from '../../../common/utils';
@@ -27,8 +27,8 @@ import {KinokarteComponent} from '../kinokarte/kinokarte.component';
 })
 export class KartenverkaufComponent implements OnInit {
 
-  vorstellung: VorstellungDto | undefined;
-  angebot: AngebotDto | undefined;
+  vorstellung: Vorstellung | undefined;
+  angebot: Angebot | undefined;
   zeigeSaalplanKomponente: boolean = false;
   zeigeZahlungKomponente: boolean = false;
   zeigeZahlungDialogKomponente: boolean = false;

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {AngebotDto, VorstellungDto} from '../../../dtos/kartenverkauf';
+import {Angebot, Vorstellung} from '../../../dtos/kartenverkauf';
 import {DatePipe} from '@angular/common';
 
 @Component({
@@ -12,10 +12,10 @@ import {DatePipe} from '@angular/common';
 })
 export class ZahlungdialogComponent {
   @Input()
-  angebot: AngebotDto | undefined;
+  angebot: Angebot | undefined;
 
   @Input()
-  vorstellung: VorstellungDto | undefined;
+  vorstellung: Vorstellung | undefined;
 
   @Output() schliesse = new EventEmitter<void>();
 

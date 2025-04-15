@@ -1,13 +1,13 @@
-export interface VorstellungDto {
+export interface Vorstellung {
   uuid: string,
   anfangszeit: string,
   saal: string,
   filmname: string,
 }
 
-export interface AngebotDto {
+export interface Angebot {
   gesamtpreis: Geldbetrag,
-  platzDtos: AngebotenerPlatzDto[],
+  platzDtos: AngebotenerPlatz[],
   platzbelegungen: Platzbelegungen,
 }
 
@@ -19,7 +19,7 @@ export interface Geldbetrag {
   betragInEuroCent: number,
 }
 
-export interface AngebotenerPlatzDto {
+export interface AngebotenerPlatz {
   reihe: Reihe,
   sitz: Sitz,
 }

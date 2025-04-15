@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {AngebotDto, VorstellungDto} from '../../dtos/kartenverkauf';
+import {Angebot, Vorstellung} from '../../dtos/kartenverkauf';
 import {DatePipe} from '@angular/common';
 import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
 import {isPresent} from '../../../common/utils';
@@ -16,9 +16,9 @@ import {isPresent} from '../../../common/utils';
 export class KinokarteComponent {
 
   @Input()
-  angebot: AngebotDto | undefined;
+  angebot: Angebot | undefined;
   @Input()
-  vorstellung: VorstellungDto | undefined;
+  vorstellung: Vorstellung | undefined;
 
 
   createPlaetzeString(): string {
