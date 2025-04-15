@@ -18,8 +18,6 @@ export class ZahlungComponent {
   @Output()
   oeffneZahlungDialog = new EventEmitter();
 
-  preisInEuro: string = "";
-
   weiterMitZahlung() {
     this.oeffneZahlungDialog.emit();
   }
