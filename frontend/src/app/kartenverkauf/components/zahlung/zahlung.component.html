@@ -1,7 +1,7 @@
 <h2>Zahlung</h2>
 <div class="zahlungscontainer">
   <div id="gesamtpreis">
-    {{ gesamtpreis.betragInEuroCent / 100 }} Euro
+    {{ gesamtpreis.betragInEuroCent | geldbetrag }}
   </div>
   <div>
     <button id="zahlungsbutton"

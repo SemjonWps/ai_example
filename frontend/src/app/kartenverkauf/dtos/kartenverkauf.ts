@@ -1,27 +1,35 @@
 export interface VorstellungDto {
-  uuid: string
-  anfangszeit: string
-  saal: string
-  filmname: string
+  uuid: string,
+  anfangszeit: string,
+  saal: string,
+  filmname: string,
 }
 
 export interface AngebotDto {
-  gesamtpreis: Geldbetrag
-  platzDtos: AngebotenerPlatzDto[]
-  platzbelegungen: Platzbelegungen
+  gesamtpreis: Geldbetrag,
+  platzDtos: AngebotenerPlatzDto[],
+  platzbelegungen: Platzbelegungen,
 }
 
 export interface Platzbelegungen {
-  platzbelegungen: SitzplatzStatus[][]
+  platzbelegungen: SitzplatzStatus[][],
 }
 
 export interface Geldbetrag {
-  betragInEuroCent: number
+  betragInEuroCent: number,
 }
 
 export interface AngebotenerPlatzDto {
-  reihe: { reihennummer: number },
-  sitz: { platznummer: number }
+  reihe: Reihe,
+  sitz: Sitz,
+}
+
+export interface Reihe {
+  reihennummer: number,
+}
+
+export interface Sitz {
+  platznummer: number,
 }
 
 export enum SitzplatzStatus {

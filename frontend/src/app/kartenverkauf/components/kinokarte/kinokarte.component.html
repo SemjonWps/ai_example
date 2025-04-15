@@ -7,12 +7,12 @@
     <br>
     {{ vorstellung?.filmname }}
     <br>
-    {{ plaetze }}
+    {{ createPlaetzeString() }}
     <br>
     <br>
     {{ angebot?.platzDtos?.length }} Plätze
     <br>
-    {{ preisInEuro }} Euro
+    {{ angebot!.gesamtpreis.betragInEuroCent | geldbetrag }}
   </div>
   <div></div>
 </div>

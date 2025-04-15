@@ -1,9 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Geldbetrag} from '../../dtos/kartenverkauf';
+import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
 
 @Component({
   selector: 'app-zahlung',
-  imports: [],
+  imports: [
+    GeldbetragPipe
+  ],
   templateUrl: './zahlung.component.html',
   styleUrl: './zahlung.component.css'
 })
