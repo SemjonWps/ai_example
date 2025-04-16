@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Angebot} from '../dtos/kartenverkauf';
+import {Angebot, Vorstellung} from '../dtos/kartenverkauf';
 
 @Injectable({
   providedIn: 'root'
@@ -16,5 +16,9 @@ export class KartenverkaufService {
 
   public holeZusammenhaengendePlaetze(platzanzahl: number, vorstellungUuid: string): Observable<Angebot> {
     return this.http.get<Angebot>(this.kartenverkaufUrl, {params: {platzanzahl, vorstellungUuid}})
+  }
+
+  public holeVorstellung(vorstellungUuid: string): Observable<Vorstellung> {
+    return this.http.get<Vorstellung>(this.kartenverkaufUrl + '/vorstellung', {params: {vorstellungUuid}});
   }
 }

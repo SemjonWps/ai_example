@@ -35,15 +35,18 @@ export class KartenverkaufComponent implements OnInit {
   zeigeZahlungDialogKomponente: boolean = false;
   zeigeKinokarteKomponente: boolean = false;
 
-  constructor(private kartenverkaufService: KartenverkaufService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private kartenverkaufService: KartenverkaufService,
+    private activatedRoute: ActivatedRoute,
+  ) {
   }
 
   ngOnInit(): void {
-    this.vorstellung = {
-      anfangszeit: '2025-04-01 20:00:00',
-      saal: 'Großer Saal',
-      filmname: 'Back to the Futura',
-      uuid: '95b21a30-64bf-4df1-a0a2-e769bd7c5ea1',
+    const uuid: string | null = this.activatedRoute.snapshot.paramMap.get('vorstellungUuid');
+    if (isPresent(uuid)) {
+      this.kartenverkaufService.holeVorstellung(uuid).subscribe((vorstellung: Vorstellung) => {
+        this.vorstellung = vorstellung
+      });
     }
   }
 

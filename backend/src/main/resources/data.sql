@@ -106,7 +106,7 @@ VALUES ('70f79a3c-eb2f-48e4-af59-cda7a353635f', '2025-03-17 15:30:00', 'kleiner 
 
 INSERT INTO kartenverkauf.saalplaene
     (vorstellungUUID)
-VALUES ('95b21a30-64bf-4df1-a0a2-e769bd7c5ea1');
+VALUES ('f00cd3c6-b059-4138-9f10-4ba2813fa162');
 
 INSERT INTO kartenverkauf.plaetze
 (platznummer, reihennummer, ist_verkauft, reservierungsnummer, saalplan_id)
