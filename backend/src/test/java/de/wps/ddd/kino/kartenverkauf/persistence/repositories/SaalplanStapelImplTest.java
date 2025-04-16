@@ -1,10 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.persistence.repositories;
 
 
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihe;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,24 +30,9 @@ class SaalplanStapelImplTest {
         // assert
         assertThat(saalplan.getVorstellungUUID()).isEqualTo(vorstellungUUID);
         int reihenAnzahl = 4;
-        List<Reihe> reihen = saalplan.getPlaetze().keySet().stream().toList();
+        List<Reihennummer> reihen = saalplan.getPlaetze().keySet().stream().toList();
         assertThat(reihen).hasSize(reihenAnzahl);
         int platzAnzahlInReihe = 12;
         saalplan.getPlaetze().forEach((reihe, plaetzeListe) -> assertThat(plaetzeListe).hasSize(platzAnzahlInReihe));
     }
-
-    @Test
-    public void legeZurueck() {
-        // arrange
-        saalplan = saalplanStapel.holeSaalplan(vorstellungUUID);
-        Reihe reihe = new Reihe(1);
-
-        // act
-        Platz zuAendernderPlatz = saalplan.getPlaetze().get(reihe).getFirst();
-        zuAendernderPlatz.markiereAlsVerkauft();
-        saalplanStapel.legeZurueck(saalplan);
-
-        // TODO assert??
-    }
-
 }

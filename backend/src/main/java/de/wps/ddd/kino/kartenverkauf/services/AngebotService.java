@@ -2,9 +2,10 @@ package de.wps.ddd.kino.kartenverkauf.services;
 
 import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapperImpl;
+import de.wps.ddd.kino.kartenverkauf.api.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
-import de.wps.ddd.kino.kartenverkauf.domain.Platzbelegungen;
+import de.wps.ddd.kino.kartenverkauf.api.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
@@ -23,22 +24,23 @@ public class AngebotService {
     private final SaalplanStapel saalplanStapel;
     private final VorstellungRepository vorstellungRepository;
     private final PlatzDtoMapper platzDtoMapper = new PlatzDtoMapperImpl();
+    private final SaalplanDtoMapper saalplanDtoMapper = new SaalplanDtoMapper();
 
     public AngebotDto holeAngebot(int platzanzahl, String vorstellungUuid) {
         UUID uuid = UUID.fromString(vorstellungUuid);
         Saalplan saalplan = saalplanStapel.holeSaalplan(uuid);
         ZusammenhaengendePlaetze zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(platzanzahl);
-        Platzbelegungen platzbelegungen = saalplan.holePlatzbelegungen(zusammenhaengendePlaetze);
+        SaalplanDto saalplanDto = saalplanDtoMapper.saalplantoSaalplanDto(saalplan);
         List<Platz> plaetze = zusammenhaengendePlaetze.plaetze();
 
         if (plaetze.isEmpty()) {
-            return new AngebotDto(new Geldbetrag(0), platzbelegungen, null);
+            return new AngebotDto(new Geldbetrag(0), saalplanDto, null);
         }
 
         List<PlatzDto> platzDtos = plaetze.stream().map(platzDtoMapper::platzToPlatzDto).toList();
         Geldbetrag gesamtbetrag = new Geldbetrag(this.vorstellungRepository.findEintrittspreisByUuid(uuid) * platzanzahl);
 
-        return new AngebotDto(gesamtbetrag, platzbelegungen, platzDtos);
+        return new AngebotDto(gesamtbetrag, saalplanDto, platzDtos);
     }
 
 }

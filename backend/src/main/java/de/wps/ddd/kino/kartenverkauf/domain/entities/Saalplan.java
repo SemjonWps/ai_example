@@ -1,17 +1,11 @@
 package de.wps.ddd.kino.kartenverkauf.domain.entities;
 
-import de.wps.ddd.kino.kartenverkauf.domain.Platzbelegungen;
 import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihe;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -19,12 +13,12 @@ import static java.util.stream.Collectors.groupingBy;
 public class Saalplan {
     private final Long id;
     private final UUID vorstellungUUID;
-    private final Map<Reihe, List<Platz>> plaetze;
+    private final Map<Reihennummer, List<Platz>> plaetze;
 
     public Saalplan(Long id, UUID vorstellungUUID, List<Platz> plaetze) {
         this.id = id;
         this.vorstellungUUID = vorstellungUUID;
-        this.plaetze = plaetze.stream().collect(groupingBy(Platz::getReihe));
+        this.plaetze = plaetze.stream().collect(groupingBy(Platz::getReihennummer));
     }
 
     /**
@@ -34,7 +28,7 @@ public class Saalplan {
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var result = new ArrayList<Platz>();
 
-        for (var reihe : plaetze.values().stream().sorted(Comparator.<List<Platz>>comparingInt(plaetze -> plaetze.getFirst().getReihe().reihennummer()).reversed()).toList()) {
+        for (var reihe : plaetze.values().stream().sorted(Comparator.<List<Platz>>comparingInt(plaetze -> plaetze.getFirst().getReihennummer().nummer()).reversed()).toList()) {
             for (Platz platz : reihe) {
                 if (platz.istFrei()) {
                     result.add(platz);
@@ -73,25 +67,5 @@ public class Saalplan {
                 .stream()
                 .filter(platz -> !platz.isIstVerkauft())
                 .forEach(Platz::gebeReservierungFrei));
-    }
-
-    /**
-     * Berechnet die Platzbelegungen unter Berücksichtigung der angefragten zusammenhängenden Plätze. <br>
-     * requirements: <br>
-     * - Zusammenhängende Plätze dürfen nicht belegt sein. <br>
-     *
-     * @param zusammenhaengendePlaetze Die angefragten Plätze
-     * @return Platzbelegungen
-     * @throws IllegalArgumentException Wenn zusammenhaendePlaetze belegte Plätze enthält
-     */
-    public Platzbelegungen holePlatzbelegungen(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
-        if (zusammenhaengendePlaetze.plaetze().stream().anyMatch(Platz::istBelegt)) {
-            throw new IllegalArgumentException("Nicht alle zusammenhängenden Plätze sind frei.");
-        }
-
-        Platzbelegungen platzbelegungen = new Platzbelegungen(plaetze);
-        platzbelegungen.markiereAlsAngeboten(zusammenhaengendePlaetze);
-
-        return platzbelegungen;
     }
 }

@@ -1,7 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.api.model;
 
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihe;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Sitz;
+import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 
-public record PlatzDto(Reihe reihe, Sitz sitz) {
+public record PlatzDto(int reihennummer, int platznummer, SitzplatzStatus sitzplatzStatus) {
 }
