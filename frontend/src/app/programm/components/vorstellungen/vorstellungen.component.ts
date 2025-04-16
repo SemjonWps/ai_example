@@ -21,7 +21,7 @@ export class VorstellungenComponent {
   constructor(private router: Router) {
   }
 
-  navigateToKartenverkauf(vorstellungUuid: any) {
+  navigateToKartenverkauf(vorstellungUuid: string) {
     this.router.navigate(['/kartenverkauf', vorstellungUuid]);
   }
 }

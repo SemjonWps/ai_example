@@ -23,7 +23,7 @@ export interface Film {
 }
 
 export interface Vorstellung {
-  uuid: number
+  uuid: string
   anfangszeit: string
   preis: number
   saal: string
