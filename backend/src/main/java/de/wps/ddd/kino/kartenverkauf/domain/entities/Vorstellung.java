@@ -4,8 +4,17 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Beginn;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Filmname;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Saal;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.UUID;
 
-public record Vorstellung(UUID uuid, Saal saal, Beginn anfangszeit, Filmname filmname, Geldbetrag eintrittspreis) {
+@Getter
+@AllArgsConstructor
+public class Vorstellung {
+    private final UUID uuid;
+    private final Saal saal;
+    private final Beginn anfangszeit;
+    private final Filmname filmname;
+    private final Geldbetrag eintrittspreis;
 }

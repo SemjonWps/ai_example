@@ -3,13 +3,13 @@ package de.wps.ddd.kino.kartenverkauf.services;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
+import de.wps.ddd.kino.kartenverkauf.api.model.GeldbetragDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.persistence.repositories.VorstellungRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,11 +33,11 @@ public class AngebotService {
         List<Platz> plaetze = zusammenhaengendePlaetze.plaetze();
 
         if (plaetze.isEmpty()) {
-            return new AngebotDto(new Geldbetrag(0), saalplanDto, null);
+            return new AngebotDto(new GeldbetragDto(0, "EUR"), saalplanDto, null);
         }
 
         List<PlatzDto> platzDtos = plaetze.stream().map(platzDtoMapper::platzToPlatzDto).toList();
-        Geldbetrag gesamtbetrag = new Geldbetrag(this.vorstellungRepository.findEintrittspreisByUuid(uuid) * platzanzahl);
+        var gesamtbetrag = new GeldbetragDto(this.vorstellungRepository.findEintrittspreisByUuid(uuid) * platzanzahl, "EUR");
 
         return new AngebotDto(gesamtbetrag, saalplanDto, platzDtos);
     }

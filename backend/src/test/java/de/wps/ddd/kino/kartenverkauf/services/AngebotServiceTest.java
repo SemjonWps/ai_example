@@ -3,6 +3,7 @@ package de.wps.ddd.kino.kartenverkauf.services;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
+import de.wps.ddd.kino.kartenverkauf.api.model.GeldbetragDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
@@ -10,7 +11,6 @@ import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
 import de.wps.ddd.kino.kartenverkauf.persistence.repositories.VorstellungRepository;
@@ -63,7 +63,7 @@ class AngebotServiceTest {
         assertThat(angebotDto).isNotNull();
         assertThat(angebotDto.saalplanDto()).isEqualTo(saalplanDto);
         assertThat(angebotDto.platzDtos()).isEqualTo(null);
-        assertThat(angebotDto.gesamtpreis()).isEqualTo(new Geldbetrag(0));
+        assertThat(angebotDto.gesamtpreis()).isEqualTo(new GeldbetragDto(0, "EUR"));
     }
 
     @Test
@@ -90,6 +90,6 @@ class AngebotServiceTest {
         assertThat(angebotDto).isNotNull();
         assertThat(angebotDto.saalplanDto()).isEqualTo(saalplanDto);
         assertThat(angebotDto.platzDtos()).containsExactly(platzDto1, platzDto2);
-        assertThat(angebotDto.gesamtpreis()).isEqualTo(new Geldbetrag(1500));
+        assertThat(angebotDto.gesamtpreis()).isEqualTo(new GeldbetragDto(1500, "EUR"));
     }
 }

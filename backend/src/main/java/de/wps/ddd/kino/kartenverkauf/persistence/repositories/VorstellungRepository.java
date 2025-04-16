@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.UUID;
 
 @org.springframework.stereotype.Repository
-public interface VorstellungRepository extends JpaRepository<VorstellungEntity, Long> {
+public interface VorstellungRepository extends JpaRepository<VorstellungEntity, UUID> {
     @Query("SELECT v.eintrittspreis FROM VorstellungEntity v WHERE v.uuid = :uuid")
     int findEintrittspreisByUuid(UUID uuid);
 }
