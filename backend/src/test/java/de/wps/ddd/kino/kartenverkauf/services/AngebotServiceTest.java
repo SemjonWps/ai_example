@@ -1,5 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.services;
 
+import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
@@ -37,10 +38,12 @@ class AngebotServiceTest {
     ZusammenhaengendePlaetze zusammenhaengendePlaetze;
     @Mock
     SaalplanDtoMapper saalplanDtoMapper;
+    @Mock
+    PlatzDtoMapper platzDtoMapper;
     @InjectMocks
     AngebotService angebotService;
-    private final PlatzDto[][] platzDtos = {{new PlatzDto(1, 2, SitzplatzStatus.FREI)}};
-    private final SaalplanDto saalplanDto = new SaalplanDto(platzDtos);
+    @Mock
+    SaalplanDto saalplanDto;
     String uuidString = "95b21a30-64bf-4df1-a0a2-e769bd7c5ea1";
     UUID vorstellungUUID = UUID.fromString(uuidString);
 
@@ -75,6 +78,10 @@ class AngebotServiceTest {
         Mockito.when(zusammenhaengendePlaetze.plaetze()).thenReturn(List.of(platz1, platz2));
         Mockito.when(vorstellungRepository.findEintrittspreisByUuid(vorstellungUUID)).thenReturn(750);
         Mockito.when(saalplanDtoMapper.saalplantoSaalplanDto(saalplan)).thenReturn(saalplanDto);
+        PlatzDto platzDto1 = new PlatzDto(1, 11, SitzplatzStatus.FREI);
+        PlatzDto platzDto2 = new PlatzDto(1, 12, SitzplatzStatus.FREI);
+        Mockito.when(platzDtoMapper.platzToPlatzDto(platz1)).thenReturn(platzDto1);
+        Mockito.when(platzDtoMapper.platzToPlatzDto(platz2)).thenReturn(platzDto2);
 
         // act
         AngebotDto angebotDto = angebotService.holeAngebot(platzanzahl, uuidString);
@@ -82,7 +89,7 @@ class AngebotServiceTest {
         // assert
         assertThat(angebotDto).isNotNull();
         assertThat(angebotDto.saalplanDto()).isEqualTo(saalplanDto);
-        assertThat(angebotDto.platzDtos()).containsExactly(new PlatzDto(1, 11, SitzplatzStatus.FREI), new PlatzDto(1, 12, SitzplatzStatus.FREI));
+        assertThat(angebotDto.platzDtos()).containsExactly(platzDto1, platzDto2);
         assertThat(angebotDto.gesamtpreis()).isEqualTo(new Geldbetrag(1500));
     }
 }
