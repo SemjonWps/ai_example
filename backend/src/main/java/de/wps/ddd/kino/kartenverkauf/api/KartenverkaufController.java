@@ -1,13 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.api;
 
-import de.wps.ddd.kino.kartenverkauf.domain.Angebot;
+import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
 import de.wps.ddd.kino.kartenverkauf.services.AngebotService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/kartenverkauf")
@@ -18,7 +14,7 @@ public class KartenverkaufController {
     private final AngebotService angebotService;
 
     @GetMapping()
-    public Angebot holeAngebot(@RequestParam int platzanzahl, @RequestParam String vorstellungUuid) {
+    public AngebotDto holeAngebot(@RequestParam int platzanzahl, @RequestParam String vorstellungUuid) {
         return angebotService.holeAngebot(platzanzahl, vorstellungUuid);
     }
 }

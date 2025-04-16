@@ -2,8 +2,8 @@ package de.wps.ddd.kino.kartenverkauf.services;
 
 import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapperImpl;
+import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
-import de.wps.ddd.kino.kartenverkauf.domain.Angebot;
 import de.wps.ddd.kino.kartenverkauf.domain.Platzbelegungen;
 import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
@@ -24,7 +24,7 @@ public class AngebotService {
     private final VorstellungRepository vorstellungRepository;
     private final PlatzDtoMapper platzDtoMapper = new PlatzDtoMapperImpl();
 
-    public Angebot holeAngebot(int platzanzahl, String vorstellungUuid) {
+    public AngebotDto holeAngebot(int platzanzahl, String vorstellungUuid) {
         UUID uuid = UUID.fromString(vorstellungUuid);
         Saalplan saalplan = saalplanStapel.holeSaalplan(uuid);
         ZusammenhaengendePlaetze zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(platzanzahl);
@@ -32,13 +32,13 @@ public class AngebotService {
         List<Platz> plaetze = zusammenhaengendePlaetze.plaetze();
 
         if (plaetze.isEmpty()) {
-            return new Angebot(new Geldbetrag(0), platzbelegungen, null);
+            return new AngebotDto(new Geldbetrag(0), platzbelegungen, null);
         }
 
         List<PlatzDto> platzDtos = plaetze.stream().map(platzDtoMapper::platzToPlatzDto).toList();
         Geldbetrag gesamtbetrag = new Geldbetrag(this.vorstellungRepository.findEintrittspreisByUuid(uuid) * platzanzahl);
 
-        return new Angebot(gesamtbetrag, platzbelegungen, platzDtos);
+        return new AngebotDto(gesamtbetrag, platzbelegungen, platzDtos);
     }
 
 }

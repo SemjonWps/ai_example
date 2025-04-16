@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.services;
 
+import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
-import de.wps.ddd.kino.kartenverkauf.domain.Angebot;
 import de.wps.ddd.kino.kartenverkauf.domain.Platzbelegungen;
 import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
@@ -50,13 +50,13 @@ class AngebotServiceTest {
         Mockito.when(saalplan.holePlatzbelegungen(zusammenhaengendePlaetze)).thenReturn(platzbelegungen);
 
         // act
-        Angebot angebot = angebotService.holeAngebot(platzanzahl, uuidString);
+        AngebotDto angebotDto = angebotService.holeAngebot(platzanzahl, uuidString);
 
         // assert
-        assertThat(angebot).isNotNull();
-        assertThat(angebot.getPlatzbelegungen()).isEqualTo(platzbelegungen);
-        assertThat(angebot.getPlatzDtos()).isEqualTo(null);
-        assertThat(angebot.getGesamtpreis()).isEqualTo(new Geldbetrag(0));
+        assertThat(angebotDto).isNotNull();
+        assertThat(angebotDto.platzbelegungen()).isEqualTo(platzbelegungen);
+        assertThat(angebotDto.platzDtos()).isEqualTo(null);
+        assertThat(angebotDto.gesamtpreis()).isEqualTo(new Geldbetrag(0));
     }
 
     @Test
@@ -73,12 +73,12 @@ class AngebotServiceTest {
         Mockito.when(saalplan.holePlatzbelegungen(zusammenhaengendePlaetze)).thenReturn(platzbelegungen);
 
         // act
-        Angebot angebot = angebotService.holeAngebot(platzanzahl, uuidString);
+        AngebotDto angebotDto = angebotService.holeAngebot(platzanzahl, uuidString);
 
         // assert
-        assertThat(angebot).isNotNull();
-        assertThat(angebot.getPlatzbelegungen()).isEqualTo(platzbelegungen);
-        assertThat(angebot.getPlatzDtos()).containsExactly(new PlatzDto(new Reihe(1), new Sitz(11)), new PlatzDto(new Reihe(1), new Sitz(12)));
-        assertThat(angebot.getGesamtpreis()).isEqualTo(new Geldbetrag(1500));
+        assertThat(angebotDto).isNotNull();
+        assertThat(angebotDto.platzbelegungen()).isEqualTo(platzbelegungen);
+        assertThat(angebotDto.platzDtos()).containsExactly(new PlatzDto(new Reihe(1), new Sitz(11)), new PlatzDto(new Reihe(1), new Sitz(12)));
+        assertThat(angebotDto.gesamtpreis()).isEqualTo(new Geldbetrag(1500));
     }
 }
