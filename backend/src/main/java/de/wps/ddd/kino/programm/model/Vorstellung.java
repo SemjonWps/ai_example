@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "vorstellungen", schema = "programm")
@@ -21,6 +22,7 @@ public class Vorstellung {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private UUID uuid;
     @JsonIgnore
     private Long filmId;
     private LocalDateTime anfangszeit;

@@ -9,6 +9,7 @@ import {NgIf} from '@angular/common';
 import {ZahlungComponent} from '../zahlung/zahlung.component';
 import {ZahlungdialogComponent} from '../zahlung/zahlungdialog/zahlungdialog.component';
 import {KinokarteComponent} from '../kinokarte/kinokarte.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-kartenverkauf',
@@ -34,7 +35,7 @@ export class KartenverkaufComponent implements OnInit {
   zeigeZahlungDialogKomponente: boolean = false;
   zeigeKinokarteKomponente: boolean = false;
 
-  constructor(private kartenverkaufService: KartenverkaufService) {
+  constructor(private kartenverkaufService: KartenverkaufService, private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {

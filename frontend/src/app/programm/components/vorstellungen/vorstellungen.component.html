@@ -1,5 +1,6 @@
 <div class="calendar-bar">
-  <button class="vorstellung" *ngFor="let vorstellung of vorstellungen">
+  <button class="vorstellung" *ngFor="let vorstellung of vorstellungen"
+          (click)="navigateToKartenverkauf(vorstellung.uuid)">
     {{ vorstellung.anfangszeit | date:'HH:mm' }} <br/> {{ vorstellung.saal }}
   </button>
 </div>

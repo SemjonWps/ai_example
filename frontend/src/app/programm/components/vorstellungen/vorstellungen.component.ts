@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Vorstellung} from '../../dtos/programm';
 import {DatePipe, NgForOf} from "@angular/common";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-vorstellungen',
@@ -17,6 +18,10 @@ export class VorstellungenComponent {
   @Input()
   vorstellungen!: Vorstellung[] | undefined;
 
-  constructor() {
+  constructor(private router: Router) {
+  }
+
+  navigateToKartenverkauf(vorstellungUuid: any) {
+    this.router.navigate(['/kartenverkauf', vorstellungUuid]);
   }
 }

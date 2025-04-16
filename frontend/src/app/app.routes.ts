@@ -5,5 +5,5 @@ import {KartenverkaufComponent} from './kartenverkauf/components/kartenverkauf-p
 export const routes: Routes = [
   {path: '', redirectTo: 'programm', pathMatch: "full"},
   {path: 'programm', component: ProgrammComponent},
-  {path: 'kartenverkauf', component: KartenverkaufComponent},
+  {path: 'kartenverkauf/:vorstellungUuid', component: KartenverkaufComponent},
 ];
