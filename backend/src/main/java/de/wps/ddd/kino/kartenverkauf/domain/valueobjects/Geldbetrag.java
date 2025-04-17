@@ -6,43 +6,31 @@ import org.springframework.util.Assert;
 @Value(staticConstructor = "of")
 public class Geldbetrag {
 
-    Betrag betrag;
+    int betrag;
     Waehrung waehrung;
 
+    private Geldbetrag(int betrag, Waehrung waehrung) {
+        Assert.isTrue(betrag >= 0, "Betrag muss größer gleich 0 sein.");
+        this.betrag = betrag;
+        this.waehrung = waehrung;
+    }
+
     public static Geldbetrag euroInCent(int cent) {
-        return Geldbetrag.of(Betrag.of(cent), Waehrung.EUR);
+        return Geldbetrag.of(cent, Waehrung.EUR);
     }
 
     public static Geldbetrag euro(int euro, int cent) {
-        return Geldbetrag.of(Betrag.of(euro * 100 + cent), Waehrung.EUR);
+        return Geldbetrag.of(euro * 100 + cent, Waehrung.EUR);
     }
 
     public Geldbetrag plus(Geldbetrag other) {
         Assert.isTrue(this.waehrung.equals(other.waehrung), "Währungen müssen übereinstimmen");
-        return Geldbetrag.of(this.betrag.plus(other.betrag), this.waehrung);
+        return Geldbetrag.of(betrag + other.betrag, this.waehrung);
     }
 
     public Geldbetrag mal(int anzahl) {
-        return Geldbetrag.of(betrag.mal(anzahl), waehrung);
-    }
-
-    @Value(staticConstructor = "of")
-    public static class Betrag {
-
-        int betrag;
-
-        private Betrag(int betrag) {
-            Assert.isTrue(betrag >= 0, "Betrag muss größer gleich 0 sein.");
-            this.betrag = betrag;
-        }
-
-        public Betrag plus(Betrag other) {
-            return new Betrag(this.betrag + other.betrag);
-        }
-
-        public Betrag mal(int anzahl) {
-            return new Betrag(this.betrag * anzahl);
-        }
+        Assert.isTrue(anzahl >= 0, "Anzahl muss größer gleich 0 sein.");
+        return Geldbetrag.of(betrag * anzahl, waehrung);
     }
 
     public enum Waehrung {
