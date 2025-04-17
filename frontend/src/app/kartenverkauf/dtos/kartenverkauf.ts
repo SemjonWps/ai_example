@@ -7,21 +7,27 @@ export interface Vorstellung {
 
 export interface Angebot {
   gesamtpreis: Geldbetrag,
-  platzDtos: AngebotenerPlatz[],
-  platzbelegungen: Platzbelegungen,
+  platzDtos: Platz[],
+  saalplanDto: Saalplan,
 }
 
-export interface Platzbelegungen {
-  platzbelegungen: SitzplatzStatus[][],
+export interface Saalplan {
+  platzbelegungen: Platz[][];
+}
+
+export interface Platz {
+  reihennummer: number,
+  platznummer: number,
+  sitzplatzStatus: SitzplatzStatus,
 }
 
 export interface Geldbetrag {
-  betragInEuroCent: number,
+  betrag: number,
+  waehrung: Waehrung,
 }
 
-export interface AngebotenerPlatz {
-  reihe: Reihe,
-  sitz: Sitz,
+export enum Waehrung {
+  EUR
 }
 
 export interface Reihe {

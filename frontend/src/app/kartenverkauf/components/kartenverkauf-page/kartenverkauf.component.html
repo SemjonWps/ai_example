@@ -5,7 +5,8 @@
   (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"
 />
 <app-saalplan
-  [platzbelegungen]="angebot?.platzbelegungen"
+  [saalplanDto]="angebot?.saalplanDto"
+  [angebotenePlaetze]="angebot?.platzDtos"
   *ngIf="zeigeSaalplanKomponente"
 />
 <app-zahlung
