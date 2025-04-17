@@ -12,7 +12,7 @@
     <br>
     {{ angebot.platzDtos.length }} Plätze
     <br>
-    {{ angebot.gesamtpreis.betragInEuroCent | geldbetrag }}
+    {{ angebot.gesamtpreis.betrag | geldbetrag }} {{ angebot.gesamtpreis.waehrung }}
   </div>
   <img class="qr-code" src="assets/qr-code.png" alt="https://www.wps.de"/>
 </div>

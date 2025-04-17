@@ -49,7 +49,8 @@ export class SaalplanComponent {
     return (this.saalplanBreite - rowWidth);
   }
 
-  getFarbeFuerPlatzbelegung(sitzplatzStatus: SitzplatzStatus): String {
+  getFarbeFuerPlatzbelegung(platz: Platz): String {
+    const sitzplatzStatus: SitzplatzStatus = this.angebotenePlaetze?.some(angebotenerPlatz => angebotenerPlatz.platznummer === platz.platznummer && angebotenerPlatz.reihennummer === platz.reihennummer) ? SitzplatzStatus.ANGEBOTEN : platz.sitzplatzStatus
     switch (sitzplatzStatus) {
       case 'FREI':
         return 'white';
