@@ -1,6 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
@@ -29,9 +30,9 @@ class PlatzMapperTest {
         Platz platz = platzMapper.platzEntityToPlatz(platzEntity);
 
         // assert
-        assertThat(platz.getPlatznummer()).isEqualTo(platznummer);
+        assertThat(platz.getPlatzId().platznummer().nummer()).isEqualTo(platznummer.nummer());
         assertThat(platz.getId()).isEqualTo(id);
-        assertThat(platz.getReihennummer()).isEqualTo(reihennummer);
+        assertThat(platz.getPlatzId().reihennummer().nummer()).isEqualTo(reihennummer.nummer());
         assertThat(platz.isIstVerkauft()).isEqualTo(istVerkauft);
         assertThat(platz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
         assertThat(platz.getSaalplan_id()).isEqualTo(saalplanId);
@@ -40,7 +41,7 @@ class PlatzMapperTest {
     @Test
     public void testPlatzToPlatzEntity() {
         // arrange
-        Platz platz = new Platz(id, platznummer, reihennummer, istVerkauft, reservierungsnummer, saalplanId);
+        Platz platz = new Platz(id, new PlatzId(reihennummer, platznummer), istVerkauft, reservierungsnummer, saalplanId);
 
         // act
         PlatzEntity platzEntity = platzMapper.platzToPlatzEntity(platz);

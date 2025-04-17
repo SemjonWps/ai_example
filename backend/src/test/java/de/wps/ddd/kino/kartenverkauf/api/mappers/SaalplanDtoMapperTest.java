@@ -5,6 +5,7 @@ import de.wps.ddd.kino.kartenverkauf.api.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
@@ -38,10 +39,15 @@ class SaalplanDtoMapperTest {
         Platznummer platznummer1 = new Platznummer(1);
         Platznummer platznummer2 = new Platznummer(2);
 
-        Platz reihe1_platz1 = new Platz(null, platznummer1, reihennummer1, false, null, null);
-        Platz rehie1_platz2 = new Platz(null, platznummer2, reihennummer1, true, null, null);
-        Platz reihe2_platz1 = new Platz(null, platznummer1, reihennummer2, true, null, null);
-        Platz reihe2_platz2 = new Platz(null, platznummer2, reihennummer2, false, new Reservierungsnummer("reservierungsnummer"), null);
+        PlatzId platzId1 = new PlatzId(reihennummer1, platznummer1);
+        PlatzId platzId2 = new PlatzId(reihennummer1, platznummer2);
+        PlatzId platzId3 = new PlatzId(reihennummer2, platznummer1);
+        PlatzId platzId4 = new PlatzId(reihennummer2, platznummer2);
+
+        Platz reihe1_platz1 = new Platz(null, platzId1, false, null, null);
+        Platz rehie1_platz2 = new Platz(null, platzId2, true, null, null);
+        Platz reihe2_platz1 = new Platz(null, platzId3, true, null, null);
+        Platz reihe2_platz2 = new Platz(null, platzId4, false, new Reservierungsnummer("reservierungsnummer"), null);
 
         platzListe.add(reihe1_platz1);
         platzListe.add(rehie1_platz2);

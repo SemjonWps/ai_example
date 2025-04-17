@@ -2,6 +2,7 @@ package de.wps.ddd.kino.kartenverkauf.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
@@ -34,7 +35,7 @@ class SaalplanMapperTest {
     @Test
     public void saalplanToSaalplanEntity() {
         // arrange
-        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, platznummer, reihennummer, istVerkauft, reservierungsnummer, saalplanId)));
+        List<Platz> plaetze = new ArrayList<>(List.of(new Platz(platzId, new PlatzId(reihennummer, platznummer), istVerkauft, reservierungsnummer, saalplanId)));
         Saalplan saalplan = new Saalplan(saalplanId, vorstellungUUID, plaetze);
 
         // act
@@ -56,9 +57,9 @@ class SaalplanMapperTest {
 
         // assert
         assertThat(saalplan.getId()).isEqualTo(saalplanId);
-        Platz mappedPlatz = saalplan.getPlaetze().get(reihennummer).getFirst();
-        assertThat(mappedPlatz.getReihennummer()).isEqualTo(reihennummer);
-        assertThat(mappedPlatz.getPlatznummer()).isEqualTo(platznummer);
+        Platz mappedPlatz = saalplan.getPlaetze().get(reihennummer).get(0);
+        assertThat(mappedPlatz.getPlatzId().reihennummer().nummer()).isEqualTo(reihennummer);
+        assertThat(mappedPlatz.getPlatzId().platznummer().nummer()).isEqualTo(platznummer);
         assertThat(mappedPlatz.getId()).isEqualTo(platzId);
         assertThat(mappedPlatz.isIstVerkauft()).isEqualTo(istVerkauft);
         assertThat(mappedPlatz.getReservierungsnummer()).isEqualTo(reservierungsnummer);

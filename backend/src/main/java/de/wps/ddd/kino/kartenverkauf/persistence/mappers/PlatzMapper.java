@@ -12,13 +12,13 @@ import org.mapstruct.Named;
 @Mapper
 public interface PlatzMapper {
     @Mapping(target = "reservierungsnummer", source = "reservierungsnummer", qualifiedByName = "StringToReservierungsnummer")
-    @Mapping(target = "reihennummer", source = "reihennummer", qualifiedByName = "IntToReihennummer")
-    @Mapping(target = "platznummer", source = "platznummer", qualifiedByName = "IntToPlatznummer")
+    @Mapping(target = "platzId.reihennummer", source = "reihennummer", qualifiedByName = "IntToReihennummer")
+    @Mapping(target = "platzId.platznummer", source = "platznummer", qualifiedByName = "IntToPlatznummer")
     Platz platzEntityToPlatz(PlatzEntity platzEntity);
 
     @Mapping(target = "reservierungsnummer", source = "reservierungsnummer", qualifiedByName = "ReservierungsnummerToString")
-    @Mapping(target = "reihennummer", source = "reihennummer", qualifiedByName = "ReihennummerToInt")
-    @Mapping(target = "platznummer", source = "platznummer", qualifiedByName = "PlatznummerToInt")
+    @Mapping(target = "reihennummer", source = "platzId.reihennummer", qualifiedByName = "ReihennummerToInt")
+    @Mapping(target = "platznummer", source = "platzId.platznummer", qualifiedByName = "PlatznummerToInt")
     PlatzEntity platzToPlatzEntity(Platz platz);
 
     @Named("ReservierungsnummerToString")
