@@ -1,7 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.domain.entities;
 
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,8 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Platz {
     private Long id;
-    private Platznummer platznummer;
-    private Reihennummer reihennummer;
+    private PlatzId platzId;
     private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;
     private Long saalplan_id;

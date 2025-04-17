@@ -9,7 +9,10 @@
     <br>
     {{ createPlaetzeString() }}
     <br>
+    <br *ngIf="angebot.platzDtos.length === 1">
+    {{ angebot.platzDtos.length }} Platz
     <br>
+    <br *ngIf="angebot.platzDtos.length > 1">
     {{ angebot.platzDtos.length }} Plätze
     <br>
     {{ angebot.gesamtpreis.betrag | geldbetrag }} {{ angebot.gesamtpreis.waehrung }}

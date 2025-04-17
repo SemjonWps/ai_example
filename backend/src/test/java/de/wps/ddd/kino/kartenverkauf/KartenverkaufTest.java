@@ -1,9 +1,12 @@
 package de.wps.ddd.kino.kartenverkauf;
 
+import de.wps.ddd.kino.kartenverkauf.domain.factories.KinokartenBlock;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.Vorstellungen;
+import de.wps.ddd.kino.kartenverkauf.domain.services.BezahlService;
 import de.wps.ddd.kino.kartenverkauf.domain.services.PreisService;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsbestaetigung;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +26,8 @@ public class KartenverkaufTest {
 
     @Autowired
     private Vorstellungen vorstellungen;
+    private BezahlService bezahlService;
+    private KinokartenBlock kinokartenblock;
 
     @Test
     void kartenverkauf() {
@@ -33,12 +38,22 @@ public class KartenverkaufTest {
         var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
         assertThat(saalplan.getVorstellungUUID()).isEqualTo(vorstellungId);
 
-        var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(4);
-        assertThat(zusammenhaengendePlaetze.anzahl()).isEqualTo(4);
+        var vorgeschlagenePlaetze = saalplan.sucheZusammenhaengendePlaetze(4);
+        assertThat(vorgeschlagenePlaetze.anzahl()).isEqualTo(4);
 
-        var preis = preisService.ermittlePreis(vorstellung, zusammenhaengendePlaetze);
+        var gesamtpreis = preisService.ermittlePreis(vorstellung, vorgeschlagenePlaetze);
         assertThat(vorstellung.getEintrittspreis()).isEqualTo(Geldbetrag.euro(7, 50));
-        assertThat(preis).isEqualTo(Geldbetrag.euro(30, 0));
+        assertThat(gesamtpreis).isEqualTo(Geldbetrag.euro(30, 0));
+
+        var gewaehltePlaetze = vorgeschlagenePlaetze;
+
+        var zahlungsanforderung = bezahlService.fordereBezahlungAn(vorstellungId, gewaehltePlaetze, gesamtpreis);
+        assertThat(zahlungsanforderung).isNotNull();
+
+        var zahlungsbestaetigung = new Zahlungsbestaetigung(vorstellungId, gewaehltePlaetze, gesamtpreis);
+        saalplan.markiereAlsVerkauft(gewaehltePlaetze);
+        var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
+        // TODO assertThat(KinokartenVerkauftEvent.feuert)
     }
 
 }

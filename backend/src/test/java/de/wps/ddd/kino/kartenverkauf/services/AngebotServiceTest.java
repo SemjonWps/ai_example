@@ -4,15 +4,14 @@ import de.wps.ddd.kino.kartenverkauf.api.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.GeldbetragDto;
-import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
+import de.wps.ddd.kino.kartenverkauf.api.model.PlatzIdDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.SaalplanDto;
-import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.persistence.repositories.VorstellungRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,8 +60,8 @@ class AngebotServiceTest {
 
         // assert
         assertThat(angebotDto).isNotNull();
-        assertThat(angebotDto.saalplanDto()).isEqualTo(saalplanDto);
-        assertThat(angebotDto.platzDtos()).isEqualTo(null);
+        assertThat(angebotDto.saalplan()).isEqualTo(saalplanDto);
+        assertThat(angebotDto.angebotenePlaetze()).isEqualTo(null);
         assertThat(angebotDto.gesamtpreis()).isEqualTo(new GeldbetragDto(0, "EUR"));
     }
 
@@ -73,23 +72,23 @@ class AngebotServiceTest {
         Mockito.when(saalplanStapel.holeSaalplan(vorstellungUUID)).thenReturn(saalplan);
         Mockito.when(saalplan.sucheZusammenhaengendePlaetze(platzanzahl)).thenReturn(zusammenhaengendePlaetze);
         Reihennummer reihennummer = new Reihennummer(1);
-        Platz platz1 = new Platz(1L, new Platznummer(11), reihennummer, false, null, 5L);
-        Platz platz2 = new Platz(2L, new Platznummer(12), reihennummer, false, null, 5L);
-        Mockito.when(zusammenhaengendePlaetze.plaetze()).thenReturn(List.of(platz1, platz2));
+        PlatzId platzId1 = new PlatzId(reihennummer, new Platznummer(11));
+        PlatzId platzId2 = new PlatzId(reihennummer, new Platznummer(12));
+        Mockito.when(zusammenhaengendePlaetze.plaetze()).thenReturn(List.of(platzId1, platzId2));
         Mockito.when(vorstellungRepository.findEintrittspreisByUuid(vorstellungUUID)).thenReturn(750);
         Mockito.when(saalplanDtoMapper.saalplantoSaalplanDto(saalplan)).thenReturn(saalplanDto);
-        PlatzDto platzDto1 = new PlatzDto(1, 11, SitzplatzStatus.FREI);
-        PlatzDto platzDto2 = new PlatzDto(1, 12, SitzplatzStatus.FREI);
-        Mockito.when(platzDtoMapper.platzToPlatzDto(platz1)).thenReturn(platzDto1);
-        Mockito.when(platzDtoMapper.platzToPlatzDto(platz2)).thenReturn(platzDto2);
+        PlatzIdDto platzIdDto1 = new PlatzIdDto(1, 11);
+        PlatzIdDto platzIdDto2 = new PlatzIdDto(1, 12);
+        Mockito.when(platzDtoMapper.platzIdToPlatzIdDto(platzId1)).thenReturn(platzIdDto1);
+        Mockito.when(platzDtoMapper.platzIdToPlatzIdDto(platzId2)).thenReturn(platzIdDto2);
 
         // act
         AngebotDto angebotDto = angebotService.holeAngebot(platzanzahl, uuidString);
 
         // assert
         assertThat(angebotDto).isNotNull();
-        assertThat(angebotDto.saalplanDto()).isEqualTo(saalplanDto);
-        assertThat(angebotDto.platzDtos()).containsExactly(platzDto1, platzDto2);
+        assertThat(angebotDto.saalplan()).isEqualTo(saalplanDto);
+        assertThat(angebotDto.angebotenePlaetze()).containsExactly(platzIdDto1, platzIdDto2);
         assertThat(angebotDto.gesamtpreis()).isEqualTo(new GeldbetragDto(1500, "EUR"));
     }
 }

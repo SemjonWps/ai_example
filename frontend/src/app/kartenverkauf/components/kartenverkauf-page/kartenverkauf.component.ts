@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
-import {Angebot, Vorstellung} from '../../dtos/kartenverkauf';
+import {Angebot, Kinokarte, Vorstellung} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
 import {KartenverkaufService} from '../../services/kartenverkauf.service';
 import {isPresent} from '../../../common/utils';
@@ -68,7 +68,12 @@ export class KartenverkaufComponent implements OnInit {
   }
 
   schliesseZahlungDialog() {
-    this.zeigeZahlungDialogKomponente = false;
-    this.zeigeKinokarteKomponente = true;
+    this.kartenverkaufService.speichereVerkauftePlaetze(this.angebot!.platzDtos).subscribe(
+      (data: Kinokarte[]) => {
+        console.log(data);
+        this.zeigeZahlungDialogKomponente = false;
+        this.zeigeKinokarteKomponente = true;
+      }
+    )
   }
 }

@@ -1,7 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.api;
 
 import de.wps.ddd.kino.kartenverkauf.api.model.AngebotDto;
+import de.wps.ddd.kino.kartenverkauf.api.model.KinokarteDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.VorstellungDto;
+import de.wps.ddd.kino.kartenverkauf.api.model.ZahlungErfolgtDto;
 import de.wps.ddd.kino.kartenverkauf.services.AngebotService;
 import de.wps.ddd.kino.kartenverkauf.services.VorstellungService;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +26,10 @@ public class KartenverkaufController {
     @GetMapping("/vorstellung")
     public VorstellungDto holeAngebot(@RequestParam String vorstellungUuid) {
         return vorstellungService.holeVorstellung(vorstellungUuid);
+    }
+
+    @PostMapping("/kinokarten")
+    public KinokarteDto[] holeEintrittskarten(@RequestBody ZahlungErfolgtDto zahlungErfolgtDto) {
+        return new KinokarteDto[2];
     }
 }

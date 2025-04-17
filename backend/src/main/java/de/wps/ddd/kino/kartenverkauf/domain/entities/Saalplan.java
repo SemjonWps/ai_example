@@ -1,24 +1,33 @@
 package de.wps.ddd.kino.kartenverkauf.domain.entities;
 
-import de.wps.ddd.kino.kartenverkauf.domain.ZusammenhaengendePlaetze;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.*;
 import lombok.Getter;
 
 import java.util.*;
-
-import static java.util.stream.Collectors.groupingBy;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Getter
 public class Saalplan {
     private final Long id;
     private final UUID vorstellungUUID;
-    private final Map<Reihennummer, List<Platz>> plaetze;
+    private final SortedMap<Reihennummer, SortedMap<Platznummer, Platz>> plaetze;
 
     public Saalplan(Long id, UUID vorstellungUUID, List<Platz> plaetze) {
         this.id = id;
         this.vorstellungUUID = vorstellungUUID;
-        this.plaetze = plaetze.stream().collect(groupingBy(Platz::getReihennummer));
+        this.plaetze = plaetze.stream()
+                .collect(Collectors.groupingBy(
+                        p -> p.getPlatzId().reihennummer(),
+                        TreeMap::new, // outer map - sorted by Reihennummer
+                        Collectors.toMap(
+                                p -> p.getPlatzId().platznummer(),
+                                Function.identity(),
+                                (p1, p2) -> p1, // handle duplicate keys if needed
+                                TreeMap::new    // inner map - sorted by Platznummer
+                        )
+                ));
     }
 
     /**
@@ -26,12 +35,12 @@ public class Saalplan {
      * @return die ersten freien zusammenhängenden Plätze startend von der hintersten Reihe oder eine leere Liste, wenn es keine anzahlPlaetze zusammenhängende Plätze gibt
      */
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
-        var result = new ArrayList<Platz>();
+        var result = new ArrayList<PlatzId>();
 
-        for (var reihe : plaetze.values().stream().sorted(Comparator.<List<Platz>>comparingInt(plaetze -> plaetze.getFirst().getReihennummer().nummer()).reversed()).toList()) {
-            for (Platz platz : reihe) {
+        for (var reihe : plaetze.values()) {
+            for (Platz platz : reihe.values()) {
                 if (platz.istFrei()) {
-                    result.add(platz);
+                    result.add(platz.getPlatzId());
                     if (result.size() == anzahlPlaetze) {
                         return new ZusammenhaengendePlaetze(result);
                     }
@@ -45,27 +54,33 @@ public class Saalplan {
     }
 
     public void markiereAlsVerkauft(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
-        for (Platz p : zusammenhaengendePlaetze.plaetze()) {
-            p.markiereAlsVerkauft();
+        for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
+            var platz = plaetze.get(p.reihennummer()).get(p.platznummer());
+            platz.markiereAlsVerkauft();
         }
     }
 
 
     public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
-        zusammenhaengendePlaetze.plaetze().forEach(platz -> platz.markiereAlsReserviert(reservierungsnummer));
+        for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
+            var platz = plaetze.get(p.reihennummer()).get(p.platznummer());
+            platz.markiereAlsReserviert(reservierungsnummer);
+        }
     }
 
     public void markiereAlsVerkauft(Reservierungsnummer reservierungsnummer) {
-        plaetze.forEach((reihe, plaetzeListe) -> plaetzeListe
-                .stream()
+        allePlaetze()
                 .filter(platz -> Objects.equals(platz.getReservierungsnummer(), reservierungsnummer))
-                .forEach(Platz::markiereAlsVerkauft));
+                .forEach(Platz::markiereAlsVerkauft);
     }
 
     public void gebeNichtAbgeholteReservierungenFrei() {
-        plaetze.forEach((reihe, plaetzeListe) -> plaetzeListe
-                .stream()
+        allePlaetze()
                 .filter(platz -> !platz.isIstVerkauft())
-                .forEach(Platz::gebeReservierungFrei));
+                .forEach(Platz::gebeReservierungFrei);
+    }
+
+    private Stream<Platz> allePlaetze() {
+        return plaetze.values().stream().flatMap(innerMap -> innerMap.values().stream());
     }
 }

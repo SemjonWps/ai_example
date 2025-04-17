@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Angebot, Vorstellung} from '../../dtos/kartenverkauf';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgIf} from '@angular/common';
 import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
 import {isPresent} from '../../../common/utils';
 
@@ -8,7 +8,8 @@ import {isPresent} from '../../../common/utils';
   selector: 'app-kinokarte',
   imports: [
     DatePipe,
-    GeldbetragPipe
+    GeldbetragPipe,
+    NgIf
   ],
   templateUrl: './kinokarte.component.html',
   styleUrl: './kinokarte.component.css'

@@ -30,18 +30,17 @@ export enum Waehrung {
   EUR
 }
 
-export interface Reihe {
-  reihennummer: number,
-}
-
-export interface Sitz {
-  platznummer: number,
-}
-
 export enum SitzplatzStatus {
   BELEGT = 'BELEGT',
   FREI = 'FREI',
   ANGEBOTEN = 'ANGEBOTEN',
+}
+
+export interface Kinokarte {
+  vorstellung: Vorstellung,
+  reihenummer: number,
+  platznummer: number,
+  preis: Geldbetrag,
 }
 
 
