@@ -10,6 +10,7 @@ import {ZahlungComponent} from '../zahlung/zahlung.component';
 import {ZahlungdialogComponent} from '../zahlung/zahlungdialog/zahlungdialog.component';
 import {KinokarteComponent} from '../kinokarte/kinokarte.component';
 import {ActivatedRoute} from '@angular/router';
+import {NavbarComponent} from '../../../common/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-kartenverkauf',
@@ -20,7 +21,8 @@ import {ActivatedRoute} from '@angular/router';
     NgIf,
     ZahlungComponent,
     ZahlungdialogComponent,
-    KinokarteComponent
+    KinokarteComponent,
+    NavbarComponent
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css',

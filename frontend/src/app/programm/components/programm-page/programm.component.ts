@@ -5,13 +5,15 @@ import {KalenderComponent} from '../kalender/kalender.component';
 import {ProgrammeintragComponent} from '../programmeintrag/programmeintrag.component';
 import {NgForOf} from '@angular/common';
 import {format} from 'date-fns';
+import {NavbarComponent} from '../../../common/components/navbar/navbar.component';
 
 @Component({
   selector: 'app-programm',
   imports: [
     KalenderComponent,
     ProgrammeintragComponent,
-    NgForOf
+    NgForOf,
+    NavbarComponent
   ],
   templateUrl: './programm.component.html',
   styleUrl: './programm.component.css',

@@ -1,15 +1,18 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {DatePipe, NgForOf} from '@angular/common';
+import {DatePipe, NgClass, NgForOf} from '@angular/common';
 import {DatumService} from '../../../common/services/datum.service';
 import {format, isBefore, startOfDay} from 'date-fns';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {distinctUntilChanged, map} from 'rxjs';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-kalender',
   imports: [
     DatePipe,
-    NgForOf
+    NgForOf,
+    FormsModule,
+    NgClass
   ],
   providers: [DatePipe],
   templateUrl: './kalender.component.html',
