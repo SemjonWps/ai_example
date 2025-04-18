@@ -2,13 +2,19 @@ package de.wps.ddd.kino.kartenverkauf.domain;
 
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.*;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,28 +22,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SaalplanTest {
 
     private final UUID vorstellungUUID = UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74");
-    private final List<Platz> platzListe = new ArrayList<>();
-    private final long saalplanId = 1L;
     private Saalplan saalplan;
+    private List<Platz> plaetze;
 
     @BeforeEach
     public void setup() {
 
-        saalplan = new Saalplan(saalplanId, null, new ArrayList<>());
-
-        for (int reihe = 1; reihe <= 4; reihe++) {
-            for (int platznummer = 1; platznummer <= 6; platznummer++) {
-                Reihennummer reihennummer = new Reihennummer(reihe);
-                Platznummer sitzplatznummer = new Platznummer(platznummer);
-                PlatzId platzId = new PlatzId(reihennummer, sitzplatznummer);
-                platzListe.add(new Platz((long) ((reihe * 10) + platznummer), platzId, true, null, saalplanId));
+        plaetze = new ArrayList<>();
+        long id = 0;
+        for (int r = 1; r <= 4; r++) {
+            for (int p = 1; p <= 6; p++) {
+                var reiheNr = new ReiheNummer(r);
+                var platzNr = new PlatzNummer(p);
+                var platzId = new PlatzId(reiheNr, platzNr);
+                plaetze.add(new Platz(id++, platzId, true, null));
             }
         }
 
-    }
+        saalplan = new Saalplan(1L, vorstellungUUID, plaetze);
 
-    private void befuelleSaalplan() {
-        saalplan = new Saalplan(1L, vorstellungUUID, platzListe);
     }
 
     @Test
@@ -45,46 +48,44 @@ public class SaalplanTest {
         // arrange
         var anzahlGewuenschtePlaetze = 4;
         var vorletzteReihe = 3;
-        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("istVerkauft");
+        var belegtFeld = plaetze.getFirst().getClass().getDeclaredField("istVerkauft");
         belegtFeld.setAccessible(true);
 
         // Reihe 1 mit 4 freien Plätzen
-        belegtFeld.set(platzListe.get(0), false);
-        belegtFeld.set(platzListe.get(1), false);
-        belegtFeld.set(platzListe.get(2), false);
-        belegtFeld.set(platzListe.get(3), false);
+        belegtFeld.set(plaetze.get(0), false);
+        belegtFeld.set(plaetze.get(1), false);
+        belegtFeld.set(plaetze.get(2), false);
+        belegtFeld.set(plaetze.get(3), false);
         // Reihe 3 mit 4 freien Plätzen
-        belegtFeld.set(platzListe.get(12), false);
-        belegtFeld.set(platzListe.get(13), false);
-        belegtFeld.set(platzListe.get(14), false);
-        belegtFeld.set(platzListe.get(15), false);
+        belegtFeld.set(plaetze.get(12), false);
+        belegtFeld.set(plaetze.get(13), false);
+        belegtFeld.set(plaetze.get(14), false);
+        belegtFeld.set(plaetze.get(15), false);
         // Reihe 4 mit 4 freien, nicht zusammenhängenden Plätzen
-        belegtFeld.set(platzListe.get(18), false);
-        belegtFeld.set(platzListe.get(19), false);
-        belegtFeld.set(platzListe.get(20), false);
-        belegtFeld.set(platzListe.get(22), false);
-        befuelleSaalplan();
+        belegtFeld.set(plaetze.get(18), false);
+        belegtFeld.set(plaetze.get(19), false);
+        belegtFeld.set(plaetze.get(20), false);
+        belegtFeld.set(plaetze.get(22), false);
 
         // act
         var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
 
         // assert
         assertThat(zusammenhaengendePlaetze.plaetze()).hasSize(anzahlGewuenschtePlaetze);
-        Set<PlatzId> plaetzeSet = new HashSet<>(zusammenhaengendePlaetze.plaetze());
-        assertThat(plaetzeSet).hasSize(anzahlGewuenschtePlaetze);
-        assertThat(zusammenhaengendePlaetze.plaetze().getLast().platznummer().nummer() - zusammenhaengendePlaetze.plaetze().getFirst().platznummer().nummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
-        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.reihennummer().nummer() == vorletzteReihe);
+        var platzIds = zusammenhaengendePlaetze.plaetze();
+        assertThat(platzIds).hasSize(anzahlGewuenschtePlaetze);
+        assertThat(zusammenhaengendePlaetze.plaetze().getLast().platzNr().nummer() - zusammenhaengendePlaetze.plaetze().getFirst().platzNr().nummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.reiheNr().nummer() == vorletzteReihe);
     }
 
     @Test
     public void sucheZusammenhaengendePlaetze_doesNotExistZusammenhaengendePlaetze_returnsObjectWithEmptyList() throws NoSuchFieldException, IllegalAccessException {
         // arrange
         var anzahlGewuenschtePlaetze = 2;
-        var belegtFeld = platzListe.getFirst().getClass().getDeclaredField("istVerkauft");
+        var belegtFeld = plaetze.getFirst().getClass().getDeclaredField("istVerkauft");
         belegtFeld.setAccessible(true);
-        belegtFeld.set(platzListe.get(0), false);
-        belegtFeld.set(platzListe.get(9), false);
-        befuelleSaalplan();
+        belegtFeld.set(plaetze.get(0), false);
+        belegtFeld.set(plaetze.get(9), false);
 
         // act
         var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
@@ -96,18 +97,15 @@ public class SaalplanTest {
     @Test
     public void markiereAlsVerkauft() {
         // arrange
-        Reihennummer reihennummer = new Reihennummer(1);
-        Platznummer platznummer1 = new Platznummer(1);
-        Platznummer platznummer2 = new Platznummer(2);
-        Platznummer platznummer3 = new Platznummer(3);
-        var platzId1 = new PlatzId(reihennummer, platznummer1);
-        var platzId2 = new PlatzId(reihennummer, platznummer2);
-        var platzId3 = new PlatzId(reihennummer, platznummer3);
+        var reiheNr1 = new ReiheNummer(1);
+        var platzNr1 = new PlatzNummer(1);
+        var platzNr2 = new PlatzNummer(2);
+        var platzNr3 = new PlatzNummer(3);
+        var platzId1 = new PlatzId(reiheNr1, platzNr1);
+        var platzId2 = new PlatzId(reiheNr1, platzNr2);
+        var platzId3 = new PlatzId(reiheNr1, platzNr3);
 
-        var plaetze = new ArrayList<PlatzId>();
-        plaetze.add(platzId1);
-        plaetze.add(platzId2);
-        plaetze.add(platzId3);
+        var plaetze = List.of(platzId1, platzId2, platzId3);
 
         var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
 
@@ -115,26 +113,23 @@ public class SaalplanTest {
         saalplan.markiereAlsVerkauft(zusammenhaengendePlaetze);
 
         // assert
-        assertThat(saalplan.getPlaetze().get(0).get(1).isIstVerkauft()).isTrue();
-        assertThat(saalplan.getPlaetze().get(0).get(2).isIstVerkauft()).isTrue();
-        assertThat(saalplan.getPlaetze().get(0).get(3).isIstVerkauft()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).isIstVerkauft()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).isIstVerkauft()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).isIstVerkauft()).isTrue();
     }
 
     @Test
     public void markiereAlsReserviert() {
         // arrange
-        Reihennummer reihennummer = new Reihennummer(1);
-        Platznummer platznummer1 = new Platznummer(1);
-        Platznummer platznummer2 = new Platznummer(2);
-        Platznummer platznummer3 = new Platznummer(3);
-        var platzId1 = new PlatzId(reihennummer, platznummer1);
-        var platzId2 = new PlatzId(reihennummer, platznummer2);
-        var platzId3 = new PlatzId(reihennummer, platznummer3);
+        var reiheNr1 = new ReiheNummer(1);
+        var platzNr1 = new PlatzNummer(1);
+        var platzNr2 = new PlatzNummer(2);
+        var platzNr3 = new PlatzNummer(3);
+        var platzId1 = new PlatzId(reiheNr1, platzNr1);
+        var platzId2 = new PlatzId(reiheNr1, platzNr2);
+        var platzId3 = new PlatzId(reiheNr1, platzNr3);
 
-        var plaetze = new ArrayList<PlatzId>();
-        plaetze.add(platzId1);
-        plaetze.add(platzId2);
-        plaetze.add(platzId3);
+        var plaetze = List.of(platzId1, platzId2, platzId3);
 
         var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
 
@@ -144,32 +139,27 @@ public class SaalplanTest {
         saalplan.markiereAlsReserviert(zusammenhaengendePlaetze, reservierungsnummer);
 
         // assert
-        assertThat(saalplan.getPlaetze().get(0).get(1).istBelegt()).isTrue();
-        assertThat(saalplan.getPlaetze().get(0).get(1).getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).istBelegt()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).getReservierungsnummer()).isEqualTo(reservierungsnummer);
 
-        assertThat(saalplan.getPlaetze().get(0).get(2).istBelegt()).isTrue();
-        assertThat(saalplan.getPlaetze().get(0).get(2).getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).istBelegt()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).getReservierungsnummer()).isEqualTo(reservierungsnummer);
 
-        assertThat(saalplan.getPlaetze().get(0).get(3).istBelegt()).isTrue();
-        assertThat(saalplan.getPlaetze().get(0).get(3).getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).istBelegt()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).getReservierungsnummer()).isEqualTo(reservierungsnummer);
     }
 
     @Test
     public void markiereAlsVerkauft_MitReservierungsnummer() {
         // arrange
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-        var lokalePlatzliste = new ArrayList<Platz>();
-        var platz1 = new Platz(1L, new PlatzId(new Reihennummer(1), new Platznummer(1)), false, reservierungsnummer, saalplanId);
-        var platz3 = new Platz(3L, new PlatzId(new Reihennummer(2), new Platznummer(3)), false, null, saalplanId);
-        var platz2 = new Platz(2L, new PlatzId(new Reihennummer(2), new Platznummer(2)), false, reservierungsnummer, saalplanId);
-        var platz4 = new Platz(4L, new PlatzId(new Reihennummer(2), new Platznummer(4)), false, null, saalplanId);
-        var platz5 = new Platz(5L, new PlatzId(new Reihennummer(2), new Platznummer(5)), false, new Reservierungsnummer("andereReservierungsnummer"), saalplanId);
+        var platz1 = new Platz(1L, new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), false, reservierungsnummer);
+        var platz3 = new Platz(3L, new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
+        var platz2 = new Platz(2L, new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), false, reservierungsnummer);
+        var platz4 = new Platz(4L, new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
+        var platz5 = new Platz(5L, new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, new Reservierungsnummer("andereReservierungsnummer"));
 
-        lokalePlatzliste.add(platz1);
-        lokalePlatzliste.add(platz2);
-        lokalePlatzliste.add(platz3);
-        lokalePlatzliste.add(platz4);
-        lokalePlatzliste.add(platz5);
+        var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5);
 
         saalplan = new Saalplan(1L, vorstellungUUID, lokalePlatzliste);
 
@@ -188,20 +178,14 @@ public class SaalplanTest {
     public void gebeNichtAbgeholteReservierungenFrei() {
         // arrange
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-        var lokalePlatzliste = new ArrayList<Platz>();
-        var platz1 = new Platz(1L, new PlatzId(new Reihennummer(1), new Platznummer(1)), true, reservierungsnummer, saalplanId);
-        var platz2 = new Platz(2L, new PlatzId(new Reihennummer(2), new Platznummer(2)), true, reservierungsnummer, saalplanId);
-        var platz3 = new Platz(3L, new PlatzId(new Reihennummer(2), new Platznummer(3)), false, null, saalplanId);
-        var platz4 = new Platz(4L, new PlatzId(new Reihennummer(2), new Platznummer(4)), false, null, saalplanId);
-        var platz5 = new Platz(5L, new PlatzId(new Reihennummer(2), new Platznummer(5)), false, reservierungsnummer, saalplanId);
-        var platz6 = new Platz(6L, new PlatzId(new Reihennummer(3), new Platznummer(6)), true, null, saalplanId);
+        var platz1 = new Platz(1L, new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), true, reservierungsnummer);
+        var platz2 = new Platz(2L, new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), true, reservierungsnummer);
+        var platz3 = new Platz(3L, new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
+        var platz4 = new Platz(4L, new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
+        var platz5 = new Platz(5L, new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, reservierungsnummer);
+        var platz6 = new Platz(6L, new PlatzId(new ReiheNummer(3), new PlatzNummer(6)), true, null);
 
-        lokalePlatzliste.add(platz1);
-        lokalePlatzliste.add(platz2);
-        lokalePlatzliste.add(platz3);
-        lokalePlatzliste.add(platz4);
-        lokalePlatzliste.add(platz5);
-        lokalePlatzliste.add(platz6);
+        var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5, platz6);
 
         saalplan = new Saalplan(1L, vorstellungUUID, lokalePlatzliste);
 

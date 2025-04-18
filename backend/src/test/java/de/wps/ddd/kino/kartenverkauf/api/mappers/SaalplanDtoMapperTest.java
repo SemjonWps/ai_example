@@ -1,13 +1,12 @@
 package de.wps.ddd.kino.kartenverkauf.api.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
-import de.wps.ddd.kino.kartenverkauf.api.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,8 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -31,47 +30,43 @@ class SaalplanDtoMapperTest {
     @Test
     void saalplantoSaalplanDto() {
         // arrange
-        List<Platz> platzListe = new ArrayList<>();
 
-        Reihennummer reihennummer1 = new Reihennummer(1);
-        Reihennummer reihennummer2 = new Reihennummer(2);
+        var reiheNr1 = new ReiheNummer(1);
+        var reiheNr2 = new ReiheNummer(2);
 
-        Platznummer platznummer1 = new Platznummer(1);
-        Platznummer platznummer2 = new Platznummer(2);
+        var platzNr1 = new PlatzNummer(1);
+        var platzNr2 = new PlatzNummer(2);
 
-        PlatzId platzId1 = new PlatzId(reihennummer1, platznummer1);
-        PlatzId platzId2 = new PlatzId(reihennummer1, platznummer2);
-        PlatzId platzId3 = new PlatzId(reihennummer2, platznummer1);
-        PlatzId platzId4 = new PlatzId(reihennummer2, platznummer2);
+        var platzId1 = new PlatzId(reiheNr1, platzNr1);
+        var platzId2 = new PlatzId(reiheNr1, platzNr2);
+        var platzId3 = new PlatzId(reiheNr2, platzNr1);
+        var platzId4 = new PlatzId(reiheNr2, platzNr2);
 
-        Platz reihe1_platz1 = new Platz(null, platzId1, false, null, null);
-        Platz rehie1_platz2 = new Platz(null, platzId2, true, null, null);
-        Platz reihe2_platz1 = new Platz(null, platzId3, true, null, null);
-        Platz reihe2_platz2 = new Platz(null, platzId4, false, new Reservierungsnummer("reservierungsnummer"), null);
+        var reihe1_platz1 = new Platz(null, platzId1, false, null);
+        var rehie1_platz2 = new Platz(null, platzId2, true, null);
+        var reihe2_platz1 = new Platz(null, platzId3, true, null);
+        var reihe2_platz2 = new Platz(null, platzId4, false, new Reservierungsnummer("reservierungsnummer"));
 
-        platzListe.add(reihe1_platz1);
-        platzListe.add(rehie1_platz2);
-        platzListe.add(reihe2_platz1);
-        platzListe.add(reihe2_platz2);
+        var plaetze = List.of(reihe1_platz1, rehie1_platz2, reihe2_platz1, reihe2_platz2);
 
-        PlatzDto reihe1_platz1_dto = new PlatzDto(1, 1, SitzplatzStatus.BELEGT);
-        PlatzDto reihe1_platz2_dto = new PlatzDto(1, 1, SitzplatzStatus.FREI);
-        PlatzDto reihe2_platz1_dto = new PlatzDto(2, 1, SitzplatzStatus.FREI);
-        PlatzDto reihe2_platz2_dto = new PlatzDto(2, 1, SitzplatzStatus.BELEGT);
+        var reihe1_platz1_dto = new PlatzDto(1, 1, SitzplatzStatus.BELEGT);
+        var reihe1_platz2_dto = new PlatzDto(1, 1, SitzplatzStatus.FREI);
+        var reihe2_platz1_dto = new PlatzDto(2, 1, SitzplatzStatus.FREI);
+        var reihe2_platz2_dto = new PlatzDto(2, 1, SitzplatzStatus.BELEGT);
 
         Mockito.when(platzDtoMapper.platzToPlatzDto(reihe1_platz1)).thenReturn(reihe1_platz1_dto);
         Mockito.when(platzDtoMapper.platzToPlatzDto(rehie1_platz2)).thenReturn(reihe1_platz2_dto);
         Mockito.when(platzDtoMapper.platzToPlatzDto(reihe2_platz1)).thenReturn(reihe2_platz1_dto);
         Mockito.when(platzDtoMapper.platzToPlatzDto(reihe2_platz2)).thenReturn(reihe2_platz2_dto);
 
-        Saalplan saalplan = new Saalplan(null, null, platzListe);
+        var saalplan = new Saalplan(1L, UUID.randomUUID(), plaetze);
         PlatzDto[][] expectedPlatzDtos = {
                 {reihe1_platz1_dto, reihe1_platz2_dto},
                 {reihe2_platz1_dto, reihe2_platz2_dto},
         };
 
         // act
-        SaalplanDto saalplanDto = mapper.saalplantoSaalplanDto(saalplan);
+        var saalplanDto = mapper.saalplantoSaalplanDto(saalplan);
 
         // assert
         assertThat(saalplanDto.platzbelegungen()).isEqualTo(expectedPlatzDtos);

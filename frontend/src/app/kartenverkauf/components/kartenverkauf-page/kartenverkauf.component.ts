@@ -57,7 +57,7 @@ export class KartenverkaufComponent implements OnInit {
     this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid).subscribe(
       (data: Angebot) => {
         this.angebot = data;
-        this.zeigeSaalplanKomponente = this.angebot.saalplanDto.platzbelegungen !== undefined;
+        this.zeigeSaalplanKomponente = this.angebot.saalplan.platzbelegungen !== undefined;
         this.zeigeZahlungKomponente = this.angebot.gesamtpreis !== undefined;
       }
     )
@@ -68,7 +68,7 @@ export class KartenverkaufComponent implements OnInit {
   }
 
   schliesseZahlungDialog() {
-    this.kartenverkaufService.speichereVerkauftePlaetze(this.angebot!.platzDtos).subscribe(
+    this.kartenverkaufService.speichereVerkauftePlaetze(this.angebot!.plaetze, this.vorstellung!.uuid).subscribe(
       (data: Kinokarte[]) => {
         console.log(data);
         this.zeigeZahlungDialogKomponente = false;

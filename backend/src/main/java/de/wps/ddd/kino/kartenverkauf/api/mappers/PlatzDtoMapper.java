@@ -12,8 +12,8 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface PlatzDtoMapper {
 
-    @Mapping(target = "platznummer", source = "platzId.platznummer.nummer")
-    @Mapping(target = "reihennummer", source = "platzId.reihennummer.nummer")
+    @Mapping(target = "platzNr", source = "platzId.platzNr.nummer")
+    @Mapping(target = "reiheNr", source = "platzId.reiheNr.nummer")
     @Mapping(target = "sitzplatzStatus", source = "platz", qualifiedByName = "istBelegtToSitzplatzStatus")
     PlatzDto platzToPlatzDto(Platz platz);
 
@@ -22,7 +22,7 @@ public interface PlatzDtoMapper {
         return platz.istBelegt() ? SitzplatzStatus.BELEGT : SitzplatzStatus.FREI;
     }
 
-    @Mapping(target = "platznummer", source = "platznummer.nummer")
-    @Mapping(target = "reihennummer", source = "reihennummer.nummer")
+    @Mapping(target = "platzNr", source = "platzNr.nummer")
+    @Mapping(target = "reiheNr", source = "reiheNr.nummer")
     PlatzIdDto platzIdToPlatzIdDto(PlatzId platzId);
 }

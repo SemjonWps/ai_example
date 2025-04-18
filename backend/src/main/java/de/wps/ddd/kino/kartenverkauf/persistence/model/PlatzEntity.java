@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 public class PlatzEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    private int platznummer;
-    private int reihennummer;
+    private Long id;
+    private int platzNr;
+    private int reiheNr;
     private boolean istVerkauft;
     private String reservierungsnummer;
-    private long saalplan_id;
+    //private Long saalplanId; column generated automatically by Hibernate
 }

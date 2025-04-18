@@ -7,8 +7,8 @@ export interface Vorstellung {
 
 export interface Angebot {
   gesamtpreis: Geldbetrag,
-  platzDtos: Platz[],
-  saalplanDto: Saalplan,
+  plaetze: Platz[],
+  saalplan: Saalplan,
 }
 
 export interface Saalplan {
@@ -16,8 +16,8 @@ export interface Saalplan {
 }
 
 export interface Platz {
-  reihennummer: number,
-  platznummer: number,
+  reiheNr: number,
+  platzNr: number,
   sitzplatzStatus: SitzplatzStatus,
 }
 
@@ -27,7 +27,7 @@ export interface Geldbetrag {
 }
 
 export enum Waehrung {
-  EUR
+  EUR = 'EUR',
 }
 
 export enum SitzplatzStatus {
@@ -38,8 +38,8 @@ export enum SitzplatzStatus {
 
 export interface Kinokarte {
   vorstellung: Vorstellung,
-  reihenummer: number,
-  platznummer: number,
+  reiheNr: number,
+  platzNr: number,
   preis: Geldbetrag,
 }
 

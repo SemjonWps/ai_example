@@ -1,9 +1,18 @@
 package de.wps.ddd.kino.kartenverkauf.domain.entities;
 
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.*;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import lombok.Getter;
+import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -12,17 +21,19 @@ import java.util.stream.Stream;
 public class Saalplan {
     private final Long id;
     private final UUID vorstellungUUID;
-    private final SortedMap<Reihennummer, SortedMap<Platznummer, Platz>> plaetze;
+    private final TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze;
 
     public Saalplan(Long id, UUID vorstellungUUID, List<Platz> plaetze) {
+        Assert.notNull(id, "id must not be null");
+        Assert.notNull(vorstellungUUID, "vorstellungUUID must not be null");
         this.id = id;
         this.vorstellungUUID = vorstellungUUID;
         this.plaetze = plaetze.stream()
                 .collect(Collectors.groupingBy(
-                        p -> p.getPlatzId().reihennummer(),
+                        p -> p.getPlatzId().reiheNr(),
                         TreeMap::new, // outer map - sorted by Reihennummer
                         Collectors.toMap(
-                                p -> p.getPlatzId().platznummer(),
+                                p -> p.getPlatzId().platzNr(),
                                 Function.identity(),
                                 (p1, p2) -> p1, // handle duplicate keys if needed
                                 TreeMap::new    // inner map - sorted by Platznummer
@@ -37,7 +48,7 @@ public class Saalplan {
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var result = new ArrayList<PlatzId>();
 
-        for (var reihe : plaetze.values()) {
+        for (var reihe : plaetze.descendingMap().values()) {
             for (Platz platz : reihe.values()) {
                 if (platz.istFrei()) {
                     result.add(platz.getPlatzId());
@@ -55,7 +66,7 @@ public class Saalplan {
 
     public void markiereAlsVerkauft(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
-            var platz = plaetze.get(p.reihennummer()).get(p.platznummer());
+            var platz = plaetze.get(p.reiheNr()).get(p.platzNr());
             platz.markiereAlsVerkauft();
         }
     }
@@ -63,7 +74,7 @@ public class Saalplan {
 
     public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
         for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
-            var platz = plaetze.get(p.reihennummer()).get(p.platznummer());
+            var platz = plaetze.get(p.reiheNr()).get(p.platzNr());
             platz.markiereAlsReserviert(reservierungsnummer);
         }
     }

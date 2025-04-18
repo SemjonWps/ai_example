@@ -22,7 +22,7 @@ export class KartenverkaufService {
     return this.http.get<Vorstellung>(this.kartenverkaufUrl + '/vorstellung', {params: {vorstellungUuid}});
   }
 
-  speichereVerkauftePlaetze(platzDtos: Platz[], vorstellungUuid: string): Observable<Kinokarte[]> {
-    return this.http.post<Kinokarte[]>(this.kartenverkaufUrl + '/kinokarten', platzDtos);
+  speichereVerkauftePlaetze(plaetze: Platz[], vorstellungUuid: string): Observable<Kinokarte[]> {
+    return this.http.post<Kinokarte[]>(this.kartenverkaufUrl + '/kinokarten', plaetze);
   }
 }

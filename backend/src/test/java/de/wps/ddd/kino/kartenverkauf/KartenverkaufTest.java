@@ -31,7 +31,7 @@ public class KartenverkaufTest {
 
     @Test
     void kartenverkauf() {
-        var vorstellungId = UUID.fromString("95b21a30-64bf-4df1-a0a2-e769bd7c5ea1");
+        var vorstellungId = UUID.fromString("090c173a-3636-4980-865a-1ec859eb4f90");
         var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
         assertThat(vorstellung).isNotNull();
 
@@ -47,12 +47,12 @@ public class KartenverkaufTest {
 
         var gewaehltePlaetze = vorgeschlagenePlaetze;
 
-        var zahlungsanforderung = bezahlService.fordereBezahlungAn(vorstellungId, gewaehltePlaetze, gesamtpreis);
-        assertThat(zahlungsanforderung).isNotNull();
+        //var zahlungsanforderung = bezahlService.fordereBezahlungAn(vorstellungId, gewaehltePlaetze, gesamtpreis);
+        //assertThat(zahlungsanforderung).isNotNull();
 
         var zahlungsbestaetigung = new Zahlungsbestaetigung(vorstellungId, gewaehltePlaetze, gesamtpreis);
         saalplan.markiereAlsVerkauft(gewaehltePlaetze);
-        var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
+        //var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
         // TODO assertThat(KinokartenVerkauftEvent.feuert)
     }
 

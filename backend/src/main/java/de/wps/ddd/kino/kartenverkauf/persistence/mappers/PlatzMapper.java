@@ -1,8 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.persistence.model.PlatzEntity;
 import org.mapstruct.Mapper;
@@ -12,13 +12,13 @@ import org.mapstruct.Named;
 @Mapper
 public interface PlatzMapper {
     @Mapping(target = "reservierungsnummer", source = "reservierungsnummer", qualifiedByName = "StringToReservierungsnummer")
-    @Mapping(target = "platzId.reihennummer", source = "reihennummer", qualifiedByName = "IntToReihennummer")
-    @Mapping(target = "platzId.platznummer", source = "platznummer", qualifiedByName = "IntToPlatznummer")
+    @Mapping(target = "platzId.reiheNr", source = "reiheNr", qualifiedByName = "IntToReiheNummer")
+    @Mapping(target = "platzId.platzNr", source = "platzNr", qualifiedByName = "IntToPlatzNummer")
     Platz platzEntityToPlatz(PlatzEntity platzEntity);
 
     @Mapping(target = "reservierungsnummer", source = "reservierungsnummer", qualifiedByName = "ReservierungsnummerToString")
-    @Mapping(target = "reihennummer", source = "platzId.reihennummer", qualifiedByName = "ReihennummerToInt")
-    @Mapping(target = "platznummer", source = "platzId.platznummer", qualifiedByName = "PlatznummerToInt")
+    @Mapping(target = "reiheNr", source = "platzId.reiheNr", qualifiedByName = "ReiheNummerToInt")
+    @Mapping(target = "platzNr", source = "platzId.platzNr", qualifiedByName = "PlatzNummerToInt")
     PlatzEntity platzToPlatzEntity(Platz platz);
 
     @Named("ReservierungsnummerToString")
@@ -31,29 +31,29 @@ public interface PlatzMapper {
         return reservierungsnummer == null ? null : new Reservierungsnummer(reservierungsnummer);
     }
 
-    @Named("IntToReihennummer")
-    default Reihennummer mapReihennummerToReihe(int reihennummer) {
-        return new Reihennummer(reihennummer);
+    @Named("IntToReiheNummer")
+    default ReiheNummer mapReihennummerToReihe(int reiheNr) {
+        return new ReiheNummer(reiheNr);
     }
 
-    @Named("ReihennummerToInt")
-    default int mapReiheToReihennummer(Reihennummer reihennummer) {
-        if (reihennummer == null) {
-            throw new IllegalArgumentException("Reihennummer must not be null");
+    @Named("ReiheNummerToInt")
+    default int mapReiheToReiheNummer(ReiheNummer reiheNr) {
+        if (reiheNr == null) {
+            throw new IllegalArgumentException("ReiheNr must not be null");
         }
-        return reihennummer.nummer();
+        return reiheNr.nummer();
     }
 
-    @Named("IntToPlatznummer")
-    default Platznummer mapPlatznummerToSitz(int platznummer) {
-        return new Platznummer(platznummer);
+    @Named("IntToPlatzNummer")
+    default PlatzNummer mapPlatzNummerToSitz(int platzNr) {
+        return new PlatzNummer(platzNr);
     }
 
-    @Named("PlatznummerToInt")
-    default int mapSitzToPlatznummer(Platznummer platznummer) {
-        if (platznummer == null) {
-            throw new IllegalArgumentException("Platznummer must not be null");
+    @Named("PlatzNummerToInt")
+    default int mapSitzToPlatznummer(PlatzNummer platzNr) {
+        if (platzNr == null) {
+            throw new IllegalArgumentException("PlatzNr must not be null");
         }
-        return platznummer.nummer();
+        return platzNr.nummer();
     }
 }

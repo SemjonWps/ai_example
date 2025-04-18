@@ -12,7 +12,6 @@ public class Platz {
     private PlatzId platzId;
     private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;
-    private Long saalplan_id;
 
     public void markiereAlsVerkauft() {
         istVerkauft = true;

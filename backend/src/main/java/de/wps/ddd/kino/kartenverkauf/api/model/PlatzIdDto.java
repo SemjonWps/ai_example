@@ -1,4 +1,4 @@
 package de.wps.ddd.kino.kartenverkauf.api.model;
 
-public record PlatzIdDto(int reihennummer, int platznummer) {
+public record PlatzIdDto(int reiheNr, int platzNr) {
 }

@@ -17,11 +17,12 @@ describe('KinokarteComponent', () => {
     component = fixture.componentInstance;
 
     component.angebot = {
-      gesamtpreis: {betragInEuroCent: 20},
-      platzDtos: [
-        {reihe: {reihennummer: 1}, sitz: {platznummer: 2}},
-        {reihe: {reihennummer: 1}, sitz: {platznummer: 3}},
-      ]
+      gesamtpreis: {betrag: 20, waehrung: 'EUR'},
+      plaetze: [
+        {reiheNr: 1, platzNr: 2, sitzplatzStatus: 'FREI'},
+        {reiheNr: 1, platzNr: 3, sitzplatzStatus: 'FREI'},
+      ],
+      saalplan: {},
     } as Angebot;
     fixture.detectChanges();
   });
@@ -41,7 +42,7 @@ describe('KinokarteComponent', () => {
     })
 
     it('should throw exception with invalid angebot', () => {
-      component.angebot.platzDtos = [];
+      component.angebot.plaetze = [];
 
       expect(() => {
         component.createPlaetzeString();

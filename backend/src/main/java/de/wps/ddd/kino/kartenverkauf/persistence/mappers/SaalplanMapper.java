@@ -2,8 +2,8 @@ package de.wps.ddd.kino.kartenverkauf.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Platznummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.persistence.model.PlatzEntity;
 import de.wps.ddd.kino.kartenverkauf.persistence.model.SaalplanEntity;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import org.mapstruct.Named;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
+import java.util.TreeMap;
 
 @Mapper
 @AllArgsConstructor
@@ -28,7 +28,7 @@ public abstract class SaalplanMapper {
     public abstract Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
 
     @Named("PlaetzeToPlatzEntities")
-    protected List<PlatzEntity> mapPlaetzeToPlatzEntities(SortedMap<Reihennummer, SortedMap<Platznummer, Platz>> plaetze) {
+    protected List<PlatzEntity> mapPlaetzeToPlatzEntities(TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze) {
         List<PlatzEntity> platzEntities = new ArrayList<>();
         for (Platz platz : plaetze.values().stream().flatMap(innerMap -> innerMap.values().stream()).toList()) {
             platzEntities.add(platzMapper.platzToPlatzEntity(platz));

@@ -50,7 +50,7 @@ export class SaalplanComponent {
   }
 
   getFarbeFuerPlatzbelegung(platz: Platz): String {
-    const sitzplatzStatus: SitzplatzStatus = this.angebotenePlaetze?.some(angebotenerPlatz => angebotenerPlatz.platznummer === platz.platznummer && angebotenerPlatz.reihennummer === platz.reihennummer) ? SitzplatzStatus.ANGEBOTEN : platz.sitzplatzStatus
+    const sitzplatzStatus: SitzplatzStatus = this.angebotenePlaetze?.some(angebotenerPlatz => angebotenerPlatz.platzNr === platz.platzNr && angebotenerPlatz.reiheNr === platz.reiheNr) ? SitzplatzStatus.ANGEBOTEN : platz.sitzplatzStatus
     switch (sitzplatzStatus) {
       case 'FREI':
         return 'white';

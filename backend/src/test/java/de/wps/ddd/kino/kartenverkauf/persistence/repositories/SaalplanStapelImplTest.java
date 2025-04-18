@@ -1,9 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.persistence.repositories;
 
 
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reihennummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,20 +18,20 @@ class SaalplanStapelImplTest {
     @Autowired
     private SaalplanStapel saalplanStapel;
 
-    Saalplan saalplan;
-    UUID vorstellungUUID = UUID.fromString("95b21a30-64bf-4df1-a0a2-e769bd7c5ea1");
+    UUID vorstellungUUID = UUID.fromString("f711a38d-e792-4016-9463-286c96ce824e");
 
     @Test
     public void holeSaalplan() {
         // act
-        saalplan = saalplanStapel.holeSaalplan(vorstellungUUID);
+        var saalplan = saalplanStapel.holeSaalplan(vorstellungUUID);
 
         // assert
+        assertThat(saalplan).isNotNull();
         assertThat(saalplan.getVorstellungUUID()).isEqualTo(vorstellungUUID);
         int reihenAnzahl = 4;
-        List<Reihennummer> reihen = saalplan.getPlaetze().keySet().stream().toList();
+        List<ReiheNummer> reihen = saalplan.getPlaetze().keySet().stream().toList();
         assertThat(reihen).hasSize(reihenAnzahl);
-        int platzAnzahlInReihe = 12;
+        int platzAnzahlInReihe = 8;
         saalplan.getPlaetze().forEach((reihe, plaetzeListe) -> assertThat(plaetzeListe).hasSize(platzAnzahlInReihe));
     }
 }

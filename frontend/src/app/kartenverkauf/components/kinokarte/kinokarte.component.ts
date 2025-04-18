@@ -23,9 +23,9 @@ export class KinokarteComponent {
 
 
   createPlaetzeString(): string {
-    if (isPresent(this.angebot.platzDtos.at(0))) {
-      return "Reihe " + this.angebot.platzDtos.at(0)!.reihennummer + ", Platz " + this.angebot.platzDtos
-        .map(platz => platz.platznummer.toString())
+    if (isPresent(this.angebot.plaetze.at(0))) {
+      return "Reihe " + this.angebot.plaetze.at(0)!.reiheNr + ", Platz " + this.angebot.plaetze
+        .map(platz => platz.platzNr.toString())
         .reduce((previousValue: string, currentValue: string) => previousValue === "" ? currentValue : previousValue + ", " + currentValue)
     }
     throw new Error("Angebot enthält keine Plätze");
