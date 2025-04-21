@@ -1,30 +1,44 @@
 <app-navbar title="Kartenverkauf"/>
 
-<app-vorstellung
-  [vorstellung]="vorstellung"
-/>
-<app-platzanzahl
-  (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"
-/>
-<app-saalplan
-  [saalplanDto]="angebot?.saalplan"
-  [angebotenePlaetze]="angebot?.plaetze"
-  *ngIf="zeigeSaalplanKomponente"
-/>
-<app-zahlung
-  [gesamtpreis]="angebot!.gesamtpreis"
-  *ngIf="zeigeZahlungKomponente"
-  (oeffneZahlungDialog)="oeffneZahlungDialog()"
-/>
-<app-zahlungdialog
-  [angebot]="angebot"
-  [vorstellung]="vorstellung"
-  *ngIf="zeigeZahlungDialogKomponente"
-  (schliesse)="schliesseZahlungDialog()"
-/>
-<app-kinokarte
-  [angebot]="angebot!"
-  [vorstellung]="vorstellung"
-  *ngIf="zeigeKinokarteKomponente"
-/>
+<div class="flex flex-row">
+  <div class="flex-1"></div>
+  <div class="flex-auto">
+    <div class="flex flex-col items-center">
+      <span class="badge badge-lg badge-primary badge-soft mt-6">Vorstellung aussuchen</span>
+      <app-vorstellung class="w-full"
+                       [vorstellung]="vorstellung"
+      />
+      <span class="badge badge-lg badge-primary badge-soft">Kartenanzahl wählen</span>
+      <app-platzanzahl class="w-full"
+                       (onPlatzanzahlButtonClick)="forderePlaetzeAn($event)"
+      />
+      <span class="badge badge-lg badge-primary badge-soft">Plätze wählen</span>
+      <app-saalplan class="w-full"
+                    [saalplanDto]="angebot?.saalplan"
+                    [angebotenePlaetze]="angebot?.plaetze"
+                    *ngIf="zeigeSaalplanKomponente"
+      />
+      <span class="badge badge-lg badge-primary badge-soft">Kinokarten zahlen</span>
+      <app-zahlung class="w-full"
+                   [gesamtpreis]="angebot!.gesamtpreis"
+                   *ngIf="zeigeZahlungKomponente"
+                   (oeffneZahlungDialog)="oeffneZahlungDialog()"
+      />
+      <app-zahlungdialog class="w-full"
+                         [angebot]="angebot"
+                         [vorstellung]="vorstellung"
+                         *ngIf="zeigeZahlungDialogKomponente"
+                         (schliesse)="schliesseZahlungDialog()"
+      />
+      <span class="badge badge-lg badge-primary badge-soft">Kinokarten erhalten</span>
+      <app-kinokarte class="w-full"
+                     [angebot]="angebot!"
+                     [vorstellung]="vorstellung"/>
+      <!--  *ngIf="zeigeKinokarteKomponente"-->
+      <!--/>-->
+      <span class="badge badge-lg badge-primary badge-soft mb-6">Kinokarten gedruckt</span>
+    </div>
+  </div>
+  <div class="flex-1"></div>
+</div>
 

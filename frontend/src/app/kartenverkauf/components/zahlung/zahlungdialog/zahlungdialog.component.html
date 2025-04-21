@@ -1,24 +1,27 @@
-<div class="zahlungDialogModal" (click)="schliesseDialog()">
-  <div class="zahlungDialog">
-    <h1>Zahlung</h1>
-    <div class="flex-container">
-      <div>
-        <img src="assets/bezahlung.png"/>
-      </div>
-      <div id="vorstellungInfos">
-        {{ vorstellung?.filmname }}
-        <br>
-        {{ vorstellung?.anfangszeit | date : 'dd.MM.YYYY' }}
-        <br>
-        {{ vorstellung?.anfangszeit | date : 'HH:mm' }} Uhr
-        <br>
-        {{ vorstellung?.saal }}
-        <br>
-        {{ angebot?.plaetze?.length }} Plätze
-        <br><br>
-        {{ angebot!.gesamtpreis.betrag | geldbetrag }} {{ angebot!.gesamtpreis.waehrung }}
-      </div>
+<dialog id="zahlungDialogModal" class="modal">
+  <div class="modal-box">
+    <form method="dialog">
+      <button class="btn btn-md btn-circle btn-ghost btn-error absolute right-2 top-2">✕</button>
+    </form>
+    <h3 class="text-lg font-bold">Zahlung</h3>
+    <div>
+      {{ vorstellung?.filmname }}
+      <br>
+      {{ vorstellung?.anfangszeit | date : 'dd.MM.YYYY' }}
+      <br>
+      {{ vorstellung?.anfangszeit | date : 'HH:mm' }} Uhr
+      <br>
+      {{ vorstellung?.saal }}
+      <br>
+      {{ angebot?.plaetze?.length }} Plätze
+      <br><br>
+      {{ angebot!.gesamtpreis.betrag | geldbetrag }} {{ angebot!.gesamtpreis.waehrung }}
     </div>
-    <button (click)="schliesseDialog()">Jetzt bezahlen</button>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn btn-primary" (click)="schliesseDialog()">Zahlung bestätigen</button>
+      </form>
+    </div>
   </div>
-</div>
+</dialog>

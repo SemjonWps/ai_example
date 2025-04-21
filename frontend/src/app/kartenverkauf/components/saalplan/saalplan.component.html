@@ -1,17 +1,27 @@
-<h2>Auswahl der Plätze</h2>
-<svg id="saalplan" [attr.height]="saalplanHoehe" [attr.width]="saalplanBreite">
-  <rect id="kinoleinwand" [attr.width]="leinwandBreite" [attr.x]="leinwandPosition"></rect>
-  <ng-container *ngFor="let platzbelegungenProReihe of platzbelegungenReihe; let rowIndex = index">
-    <ng-container *ngFor="let platz of platzbelegungenProReihe; let columnIndex = index">
-      <svg>
-        <circle
-          [attr.cx]="getStartX(platzbelegungenProReihe) + columnIndex * spacing"
-          [attr.cy]="startY + rowIndex * rowSpacing"
-          [attr.r]="radius"
-          [attr.fill]="getFarbeFuerPlatzbelegung(platz)"
-          stroke="black"
-        />
-      </svg>
-    </ng-container>
-  </ng-container>
-</svg>
+<div class="card card-border m-4 shadow-md bg-gray-50">
+  <div class="card-body items-center">
+    <p class="italic">Wo möchten Sie sitzen?</p>
+    <svg class="border" [attr.height]="saalplanHoehe" [attr.width]="saalplanBreite">
+      <rect [attr.width]="leinwandBreite"
+            [attr.x]="leinwandPosition"
+            height="16"
+            fill="white"
+            stroke="black"
+      />
+      <ng-container *ngFor="let platzbelegungenProReihe of platzbelegungenReihe; let rowIndex = index">
+        <ng-container *ngFor="let platz of platzbelegungenProReihe; let columnIndex = index">
+          <circle
+            [attr.cx]="getStartX(platzbelegungenProReihe) + columnIndex * spacing"
+            [attr.cy]="startY + rowIndex * rowSpacing"
+            [attr.r]="radius"
+            [attr.fill]="getFarbeFuerPlatzbelegung(platz)"
+            stroke="black"
+          />
+        </ng-container>
+      </ng-container>
+    </svg>
+    <div class="card-actions">
+      <button class="btn btn-sm btn-primary">Platzauswahl bestätigen</button>
+    </div>
+  </div>
+</div>
