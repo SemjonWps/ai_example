@@ -15,12 +15,13 @@ import {NgForOf} from '@angular/common';
 })
 export class PlatzanzahlComponent {
 
-  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null, [Validators.required, Validators.min(1)]);
+  maxAnzahl: number = 10
+  anzahlOptions: number[] = Array.from({length: this.maxAnzahl}, (_, i) => i + 1);
+
+  platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null,
+    [Validators.required, Validators.min(1), Validators.max(this.maxAnzahl)]);
 
   @Output() onPlatzanzahlButtonClick: EventEmitter<number> = new EventEmitter();
-
-  maxAnzahl: number = 10
-  steps: number[] = Array.from({length: this.maxAnzahl}, (_, i) => i + 1);
 
   uebermittlePlatzanzahl() {
     if (!isPresent(this.platzanzahlControl.value)) {
