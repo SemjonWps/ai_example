@@ -12,13 +12,22 @@ export interface Angebot {
 }
 
 export interface Saalplan {
-  platzbelegungen: Platz[][];
+  plaetze: Platz[][];
 }
 
 export interface Platz {
   reiheNr: number,
   platzNr: number,
-  sitzplatzStatus: SitzplatzStatus,
+  istFrei: boolean,
+}
+
+export interface PlatzId {
+  reiheNr: number,
+  platzNr: number,
+}
+
+export interface ZusammenhaengendePlaetze {
+  plaetze: PlatzId[],
 }
 
 export interface Geldbetrag {
@@ -30,16 +39,30 @@ export enum Waehrung {
   EUR = 'EUR',
 }
 
-export enum SitzplatzStatus {
-  BELEGT = 'BELEGT',
-  FREI = 'FREI',
-  ANGEBOTEN = 'ANGEBOTEN',
+export interface Preisanfrage {
+  vorstellungUuid: string,
+  plaetze: ZusammenhaengendePlaetze,
+}
+
+export interface Zahlungsanforderung {
+  vorstellung: Vorstellung,
+  plaetze: ZusammenhaengendePlaetze,
+  betrag: Geldbetrag,
+}
+
+export interface Zahlungsbestaetigung {
+  zahlungsanforderung: Zahlungsanforderung,
+  status: ZahlungStatus,
+}
+
+export enum ZahlungStatus {
+  ABGELEHNT = 'ABGELEHNT',
+  BEZAHLT = 'BEZAHLT',
 }
 
 export interface Kinokarte {
   vorstellung: Vorstellung,
-  reiheNr: number,
-  platzNr: number,
+  platz: PlatzId,
   preis: Geldbetrag,
 }
 

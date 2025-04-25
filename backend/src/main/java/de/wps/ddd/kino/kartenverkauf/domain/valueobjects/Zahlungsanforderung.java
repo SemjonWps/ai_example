@@ -1,7 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.domain.valueobjects;
 
-import java.util.UUID;
+import de.wps.ddd.kino.kartenverkauf.domain.entities.Vorstellung;
 
-public record Zahlungsanforderung(UUID vorstellungUuid, ZusammenhaengendePlaetze zusammenhaengendePlaetze,
-                                  Geldbetrag preis) {
+public record Zahlungsanforderung(
+        Vorstellung vorstellung,
+        ZusammenhaengendePlaetze plaetze,
+        Geldbetrag betrag) {
 }

@@ -139,13 +139,13 @@ public class SaalplanTest {
         saalplan.markiereAlsReserviert(zusammenhaengendePlaetze, reservierungsnummer);
 
         // assert
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).istBelegt()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).istFrei()).isFalse();
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).getReservierungsnummer()).isEqualTo(reservierungsnummer);
 
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).istBelegt()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).istFrei()).isFalse();
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).getReservierungsnummer()).isEqualTo(reservierungsnummer);
 
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).istBelegt()).isTrue();
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).istFrei()).isFalse();
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).getReservierungsnummer()).isEqualTo(reservierungsnummer);
     }
 

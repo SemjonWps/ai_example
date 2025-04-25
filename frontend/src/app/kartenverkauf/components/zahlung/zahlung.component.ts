@@ -1,24 +1,55 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Geldbetrag} from '../../dtos/kartenverkauf';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Vorstellung,
+  Zahlungsanforderung,
+  Zahlungsbestaetigung,
+  ZusammenhaengendePlaetze
+} from '../../dtos/kartenverkauf';
 import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
+import {ZahlungdialogComponent} from './zahlungdialog/zahlungdialog.component';
+import {KartenverkaufService} from '../../services/kartenverkauf.service';
 
 @Component({
   selector: 'app-zahlung',
   imports: [
-    GeldbetragPipe
+    GeldbetragPipe,
+    ZahlungdialogComponent
   ],
   templateUrl: './zahlung.component.html',
   styleUrl: './zahlung.component.css'
 })
-export class ZahlungComponent {
+export class ZahlungComponent implements OnInit {
 
-  @Input()
-  gesamtpreis!: Geldbetrag;
+  @Input({required: true})
+  vorstellung!: Vorstellung;
+
+  @Input({required: true})
+  plaetze!: ZusammenhaengendePlaetze;
 
   @Output()
-  oeffneZahlungDialog = new EventEmitter();
+  onZahlungBestaetigt: EventEmitter<Zahlungsbestaetigung> = new EventEmitter();
 
-  weiterMitZahlung() {
-    this.oeffneZahlungDialog.emit();
+  zahlungsanforderung: Zahlungsanforderung | undefined;
+
+  @ViewChild('zahlungDialog')
+  zahlungDialog!: ZahlungdialogComponent;
+
+
+  constructor(private kartenverkaufService: KartenverkaufService) {
   }
+
+  ngOnInit(): void {
+    this.kartenverkaufService.holeZahlungsanforderung(this.vorstellung.uuid, this.plaetze).subscribe((zahlungsanforderung: Zahlungsanforderung) => {
+      this.zahlungsanforderung = zahlungsanforderung;
+    });
+  }
+
+  oeffneZahlungDialog() {
+    this.zahlungDialog.oeffneDialog()
+  }
+
+  zahlungDialogGeschlossen(zahlungsbestaetigung: Zahlungsbestaetigung) {
+    this.onZahlungBestaetigt.emit(zahlungsbestaetigung);
+  }
+
 }

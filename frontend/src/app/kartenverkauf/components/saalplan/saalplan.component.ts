@@ -1,6 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {Platz, Saalplan, SitzplatzStatus} from '../../dtos/kartenverkauf';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Platz, Saalplan, Vorstellung, ZusammenhaengendePlaetze} from '../../dtos/kartenverkauf';
 import {NgForOf} from '@angular/common';
+import {KartenverkaufService} from '../../services/kartenverkauf.service';
 
 @Component({
   selector: 'app-saalplan',
@@ -10,26 +11,55 @@ import {NgForOf} from '@angular/common';
   templateUrl: './saalplan.component.html',
   styleUrl: './saalplan.component.css'
 })
-export class SaalplanComponent {
+export class SaalplanComponent implements OnInit {
 
-  @Input()
-  saalplanDto: Saalplan | undefined;
+  @Input({required: true})
+  vorstellung!: Vorstellung;
 
-  @Input()
-  angebotenePlaetze: Platz[] | undefined
+  @Input({required: true})
+  platzanzahl!: number;
+
+  @Output()
+  onPlatzwahlBestaetigt = new EventEmitter<ZusammenhaengendePlaetze>();
+
+  saalplan: Saalplan | undefined;
+  angebotenePlaetze: ZusammenhaengendePlaetze | undefined;
+  gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
 
   radius = 20;
   spacing = 53;
   rowSpacing = 80;
   startY = 70;
 
+  constructor(private kartenverkaufService: KartenverkaufService) {
+  }
+
+  ngOnInit(): void {
+    this.kartenverkaufService.holeSaalplan(this.vorstellung!.uuid).subscribe(
+      (data: Saalplan) => {
+        console.log(data);
+        this.saalplan = data;
+      }
+    )
+    this.kartenverkaufService.sucheZusammenhaengendePlaetze(this.vorstellung.uuid, this.platzanzahl).subscribe(
+      (data: ZusammenhaengendePlaetze) => {
+        this.angebotenePlaetze = data;
+        this.gewaehltePlaetze = data;
+      }
+    )
+  }
+
+  platzwahlBestaetigt() {
+    this.onPlatzwahlBestaetigt.emit(this.gewaehltePlaetze!);
+  }
+
   get saalplanBreite(): number {
-    const maxLength = Math.max(...this.saalplanDto!.platzbelegungen.map(reihe => reihe.length));
+    const maxLength = Math.max(...this.saalplan!.plaetze.map(reihe => reihe.length));
     return this.spacing * maxLength + this.radius * 2;
   }
 
   get saalplanHoehe(): number {
-    return this.startY + (this.saalplanDto!.platzbelegungen.length) * this.rowSpacing;
+    return this.startY + (this.saalplan!.plaetze.length) * this.rowSpacing;
   }
 
   get leinwandBreite() {
@@ -41,7 +71,7 @@ export class SaalplanComponent {
   }
 
   get platzbelegungenReihe(): Platz[][] {
-    return this.saalplanDto?.platzbelegungen ?? [];
+    return this.saalplan?.plaetze ?? [];
   }
 
   getStartX(row: Platz[]): number {
@@ -50,16 +80,14 @@ export class SaalplanComponent {
   }
 
   getFarbeFuerPlatzbelegung(platz: Platz): String {
-    const sitzplatzStatus: SitzplatzStatus = this.angebotenePlaetze?.some(angebotenerPlatz => angebotenerPlatz.platzNr === platz.platzNr && angebotenerPlatz.reiheNr === platz.reiheNr) ? SitzplatzStatus.ANGEBOTEN : platz.sitzplatzStatus
-    switch (sitzplatzStatus) {
-      case 'FREI':
-        return 'white';
-      case 'BELEGT':
-        return 'lightgray';
-      case 'ANGEBOTEN':
-        return 'lightgreen';
-      default:
-        return 'gray';
+    if (this.angebotenePlaetze?.plaetze.some(angebotenerPlatz => angebotenerPlatz.platzNr === platz.platzNr && angebotenerPlatz.reiheNr === platz.reiheNr)) {
+      return 'lightgreen';
     }
+
+    if (platz.istFrei) {
+      return 'white';
+    }
+
+    return 'lightgray';
   }
 }

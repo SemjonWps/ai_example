@@ -1,27 +1,26 @@
 <div class="card card-border m-4 shadow-md bg-gray-50">
   <div class="card-body  items-center">
     <p class="italic">Zu zahlender Betrag</p>
-    <b>{{ gesamtpreis.betrag | geldbetrag }} {{ gesamtpreis.waehrung }}</b>
-    <fieldset class="flex flex-col gap-2">
-      <p class="italic">Wie möchten Sie zahlen?</p>
-
-      <div class="flex flex-row gap-2">
-        <input type="radio" name="zahlungsart" id="kreditkarte" value="Kreditkarte" class="radio radio-sm"
-               checked="checked"/>
-        <label for="kreditkarte">Kreditkarte</label>
-      </div>
-      <div class="flex flex-row gap-2">
-        <input type="radio" name="zahlungsart" value="SpyPal" class="radio radio-sm">
-        <label for="kreditkarte">Bezahlkumpel</label>
-      </div>
-      <div class="flex flex-row gap-2">
-        <input type="radio" name="zahlungsart" value="Pear Pay" class="radio radio-sm">
-        <label for="kreditkarte">Pear Pay</label>
-      </div>
-    </fieldset>
+    @if (zahlungsanforderung) {
+      <b>{{ zahlungsanforderung.betrag.betrag | geldbetrag }} {{ zahlungsanforderung.betrag.waehrung }}</b>
+    } @else {
+      <div class="loading loading-dots loading-sm"></div>
+    }
     <div class="card-actions">
-      <button class="btn btn-sm btn-primary" onclick="zahlungDialogModal.showModal()">Weiter zur Zahlung</button>
+      <button class="btn btn-sm btn-primary" (click)="oeffneZahlungDialog()"
+              [disabled]="zahlungsanforderung===undefined">
+        Weiter zur Zahlung
+      </button>
     </div>
   </div>
 </div>
+
+@if (zahlungsanforderung) {
+  <app-zahlungdialog
+    #zahlungDialog
+    class="w-full"
+    [zahlungsanforderung]="zahlungsanforderung!"
+    (onDialogGeschlossen)="zahlungDialogGeschlossen($event)"
+  />
+}
 

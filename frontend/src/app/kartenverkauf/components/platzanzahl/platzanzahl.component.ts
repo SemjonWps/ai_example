@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {isPresent} from '../../../common/utils';
 import {NgForOf} from '@angular/common';
+import {Vorstellung} from '../../dtos/kartenverkauf';
 
 @Component({
   selector: 'app-platzanzahl',
@@ -15,18 +16,22 @@ import {NgForOf} from '@angular/common';
 })
 export class PlatzanzahlComponent {
 
-  maxAnzahl: number = 10
+  @Input() vorstellung!: Vorstellung;
+
+  @Output()
+  onPlatzanzahlBestaetigt: EventEmitter<number> = new EventEmitter();
+
+  maxAnzahl: number = 10 // TODO get from backend for vorstellung
   anzahlOptions: number[] = Array.from({length: this.maxAnzahl}, (_, i) => i + 1);
 
   platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null,
     [Validators.required, Validators.min(1), Validators.max(this.maxAnzahl)]);
 
-  @Output() onPlatzanzahlButtonClick: EventEmitter<number> = new EventEmitter();
 
   uebermittlePlatzanzahl() {
     if (!isPresent(this.platzanzahlControl.value)) {
       return;
     }
-    this.onPlatzanzahlButtonClick.emit(this.platzanzahlControl.value);
+    this.onPlatzanzahlBestaetigt.emit(this.platzanzahlControl.value);
   }
 }

@@ -23,7 +23,7 @@ public class SaalplanDtoMapper {
         var platzbelegungen = new PlatzDto[reihenzahl][platzAnzahl];
 
         plaetze.forEach((reiheNr, plaetzeListe) -> plaetzeListe.forEach((platzNr, platz) -> {
-            platzbelegungen[reiheNr.nummer() - 1][platzNr.nummer() - 1] = platzDtoMapper.platzToPlatzDto(platz);
+            platzbelegungen[reiheNr.nummer() - 1][platzNr.nummer() - 1] = platzDtoMapper.toDto(platz);
         }));
 
         return new SaalplanDto(platzbelegungen);

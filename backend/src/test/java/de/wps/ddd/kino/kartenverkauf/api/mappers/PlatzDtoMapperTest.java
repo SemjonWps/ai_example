@@ -2,7 +2,6 @@ package de.wps.ddd.kino.kartenverkauf.api.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
@@ -26,12 +25,12 @@ class PlatzDtoMapperTest {
         Platz platz = new Platz(id, platzId, istVerkauft, null);
 
         // act
-        PlatzDto platzDto = platzDtoMapper.platzToPlatzDto(platz);
+        PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
         assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzDto.sitzplatzStatus()).isEqualTo(SitzplatzStatus.FREI);
+        assertThat(platzDto.istFrei()).isTrue();
     }
 
     @Test
@@ -41,12 +40,12 @@ class PlatzDtoMapperTest {
         Platz platz = new Platz(id, platzId, istVerkauft, null);
 
         // act
-        PlatzDto platzDto = platzDtoMapper.platzToPlatzDto(platz);
+        PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
         assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzDto.sitzplatzStatus()).isEqualTo(SitzplatzStatus.BELEGT);
+        assertThat(platzDto.istFrei()).isFalse();
     }
 
     @Test
@@ -56,11 +55,11 @@ class PlatzDtoMapperTest {
         Platz platz = new Platz(id, platzId, istVerkauft, new Reservierungsnummer("reservierungsnummer"));
 
         // act
-        PlatzDto platzDto = platzDtoMapper.platzToPlatzDto(platz);
+        PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
         assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzDto.sitzplatzStatus()).isEqualTo(SitzplatzStatus.BELEGT);
+        assertThat(platzDto.istFrei()).isFalse();
     }
 }

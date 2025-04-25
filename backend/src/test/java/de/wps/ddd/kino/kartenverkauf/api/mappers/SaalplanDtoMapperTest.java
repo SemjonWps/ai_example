@@ -3,7 +3,6 @@ package de.wps.ddd.kino.kartenverkauf.api.mappers;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
@@ -18,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.UUID;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class SaalplanDtoMapperTest {
@@ -49,15 +48,15 @@ class SaalplanDtoMapperTest {
 
         var plaetze = List.of(reihe1_platz1, rehie1_platz2, reihe2_platz1, reihe2_platz2);
 
-        var reihe1_platz1_dto = new PlatzDto(1, 1, SitzplatzStatus.BELEGT);
-        var reihe1_platz2_dto = new PlatzDto(1, 1, SitzplatzStatus.FREI);
-        var reihe2_platz1_dto = new PlatzDto(2, 1, SitzplatzStatus.FREI);
-        var reihe2_platz2_dto = new PlatzDto(2, 1, SitzplatzStatus.BELEGT);
+        var reihe1_platz1_dto = new PlatzDto(1, 1, false);
+        var reihe1_platz2_dto = new PlatzDto(1, 1, true);
+        var reihe2_platz1_dto = new PlatzDto(2, 1, true);
+        var reihe2_platz2_dto = new PlatzDto(2, 1, false);
 
-        Mockito.when(platzDtoMapper.platzToPlatzDto(reihe1_platz1)).thenReturn(reihe1_platz1_dto);
-        Mockito.when(platzDtoMapper.platzToPlatzDto(rehie1_platz2)).thenReturn(reihe1_platz2_dto);
-        Mockito.when(platzDtoMapper.platzToPlatzDto(reihe2_platz1)).thenReturn(reihe2_platz1_dto);
-        Mockito.when(platzDtoMapper.platzToPlatzDto(reihe2_platz2)).thenReturn(reihe2_platz2_dto);
+        Mockito.when(platzDtoMapper.toDto(reihe1_platz1)).thenReturn(reihe1_platz1_dto);
+        Mockito.when(platzDtoMapper.toDto(rehie1_platz2)).thenReturn(reihe1_platz2_dto);
+        Mockito.when(platzDtoMapper.toDto(reihe2_platz1)).thenReturn(reihe2_platz1_dto);
+        Mockito.when(platzDtoMapper.toDto(reihe2_platz2)).thenReturn(reihe2_platz2_dto);
 
         var saalplan = new Saalplan(1L, UUID.randomUUID(), plaetze);
         PlatzDto[][] expectedPlatzDtos = {
@@ -69,6 +68,6 @@ class SaalplanDtoMapperTest {
         var saalplanDto = mapper.saalplantoSaalplanDto(saalplan);
 
         // assert
-        assertThat(saalplanDto.platzbelegungen()).isEqualTo(expectedPlatzDtos);
+        assertThat(saalplanDto.plaetze()).isEqualTo(expectedPlatzDtos);
     }
 }

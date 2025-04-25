@@ -7,12 +7,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface VorstellungDtoMapper {
     @Mapping(source = "anfangszeit", target = "anfangszeit", qualifiedByName = "beginnToString")
     @Mapping(source = "saal.name", target = "saal")
     @Mapping(source = "filmname.originalTitel", target = "filmname")
-    VorstellungDto vorstellungToVorstellungDto(Vorstellung vorstellung);
+    VorstellungDto toDto(Vorstellung vorstellung);
 
     @Named("beginnToString")
     default String beginToString(Beginn begin) {

@@ -1,33 +1,43 @@
-import {Component, Input} from '@angular/core';
-import {Angebot, Vorstellung} from '../../dtos/kartenverkauf';
-import {DatePipe, NgIf} from '@angular/common';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Kinokarte, Zahlungsbestaetigung} from '../../dtos/kartenverkauf';
+import {KartenverkaufService} from '../../services/kartenverkauf.service';
+import {DatePipe, NgForOf} from '@angular/common';
 import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
-import {isPresent} from '../../../common/utils';
 
 @Component({
   selector: 'app-kinokarte',
   imports: [
+    NgForOf,
     DatePipe,
-    GeldbetragPipe,
-    NgIf
+    GeldbetragPipe
   ],
   templateUrl: './kinokarte.component.html',
   styleUrl: './kinokarte.component.css'
 })
-export class KinokarteComponent {
+export class KinokarteComponent implements OnInit {
 
-  @Input({required: true})
-  angebot!: Angebot;
   @Input()
-  vorstellung: Vorstellung | undefined;
+  zahlungsbestaetigung!: Zahlungsbestaetigung;
 
+  @Output()
+  onKinokartenGedruckt: EventEmitter<Kinokarte[]> = new EventEmitter();
 
-  createPlaetzeString(): string {
-    if (isPresent(this.angebot.plaetze.at(0))) {
-      return "Reihe " + this.angebot.plaetze.at(0)!.reiheNr + ", Platz " + this.angebot.plaetze
-        .map(platz => platz.platzNr.toString())
-        .reduce((previousValue: string, currentValue: string) => previousValue === "" ? currentValue : previousValue + ", " + currentValue)
-    }
-    throw new Error("Angebot enthält keine Plätze");
+  kinokarten: Kinokarte[] | undefined;
+
+  constructor(private kartenverkaufService: KartenverkaufService) {
   }
+
+  ngOnInit(): void {
+    this.kartenverkaufService.erstelleKinokarten(this.zahlungsbestaetigung).subscribe(
+      (data: Kinokarte[]) => {
+        console.log(data);
+        this.kinokarten = data;
+      }
+    )
+  }
+
+  druckeKinokarten() {
+    this.onKinokartenGedruckt.emit(this.kinokarten);
+  }
+
 }

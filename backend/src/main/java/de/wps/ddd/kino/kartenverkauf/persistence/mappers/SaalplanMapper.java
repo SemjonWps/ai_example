@@ -11,7 +11,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -29,19 +28,14 @@ public abstract class SaalplanMapper {
 
     @Named("PlaetzeToPlatzEntities")
     protected List<PlatzEntity> mapPlaetzeToPlatzEntities(TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze) {
-        List<PlatzEntity> platzEntities = new ArrayList<>();
-        for (Platz platz : plaetze.values().stream().flatMap(innerMap -> innerMap.values().stream()).toList()) {
-            platzEntities.add(platzMapper.platzToPlatzEntity(platz));
-        }
-        return platzEntities;
+        return plaetze.values().stream()
+                .flatMap(innerMap -> innerMap.values().stream())
+                .map(platzMapper::platzToPlatzEntity)
+                .toList();
     }
 
     @Named("PlatzEntitiesToPlaetze")
     protected List<Platz> mapPlatzEntitiesToPlaetze(List<PlatzEntity> platzEntities) {
-        List<Platz> plaetze = new ArrayList<>();
-        for (PlatzEntity platzEntity : platzEntities) {
-            plaetze.add(platzMapper.platzEntityToPlatz(platzEntity));
-        }
-        return plaetze;
+        return platzEntities.stream().map(platzMapper::platzEntityToPlatz).toList();
     }
 }

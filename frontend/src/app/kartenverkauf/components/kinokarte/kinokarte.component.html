@@ -1,33 +1,29 @@
 <div class="card card-border m-4 shadow-md bg-gray-50">
-  <div class="card-body">
-    <p class="italic">Herzlichen Glückwunsch! Hier sind Ihre Kinokarten:</p>
-    <div class="flex flex-wrap gap-4">
-      <div class="card card-side card-dash rounded-md shadow-sm items-center bg-white">
-        <div class="card-body">
-          {{ vorstellung?.anfangszeit | date : 'dd.MM.YYYY HH:mm' }} Uhr
-          <br>
-          {{ vorstellung?.saal }}
-          <br>
-          {{ vorstellung?.filmname }}
-          <br>
-          {{ createPlaetzeString() }}
-          <br>
-          <br *ngIf="angebot.plaetze.length === 1">
-          {{ angebot.plaetze.length }} Platz
-          <br>
-          <br *ngIf="angebot.plaetze.length > 1">
-          {{ angebot.plaetze.length }} Plätze
-          <br>
-          {{ angebot.gesamtpreis.betrag | geldbetrag }} {{ angebot.gesamtpreis.waehrung }}
+  <div class="card-body items-center">
+    @if (kinokarten) {
+      <p class="italic">Herzlichen Glückwunsch! Hier sind Ihre Kinokarten:</p>
+      <div class="flex flex-row gap-4 flex-wrap justify-center">
+        <div class="flex flex-wrap gap-4" *ngFor="let kinokarte of kinokarten">
+          <div class="card card-side card-dash rounded-md shadow-sm items-center bg-white">
+            <div class="card-body">
+              <p>{{ kinokarte.vorstellung.filmname }}</p>
+              <p>{{ kinokarte.vorstellung.anfangszeit | date : 'dd.MM.YYYY HH:mm' }} Uhr</p>
+              <p>{{ kinokarte.vorstellung.saal }}</p>
+              <p>Reihe {{ kinokarte.platz.reiheNr }} Platz {{ kinokarte.platz.platzNr }}</p>
+              <p>{{ kinokarte.preis.betrag | geldbetrag }} {{ kinokarte.preis.waehrung }}</p>
+            </div>
+            <figure class="h-32 mr-4">
+              <img src="assets/qr-code.png" alt="https://www.wps.de"/>
+            </figure>
+          </div>
         </div>
-        <figure class="h-32 mr-4">
-          <img src="assets/qr-code.png" alt="https://www.wps.de"/>
-        </figure>
       </div>
-    </div>
-    <div class="card-actions">
-      <button class="btn btn-sm btn-primary">Kinokarten drucken</button>
-    </div>
+      <div class="card-actions">
+        <button class="btn btn-sm btn-primary" (click)="druckeKinokarten()">Kinokarten drucken</button>
+      </div>
+    } @else {
+      <div class="loading loading-dots loading-sm"></div>
+    }
   </div>
 </div>
 

@@ -2,27 +2,36 @@ package de.wps.ddd.kino.kartenverkauf.api.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.PlatzIdDto;
+import de.wps.ddd.kino.kartenverkauf.api.model.ZusammenhaengendePlaetzeDto;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.domain.enums.SitzplatzStatus;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface PlatzDtoMapper {
+
+    ZusammenhaengendePlaetzeDto toDto(ZusammenhaengendePlaetze plaetze);
+
+    ZusammenhaengendePlaetze toDomain(ZusammenhaengendePlaetzeDto plaetze);
 
     @Mapping(target = "platzNr", source = "platzId.platzNr.nummer")
     @Mapping(target = "reiheNr", source = "platzId.reiheNr.nummer")
-    @Mapping(target = "sitzplatzStatus", source = "platz", qualifiedByName = "istBelegtToSitzplatzStatus")
-    PlatzDto platzToPlatzDto(Platz platz);
+    @Mapping(target = "istFrei", source = "platz", qualifiedByName = "mapIstFrei")
+    PlatzDto toDto(Platz platz);
 
-    @Named("istBelegtToSitzplatzStatus")
-    default SitzplatzStatus istBelegtToSitzplatzStatus(Platz platz) {
-        return platz.istBelegt() ? SitzplatzStatus.BELEGT : SitzplatzStatus.FREI;
+    @Named("mapIstFrei")
+    static boolean mapIstFrei(Platz platz) {
+        return platz.istFrei();
     }
+
+    @Mapping(target = "reiheNr.nummer", source = "platzIdDto.reiheNr")
+    @Mapping(target = "platzNr.nummer", source = "platzIdDto.platzNr")
+    PlatzId toDomain(PlatzIdDto platzIdDto);
 
     @Mapping(target = "platzNr", source = "platzNr.nummer")
     @Mapping(target = "reiheNr", source = "reiheNr.nummer")
-    PlatzIdDto platzIdToPlatzIdDto(PlatzId platzId);
+    PlatzIdDto toDto(PlatzId platzId);
 }

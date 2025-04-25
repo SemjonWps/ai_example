@@ -1,28 +1,37 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Angebot, Vorstellung} from '../../../dtos/kartenverkauf';
-import {DatePipe} from '@angular/common';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Zahlungsanforderung, Zahlungsbestaetigung, ZahlungStatus} from '../../../dtos/kartenverkauf';
 import {GeldbetragPipe} from '../../../services/geldbetrag.pipe';
 
 @Component({
   selector: 'app-zahlungdialog',
   imports: [
-    DatePipe,
     GeldbetragPipe
   ],
   templateUrl: './zahlungdialog.component.html',
   styleUrl: './zahlungdialog.component.css'
 })
 export class ZahlungdialogComponent {
-  @Input()
-  angebot: Angebot | undefined;
 
-  @Input()
-  vorstellung: Vorstellung | undefined;
+  @Input({required: true})
+  zahlungsanforderung!: Zahlungsanforderung;
 
-  @Output() schliesse = new EventEmitter<void>();
+  @Output()
+  onDialogGeschlossen = new EventEmitter<Zahlungsbestaetigung>();
+
+  @ViewChild('zahlungDialogModal')
+  dialogRef!: ElementRef<HTMLDialogElement>;
+
+  oeffneDialog(): void {
+    this.dialogRef.nativeElement.showModal();
+  }
 
   schliesseDialog(): void {
-    this.schliesse.emit();
+    this.dialogRef.nativeElement.close();
+    const zahlungsbestaetigung: Zahlungsbestaetigung = {
+      zahlungsanforderung: this.zahlungsanforderung,
+      status: ZahlungStatus.BEZAHLT
+    };
+    this.onDialogGeschlossen.emit(zahlungsbestaetigung);
   }
 
 }

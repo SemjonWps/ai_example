@@ -1,8 +1,10 @@
 package de.wps.ddd.kino.kartenverkauf.domain.valueobjects;
 
-import java.util.UUID;
-
-public class Zahlungsbestaetigung {
-    public Zahlungsbestaetigung(UUID vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze, Geldbetrag preis) {
+public record Zahlungsbestaetigung(
+        Zahlungsanforderung zahlungsanforderung,
+        Status status) {
+    public enum Status {
+        BEZAHLT, ABGELEHNT
     }
 }
+

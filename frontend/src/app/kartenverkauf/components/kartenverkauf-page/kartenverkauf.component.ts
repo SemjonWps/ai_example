@@ -1,13 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
-import {Angebot, Kinokarte, Vorstellung} from '../../dtos/kartenverkauf';
+import {Kinokarte, Vorstellung, Zahlungsbestaetigung, ZusammenhaengendePlaetze} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
-import {KartenverkaufService} from '../../services/kartenverkauf.service';
-import {isPresent} from '../../../common/utils';
 import {SaalplanComponent} from '../saalplan/saalplan.component';
-import {NgIf} from '@angular/common';
 import {ZahlungComponent} from '../zahlung/zahlung.component';
-import {ZahlungdialogComponent} from '../zahlung/zahlungdialog/zahlungdialog.component';
 import {KinokarteComponent} from '../kinokarte/kinokarte.component';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarComponent} from '../../../common/components/navbar/navbar.component';
@@ -18,9 +14,7 @@ import {NavbarComponent} from '../../../common/components/navbar/navbar.componen
     VorstellungComponent,
     PlatzanzahlComponent,
     SaalplanComponent,
-    NgIf,
     ZahlungComponent,
-    ZahlungdialogComponent,
     KinokarteComponent,
     NavbarComponent
   ],
@@ -30,52 +24,84 @@ import {NavbarComponent} from '../../../common/components/navbar/navbar.componen
 })
 export class KartenverkaufComponent implements OnInit {
 
-  vorstellung: Vorstellung | undefined;
-  angebot: Angebot | undefined;
-  zeigeSaalplanKomponente: boolean = false;
-  zeigeZahlungKomponente: boolean = false;
-  zeigeZahlungDialogKomponente: boolean = false;
-  zeigeKinokarteKomponente: boolean = false;
+  vorstellungUuid: string | undefined;
+  gewaehlteVorstellung: Vorstellung | undefined;
+  gewaehltePlatzanzahl: number | undefined;
+  gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
+  zahlungsbestaetigung: Zahlungsbestaetigung | undefined;
+  erhalteneKinokarten: Kinokarte[] | undefined;
 
   constructor(
-    private kartenverkaufService: KartenverkaufService,
     private activatedRoute: ActivatedRoute,
   ) {
   }
 
   ngOnInit(): void {
     const uuid: string | null = this.activatedRoute.snapshot.paramMap.get('vorstellungUuid');
-    if (isPresent(uuid)) {
-      this.kartenverkaufService.holeVorstellung(uuid).subscribe((vorstellung: Vorstellung) => {
-        this.vorstellung = vorstellung
-      });
-    }
+    this.vorstellungUuid = uuid ?? undefined;
+    console.log(uuid, this.vorstellungUuid);
   }
 
-  forderePlaetzeAn($event: number) {
-    if (!isPresent(this.vorstellung)) {
-      return;
-    }
-    this.kartenverkaufService.holeZusammenhaengendePlaetze($event, this.vorstellung.uuid).subscribe(
-      (data: Angebot) => {
-        this.angebot = data;
-        this.zeigeSaalplanKomponente = this.angebot.saalplan.platzbelegungen !== undefined;
-        this.zeigeZahlungKomponente = this.angebot.gesamtpreis !== undefined;
-      }
-    )
+  get zeigeVorstellungAktiv(): boolean {
+    console.log(this.vorstellungUuid, this.vorstellungUuid !== undefined);
+    return this.vorstellungUuid !== undefined;
   }
 
-  oeffneZahlungDialog() {
-    this.zeigeZahlungDialogKomponente = true;
+  get zeigeVorstellungFertig(): boolean {
+    return this.gewaehlteVorstellung !== undefined;
   }
 
-  schliesseZahlungDialog() {
-    this.kartenverkaufService.speichereVerkauftePlaetze(this.angebot!.plaetze, this.vorstellung!.uuid).subscribe(
-      (data: Kinokarte[]) => {
-        console.log(data);
-        this.zeigeZahlungDialogKomponente = false;
-        this.zeigeKinokarteKomponente = true;
-      }
-    )
+  get zeigePlatzanzahlAktiv(): boolean {
+    return this.gewaehlteVorstellung !== undefined && this.gewaehltePlatzanzahl === undefined;
   }
+
+  get zeigePlatzanzahlFertig(): boolean {
+    return this.gewaehltePlatzanzahl !== undefined;
+  }
+
+  get zeigePlatzwahlAktiv(): boolean {
+    return this.gewaehltePlatzanzahl !== undefined && this.gewaehltePlaetze === undefined;
+  }
+
+  get zeigePlatzwahlFertig(): boolean {
+    return this.gewaehltePlaetze !== undefined;
+  }
+
+  get zeigeZahlungAktiv(): boolean {
+    return this.gewaehltePlaetze !== undefined && this.zahlungsbestaetigung === undefined;
+  }
+
+  get zeigeZahlungFertig(): boolean {
+    return this.zahlungsbestaetigung !== undefined;
+  }
+
+  get zeigeKinokartenAktiv(): boolean {
+    return this.zahlungsbestaetigung !== undefined && this.erhalteneKinokarten === undefined;
+  }
+
+  get zeigeKinokartenFertig(): boolean {
+    return this.erhalteneKinokarten !== undefined;
+  }
+
+
+  vorstellungGeladen(vorstellung: Vorstellung) {
+    this.gewaehlteVorstellung = vorstellung;
+  }
+
+  platzanzahlGewaehlt(platzanzahl: number) {
+    this.gewaehltePlatzanzahl = platzanzahl;
+  }
+
+  plaetzeGewaehlt(plaetze: ZusammenhaengendePlaetze) {
+    this.gewaehltePlaetze = plaetze;
+  }
+
+  zahlungBestaetigt(zahlungsbestaetigung: Zahlungsbestaetigung) {
+    this.zahlungsbestaetigung = zahlungsbestaetigung;
+  }
+
+  kinokartenGedruckt(kinokarten: Kinokarte[]) {
+    this.erhalteneKinokarten = kinokarten;
+  }
+
 }
