@@ -37,7 +37,6 @@ export class SaalplanComponent implements OnInit {
   ngOnInit(): void {
     this.kartenverkaufService.holeSaalplan(this.vorstellung!.uuid).subscribe(
       (data: Saalplan) => {
-        console.log(data);
         this.saalplan = data;
       }
     )

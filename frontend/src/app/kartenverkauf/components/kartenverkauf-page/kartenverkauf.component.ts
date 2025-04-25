@@ -39,11 +39,9 @@ export class KartenverkaufComponent implements OnInit {
   ngOnInit(): void {
     const uuid: string | null = this.activatedRoute.snapshot.paramMap.get('vorstellungUuid');
     this.vorstellungUuid = uuid ?? undefined;
-    console.log(uuid, this.vorstellungUuid);
   }
 
   get zeigeVorstellungAktiv(): boolean {
-    console.log(this.vorstellungUuid, this.vorstellungUuid !== undefined);
     return this.vorstellungUuid !== undefined;
   }
 

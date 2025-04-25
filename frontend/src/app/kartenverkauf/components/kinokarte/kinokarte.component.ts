@@ -30,7 +30,6 @@ export class KinokarteComponent implements OnInit {
   ngOnInit(): void {
     this.kartenverkaufService.erstelleKinokarten(this.zahlungsbestaetigung).subscribe(
       (data: Kinokarte[]) => {
-        console.log(data);
         this.kinokarten = data;
       }
     )
