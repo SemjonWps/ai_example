@@ -11,7 +11,7 @@ import java.util.List;
 public class KartenBlock {
     public List<Kinokarte> erstelleKarten(Vorstellung vorstellung, ZusammenhaengendePlaetze gewaehltePlaetze) {
         return gewaehltePlaetze.plaetze().stream().map(platz -> new Kinokarte(
-                vorstellung, platz, vorstellung.getEintrittspreis()
+                vorstellung, platz
         )).toList();
     }
 }

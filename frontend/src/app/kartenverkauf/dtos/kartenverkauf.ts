@@ -63,7 +63,6 @@ export enum ZahlungStatus {
 export interface Kinokarte {
   vorstellung: Vorstellung,
   platz: PlatzId,
-  preis: Geldbetrag,
 }
 
 

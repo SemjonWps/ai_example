@@ -1,6 +1,5 @@
 package de.wps.ddd.kino.kartenverkauf.domain.entities;
 
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,5 +9,4 @@ import lombok.Getter;
 public class Kinokarte {
     Vorstellung vorstellung;
     PlatzId platz;
-    Geldbetrag preis;
 }
