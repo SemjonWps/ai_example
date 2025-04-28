@@ -5,24 +5,21 @@
   <div class="flex-auto">
     <div class="flex flex-col items-center">
       @if (zeigeVorstellungAktiv || zeigeVorstellungFertig) {
-        <div class="badge badge-lg badge-primary badge-soft mt-6">
-          Vorstellung wählen
-          <!--          <div [ngClass]="['status', zeigeVorstellungFertig ? 'status-success' : 'status-ping' ]"></div>-->
-        </div>
+        <app-badge text="Vorstellung wählen" [checked]="zeigeVorstellungFertig"/>
         <app-vorstellung class="w-full"
                          [vorstellungUuid]="vorstellungUuid!"
                          (onVorstellungGeladen)="vorstellungGeladen($event)"
         />
       }
       @if (zeigePlatzanzahlAktiv || zeigePlatzanzahlFertig) {
-        <span class="badge badge-lg badge-primary badge-soft">Kartenanzahl wählen</span>
+        <app-badge text="Kartenanzahl wählen" [checked]="zeigePlatzanzahlFertig"/>
         <app-platzanzahl class="w-full"
                          [vorstellung]="gewaehlteVorstellung!"
                          (onPlatzanzahlBestaetigt)="platzanzahlGewaehlt($event)"
         />
       }
       @if (zeigePlatzwahlAktiv || zeigePlatzwahlFertig) {
-        <span class="badge badge-lg badge-primary badge-soft">Plätze wählen</span>
+        <app-badge text="Plätze wählen" [checked]="zeigePlatzwahlFertig"/>
         <app-saalplan class="w-full"
                       [vorstellung]="gewaehlteVorstellung!"
                       [platzanzahl]="gewaehltePlatzanzahl!"
@@ -30,7 +27,7 @@
         />
       }
       @if (zeigeZahlungAktiv || zeigeZahlungFertig) {
-        <span class="badge badge-lg badge-primary badge-soft">Kinokarten zahlen</span>
+        <app-badge text="Kinokarten zahlen" [checked]="zeigeZahlungFertig"/>
         <app-zahlung class="w-full"
                      [vorstellung]="gewaehlteVorstellung!"
                      [plaetze]="gewaehltePlaetze!"
@@ -38,14 +35,11 @@
         />
       }
       @if (zeigeKinokartenAktiv || zeigeKinokartenFertig) {
-        <span class="badge badge-lg badge-primary badge-soft">Kinokarten erhalten</span>
+        <app-badge text="Kinokarten drucken" [checked]="zeigeKinokartenFertig"/>
         <app-kinokarte class="w-full"
                        [zahlungsbestaetigung]="zahlungsbestaetigung!"
                        (onKinokartenGedruckt)="kinokartenGedruckt($event)"
         />
-      }
-      @if (zeigeKinokartenFertig) {
-        <span class="badge badge-lg badge-primary badge-soft mb-6">Kinokarten gedruckt</span>
       }
     </div>
   </div>

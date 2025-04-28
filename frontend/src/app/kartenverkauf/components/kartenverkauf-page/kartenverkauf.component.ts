@@ -7,6 +7,7 @@ import {ZahlungComponent} from '../zahlung/zahlung.component';
 import {KinokarteComponent} from '../kinokarte/kinokarte.component';
 import {ActivatedRoute} from '@angular/router';
 import {NavbarComponent} from '../../../common/components/navbar/navbar.component';
+import {BadgeComponent} from './badge/badge.component';
 
 @Component({
   selector: 'app-kartenverkauf',
@@ -16,7 +17,8 @@ import {NavbarComponent} from '../../../common/components/navbar/navbar.componen
     SaalplanComponent,
     ZahlungComponent,
     KinokarteComponent,
-    NavbarComponent
+    NavbarComponent,
+    BadgeComponent
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css',
