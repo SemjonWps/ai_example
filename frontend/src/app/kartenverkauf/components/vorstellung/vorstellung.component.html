@@ -1,23 +1,23 @@
 <div class="card card-border m-4 shadow-md bg-gray-50">
-  <div class="card-body grid grid-rows-3 auto-rows-fr items-center">
-    <div class="card-actions items-baseline">
+  <div class="card-body items-center">
       <p class="italic">Sie haben folgende Vorstellung gewählt:</p>
-      <button class="btn btn-ghost btn-sm btn-warning" (click)="zurueckZumProgramm()">
-        zurück zum Programm
-      </button>
-    </div>
-    <div class="card-title">
-      {{ vorstellung?.filmname }}
-    </div>
-    <div class="text-info-content">
-      {{ vorstellung?.anfangszeit | date : 'EEEE' }}
-      <span>⋅</span>
-      {{ vorstellung?.anfangszeit | date : 'dd.MM.yyyy' }}
-      <span>⋅</span>
-      {{ vorstellung?.anfangszeit | date : 'HH:mm' }} Uhr
-      <span>⋅</span>
-      {{ vorstellung?.saal }}
+    @if (vorstellung) {
+      <div class="card-title">
+        {{ vorstellung.filmname }}
+      </div>
+      <div class="text-info-content">
+        {{ vorstellung.anfangszeit | date : 'EEEE' }}
+        <span>⋅</span>
+        {{ vorstellung.anfangszeit | date : 'dd.MM.yyyy' }}
+        <span>⋅</span>
+        {{ vorstellung.anfangszeit | date : 'HH:mm' }} Uhr
+        <span>⋅</span>
+        {{ vorstellung.saal }}
+      </div>
+    } @else {
+      <div class="loading loading-dots loading-sm"></div>
+    }
     </div>
   </div>
-</div>
+
 

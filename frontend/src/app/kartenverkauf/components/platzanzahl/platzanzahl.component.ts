@@ -21,17 +21,23 @@ export class PlatzanzahlComponent {
   @Output()
   onPlatzanzahlBestaetigt: EventEmitter<number> = new EventEmitter();
 
+  @Output()
+  onReset: EventEmitter<void> = new EventEmitter();
+
   maxAnzahl: number = 10 // TODO get from backend for vorstellung
   anzahlOptions: number[] = Array.from({length: this.maxAnzahl}, (_, i) => i + 1);
 
   platzanzahlControl: FormControl<number | null> = new FormControl<number | null>(null,
     [Validators.required, Validators.min(1), Validators.max(this.maxAnzahl)]);
 
+  fertig: boolean = false;
 
   uebermittlePlatzanzahl() {
     if (!isPresent(this.platzanzahlControl.value)) {
       return;
     }
+    this.fertig = true;
     this.onPlatzanzahlBestaetigt.emit(this.platzanzahlControl.value);
   }
+
 }

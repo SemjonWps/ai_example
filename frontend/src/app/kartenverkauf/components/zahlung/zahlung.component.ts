@@ -30,6 +30,8 @@ export class ZahlungComponent implements OnInit {
   onZahlungBestaetigt: EventEmitter<Zahlungsbestaetigung> = new EventEmitter();
 
   zahlungsanforderung: Zahlungsanforderung | undefined;
+  zahlungsbestaetigung: Zahlungsbestaetigung | undefined;
+  fertig: boolean = false;
 
   @ViewChild('zahlungDialog')
   zahlungDialog!: ZahlungdialogComponent;
@@ -49,6 +51,8 @@ export class ZahlungComponent implements OnInit {
   }
 
   zahlungDialogGeschlossen(zahlungsbestaetigung: Zahlungsbestaetigung) {
+    this.fertig = true;
+    this.zahlungsbestaetigung = zahlungsbestaetigung;
     this.onZahlungBestaetigt.emit(zahlungsbestaetigung);
   }
 

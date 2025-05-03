@@ -1,15 +1,14 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Kinokarte, Zahlungsbestaetigung} from '../../dtos/kartenverkauf';
 import {KartenverkaufService} from '../../services/kartenverkauf.service';
-import {DatePipe, NgForOf} from '@angular/common';
-import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
+import {DatePipe, NgClass, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-kinokarte',
   imports: [
     NgForOf,
     DatePipe,
-    GeldbetragPipe
+    NgClass
   ],
   templateUrl: './kinokarte.component.html',
   styleUrl: './kinokarte.component.css'
@@ -23,6 +22,8 @@ export class KinokarteComponent implements OnInit {
   onKinokartenGedruckt: EventEmitter<Kinokarte[]> = new EventEmitter();
 
   kinokarten: Kinokarte[] | undefined;
+
+  stacked: boolean = true;
 
   constructor(private kartenverkaufService: KartenverkaufService) {
   }
@@ -39,4 +40,7 @@ export class KinokarteComponent implements OnInit {
     this.onKinokartenGedruckt.emit(this.kinokarten);
   }
 
+  toggleStacked() {
+    this.stacked = !this.stacked;
+  }
 }

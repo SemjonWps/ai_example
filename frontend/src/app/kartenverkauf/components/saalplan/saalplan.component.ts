@@ -25,6 +25,7 @@ export class SaalplanComponent implements OnInit {
   saalplan: Saalplan | undefined;
   angebotenePlaetze: ZusammenhaengendePlaetze | undefined;
   gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
+  fertig: boolean = false;
 
   radius = 20;
   spacing = 53;
@@ -48,9 +49,23 @@ export class SaalplanComponent implements OnInit {
     )
   }
 
-  platzwahlBestaetigt() {
+  get plaetzeGeladen(): boolean {
+    return this.angebotenePlaetze !== undefined
+  };
+
+  get plaetzeGefunden(): boolean {
+    return this.angebotenePlaetze?.plaetze.length == this.platzanzahl
+  }
+
+  get saalplanGeladen(): boolean {
+    return this.saalplan !== undefined && this.angebotenePlaetze !== undefined
+  };
+
+  platzwahlBestaetigen() {
+    this.fertig = true;
     this.onPlatzwahlBestaetigt.emit(this.gewaehltePlaetze!);
   }
+
 
   get saalplanBreite(): number {
     const maxLength = Math.max(...this.saalplan!.plaetze.map(reihe => reihe.length));
@@ -88,5 +103,13 @@ export class SaalplanComponent implements OnInit {
     }
 
     return 'lightgray';
+  }
+
+  get plaetzeString(): string {
+    if (this.gewaehltePlaetze?.plaetze?.length == 1) {
+      return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reiheNr} ⋅ Platz ${this.gewaehltePlaetze?.plaetze?.[0].platzNr}`;
+    } else {
+      return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reiheNr} ⋅ Plätze ${this.gewaehltePlaetze?.plaetze?.[0].platzNr} - ${this.gewaehltePlaetze?.plaetze?.at(-1)?.platzNr}`;
+    }
   }
 }

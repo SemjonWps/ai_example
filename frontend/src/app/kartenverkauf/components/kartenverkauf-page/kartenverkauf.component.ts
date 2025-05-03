@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
 import {Kinokarte, Vorstellung, Zahlungsbestaetigung, ZusammenhaengendePlaetze} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
@@ -18,7 +18,7 @@ import {BadgeComponent} from './badge/badge.component';
     ZahlungComponent,
     KinokarteComponent,
     NavbarComponent,
-    BadgeComponent
+    BadgeComponent,
   ],
   templateUrl: './kartenverkauf.component.html',
   styleUrl: './kartenverkauf.component.css',
@@ -32,6 +32,12 @@ export class KartenverkaufComponent implements OnInit {
   gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
   zahlungsbestaetigung: Zahlungsbestaetigung | undefined;
   erhalteneKinokarten: Kinokarte[] | undefined;
+
+  @ViewChild('platzanzahlComponent')
+  platzanzahlComponent!: PlatzanzahlComponent;
+
+  @ViewChild('saalplanComponent')
+  saalplanComponent!: SaalplanComponent;
 
   constructor(
     private activatedRoute: ActivatedRoute,

@@ -1,17 +1,26 @@
 <div class="card card-border m-4 shadow-md bg-gray-50">
-  <div class="card-body  items-center">
-    <p class="italic">Zu zahlender Betrag</p>
-    @if (zahlungsanforderung) {
-      <b>{{ zahlungsanforderung.betrag.betrag | geldbetrag }} {{ zahlungsanforderung.betrag.waehrung }}</b>
+  <div class="card-body items-center">
+    @if (fertig && zahlungsbestaetigung) {
+      <p class="italic">Sie haben folgenden Betrag bezahlt:</p>
+      <p class="card-title">
+        {{ zahlungsbestaetigung.zahlungsanforderung.betrag.betrag | geldbetrag }} {{ zahlungsbestaetigung.zahlungsanforderung.betrag.waehrung }}
+      </p>
     } @else {
-      <div class="loading loading-dots loading-sm"></div>
+      <p class="italic">Zu zahlender Betrag:</p>
+      @if (zahlungsanforderung) {
+        <p class="card-title">
+          {{ zahlungsanforderung.betrag.betrag | geldbetrag }} {{ zahlungsanforderung.betrag.waehrung }}
+        </p>
+        <div class="card-actions">
+          <button class="btn btn-sm btn-primary" (click)="oeffneZahlungDialog()"
+                  [disabled]="zahlungsanforderung===undefined">
+            Weiter zur Zahlung
+          </button>
+        </div>
+      } @else {
+        <div class="loading loading-dots loading-sm"></div>
+      }
     }
-    <div class="card-actions">
-      <button class="btn btn-sm btn-primary" (click)="oeffneZahlungDialog()"
-              [disabled]="zahlungsanforderung===undefined">
-        Weiter zur Zahlung
-      </button>
-    </div>
   </div>
 </div>
 
