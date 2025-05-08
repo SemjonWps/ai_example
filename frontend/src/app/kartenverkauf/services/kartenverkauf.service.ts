@@ -16,7 +16,7 @@ import {
 })
 export class KartenverkaufService {
 
-  private kartenverkaufUrl: string = 'http://localhost:8080/api/kartenverkauf';
+  private kartenverkaufUrl: string = '/api/kartenverkauf';
 
   constructor(private http: HttpClient) {
   }

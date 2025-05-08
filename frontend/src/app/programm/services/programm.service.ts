@@ -8,7 +8,7 @@ import {Programm} from '../dtos/programm';
 })
 export class ProgrammService {
 
-  private programmUrl: string = 'http://localhost:8080/api/programm';
+  private programmUrl: string = '/api/programm';
 
   constructor(private http: HttpClient) {
 
