@@ -22,6 +22,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <jib.version>3.4.5</jib.version>
         <jib.console>plain</jib.console>
+        <cyclonedx.version>2.9.1</cyclonedx.version>
     </properties>
 
     <dependencyManagement>
@@ -111,6 +112,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Docker image generation -->
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
@@ -129,6 +131,21 @@
                         <image>${project.parent.artifactId}/${project.artifactId}</image>
                     </to>
                 </configuration>
+            </plugin>
+
+            <!-- SBOM generation -->
+            <plugin>
+                <groupId>org.cyclonedx</groupId>
+                <artifactId>cyclonedx-maven-plugin</artifactId>
+                <version>${cyclonedx.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>makeAggregateBom</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
