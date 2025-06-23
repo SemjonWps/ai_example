@@ -71,7 +71,6 @@ public class Saalplan {
         }
     }
 
-
     public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
         for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
             var platz = plaetze.get(p.reiheNr()).get(p.platzNr());
@@ -89,6 +88,10 @@ public class Saalplan {
         allePlaetze()
                 .filter(platz -> !platz.isIstVerkauft())
                 .forEach(Platz::gebeReservierungFrei);
+    }
+
+    public Platz platz(PlatzId platzId) {
+        return this.plaetze.get(platzId.reiheNr()).get(platzId.platzNr());
     }
 
     private Stream<Platz> allePlaetze() {

@@ -21,6 +21,10 @@ public class Platz {
         return !istVerkauft && reservierungsnummer == null;
     }
 
+    public boolean istVerkauft() {
+        return istVerkauft;
+    }
+
     public void markiereAlsReserviert(Reservierungsnummer reservierungsnummer) {
         this.reservierungsnummer = reservierungsnummer;
     }
