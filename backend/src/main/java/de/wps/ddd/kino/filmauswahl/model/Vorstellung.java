@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.programm.model;
+package de.wps.ddd.kino.filmauswahl.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;

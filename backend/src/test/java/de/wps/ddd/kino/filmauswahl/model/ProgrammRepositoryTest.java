@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.programm.model;
+package de.wps.ddd.kino.filmauswahl.model;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

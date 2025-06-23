@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {ProgrammComponent} from './programm/components/programm-page/programm.component';
+import {ProgrammComponent} from './filmauswahl/components/programm-page/programm.component';
 import {KartenverkaufComponent} from './kartenverkauf/components/kartenverkauf-page/kartenverkauf.component';
 
 export const routes: Routes = [

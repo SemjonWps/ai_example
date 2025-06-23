@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.programm.model;
+package de.wps.ddd.kino.filmauswahl.model;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

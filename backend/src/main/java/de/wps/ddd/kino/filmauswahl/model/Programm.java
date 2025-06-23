@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.programm.model;
+package de.wps.ddd.kino.filmauswahl.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

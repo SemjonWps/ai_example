@@ -1,7 +1,7 @@
-package de.wps.ddd.kino.programm.controller;
+package de.wps.ddd.kino.filmauswahl.controller;
 
-import de.wps.ddd.kino.programm.model.Programm;
-import de.wps.ddd.kino.programm.model.ProgrammRepository;
+import de.wps.ddd.kino.filmauswahl.model.Programm;
+import de.wps.ddd.kino.filmauswahl.model.ProgrammRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
