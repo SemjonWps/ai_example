@@ -8,6 +8,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Beginn;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Filmname;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Saal;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class KartenverkaufTest {
     void kartenverkauf() {
 
         // 1. Kinobesucher sucht Vorstellung in Wochenplan aus → Vorstellung ausgesucht
-        var vorstellungId = UUID.fromString("090c173a-3636-4980-865a-1ec859eb4f90");
+        var vorstellungId = new VorstellungId(UUID.fromString("090c173a-3636-4980-865a-1ec859eb4f90"));
         var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
         assertThat(vorstellung.getFilmname()).isEqualTo(new Filmname("Fast and the Curious"));
         assertThat(vorstellung.getSaal()).isEqualTo(new Saal("großer Saal"));
@@ -49,7 +50,7 @@ public class KartenverkaufTest {
 
         // 3. Kassenmitarbeiter holt Saalplan zu Vorstellung aus Saalplanstapel --> Saalplan geholt
         var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
-        assertThat(saalplan.getVorstellungUUID()).isEqualTo(vorstellungId);
+        assertThat(saalplan.getVorstellungId()).isEqualTo(vorstellungId);
 
         // 4. Kassenmitarbeiter sucht gewünschte Anzahl Plätze im Saalplan → Zusammenhängende Plätze gefunden
         // 5a. Kassenmitarbeiter bietet gefundene Plätze an → Plätze angeboten

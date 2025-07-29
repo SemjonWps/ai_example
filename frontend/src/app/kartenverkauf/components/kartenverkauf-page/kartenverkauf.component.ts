@@ -26,7 +26,7 @@ import {BadgeComponent} from './badge/badge.component';
 })
 export class KartenverkaufComponent implements OnInit {
 
-  vorstellungUuid: string | undefined;
+  vorstellungId: string | undefined;
   gewaehlteVorstellung: Vorstellung | undefined;
   gewaehltePlatzanzahl: number | undefined;
   gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
@@ -45,12 +45,12 @@ export class KartenverkaufComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const uuid: string | null = this.activatedRoute.snapshot.paramMap.get('vorstellungUuid');
-    this.vorstellungUuid = uuid ?? undefined;
+    const uuid: string | null = this.activatedRoute.snapshot.paramMap.get('vorstellungId');
+    this.vorstellungId = uuid ?? undefined;
   }
 
   get zeigeVorstellungAktiv(): boolean {
-    return this.vorstellungUuid !== undefined;
+    return this.vorstellungId !== undefined;
   }
 
   get zeigeVorstellungFertig(): boolean {

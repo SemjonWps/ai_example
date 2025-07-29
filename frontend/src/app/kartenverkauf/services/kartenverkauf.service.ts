@@ -21,24 +21,24 @@ export class KartenverkaufService {
   constructor(private http: HttpClient) {
   }
 
-  public holeVorstellung(vorstellungUuid: string): Observable<Vorstellung> {
-    return this.http.get<Vorstellung>(`${this.kartenverkaufUrl}/vorstellungen/${vorstellungUuid}`);
+  public holeVorstellung(vorstellungId: string): Observable<Vorstellung> {
+    return this.http.get<Vorstellung>(`${this.kartenverkaufUrl}/vorstellungen/${vorstellungId}`);
   }
 
-  public holeSaalplan(vorstellungUuid: string): Observable<Saalplan> {
-    return this.http.get<Saalplan>(`${this.kartenverkaufUrl}/saalplaene/${vorstellungUuid}`);
+  public holeSaalplan(vorstellungId: string): Observable<Saalplan> {
+    return this.http.get<Saalplan>(`${this.kartenverkaufUrl}/saalplaene/${vorstellungId}`);
   }
 
-  public sucheZusammenhaengendePlaetze(vorstellungUuid: string, platzanzahl: number): Observable<ZusammenhaengendePlaetze> {
-    return this.http.get<ZusammenhaengendePlaetze>(`${this.kartenverkaufUrl}/saalplaene/${vorstellungUuid}/suche-zusammenhaengende-plaetze`, {
+  public sucheZusammenhaengendePlaetze(vorstellungId: string, platzanzahl: number): Observable<ZusammenhaengendePlaetze> {
+    return this.http.get<ZusammenhaengendePlaetze>(`${this.kartenverkaufUrl}/saalplaene/${vorstellungId}/suche-zusammenhaengende-plaetze`, {
       params: {
         platzanzahl,
       }
     })
   }
 
-  public holeZahlungsanforderung(vorstellungUuid: string, plaetze: ZusammenhaengendePlaetze): Observable<Zahlungsanforderung> {
-    const preisanfrage: Preisanfrage = {vorstellungUuid, plaetze};
+  public holeZahlungsanforderung(vorstellungId: string, plaetze: ZusammenhaengendePlaetze): Observable<Zahlungsanforderung> {
+    const preisanfrage: Preisanfrage = {vorstellungId, plaetze};
     return this.http.post<Zahlungsanforderung>(`${this.kartenverkaufUrl}/preisanfrage`, preisanfrage);
   }
 

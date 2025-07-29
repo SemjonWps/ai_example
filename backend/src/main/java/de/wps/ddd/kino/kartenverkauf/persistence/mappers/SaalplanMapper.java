@@ -20,9 +20,11 @@ public abstract class SaalplanMapper {
 
     private final PlatzMapper platzMapper = new PlatzMapperImpl(); // TODO inject
 
+    @Mapping(target = "vorstellungUUID", source = "vorstellungId.uuid")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
     public abstract SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan);
 
+    @Mapping(target = "vorstellungId.uuid", source = "vorstellungUUID")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlatzEntitiesToPlaetze")
     public abstract Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
 

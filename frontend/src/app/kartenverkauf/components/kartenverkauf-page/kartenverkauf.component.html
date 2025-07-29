@@ -7,7 +7,7 @@
       @if (zeigeVorstellungAktiv || zeigeVorstellungFertig) {
         <app-badge text="Vorstellung wählen" [checked]="zeigeVorstellungFertig"/>
         <app-vorstellung class="w-lg"
-                         [vorstellungUuid]="vorstellungUuid!"
+                         [vorstellungId]="vorstellungId!"
                          (onVorstellungGeladen)="vorstellungGeladen($event)"
         />
       }

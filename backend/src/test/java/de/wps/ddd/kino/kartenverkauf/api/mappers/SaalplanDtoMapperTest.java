@@ -7,6 +7,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -58,7 +59,8 @@ class SaalplanDtoMapperTest {
         Mockito.when(platzDtoMapper.toDto(reihe2_platz1)).thenReturn(reihe2_platz1_dto);
         Mockito.when(platzDtoMapper.toDto(reihe2_platz2)).thenReturn(reihe2_platz2_dto);
 
-        var saalplan = new Saalplan(1L, UUID.randomUUID(), plaetze);
+        var vorstellungId = new VorstellungId(UUID.randomUUID());
+        var saalplan = new Saalplan(1L, vorstellungId, plaetze);
         PlatzDto[][] expectedPlatzDtos = {
                 {reihe1_platz1_dto, reihe1_platz2_dto},
                 {reihe2_platz1_dto, reihe2_platz2_dto},

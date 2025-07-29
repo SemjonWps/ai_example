@@ -16,7 +16,7 @@ import {KartenverkaufService} from '../../services/kartenverkauf.service';
 export class VorstellungComponent implements OnInit {
 
   @Input({required: true})
-  vorstellungUuid!: string;
+  vorstellungId!: string;
 
   @Output() onVorstellungGeladen: EventEmitter<Vorstellung> = new EventEmitter();
 
@@ -26,7 +26,7 @@ export class VorstellungComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.kartenverkaufService.holeVorstellung(this.vorstellungUuid).subscribe((vorstellung: Vorstellung) => {
+    this.kartenverkaufService.holeVorstellung(this.vorstellungId).subscribe((vorstellung: Vorstellung) => {
       this.vorstellung = vorstellung
       this.onVorstellungGeladen.emit(vorstellung);
     });

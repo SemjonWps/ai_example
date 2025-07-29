@@ -16,6 +16,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.factories.KartenBlock;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.Vorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.services.PreisService;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsanforderung;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsbestaetigung;
 import lombok.RequiredArgsConstructor;
@@ -54,28 +55,32 @@ public class KartenverkaufController {
 
     @GetMapping("/vorstellungen/{id}")
     public VorstellungDto holeVorstellung(@PathVariable UUID id) {
-        var vorstellung = vorstellungen.holeVorstellung(id);
+        var vorstellungId = new VorstellungId(id);
+        var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
         return vorstellungDtoMapper.toDto(vorstellung);
     }
 
     @GetMapping("/saalplaene/{id}")
     public SaalplanDto holeSaalplan(@PathVariable UUID id) {
-        var saalplan = saalplanStapel.holeSaalplan(id);
+        var vorstellungId = new VorstellungId(id);
+        var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
         return saalplanDtoMapper.saalplantoSaalplanDto(saalplan);
     }
 
     @GetMapping("/saalplaene/{id}/suche-zusammenhaengende-plaetze")
     public ZusammenhaengendePlaetzeDto sucheZusammenhaengendePlatze(@PathVariable UUID id, @RequestParam int platzanzahl) {
-        var saalplan = saalplanStapel.holeSaalplan(id);
+        var vorstellungId = new VorstellungId(id);
+        var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
         var plaetze = saalplan.sucheZusammenhaengendePlaetze(platzanzahl);
         return platzDtoMapper.toDto(plaetze);
     }
 
     @PostMapping("/preisanfrage")
     public ZahlunsanforderungDto preisanfrage(@RequestBody PreisanfrageDto preisanfrageDto) {
-        var vorstellung = vorstellungen.holeVorstellung(preisanfrageDto.vorstellungUuid());
+        var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
+        var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
         var zusammenhaengendePlaetze = platzDtoMapper.toDomain(preisanfrageDto.plaetze());
-        var gesamtbetrag = preisService.ermittlePreis(preisanfrageDto.vorstellungUuid(), zusammenhaengendePlaetze);
+        var gesamtbetrag = preisService.ermittlePreis(vorstellungId, zusammenhaengendePlaetze);
         var zahlungsanforderung = new Zahlungsanforderung(vorstellung, zusammenhaengendePlaetze, gesamtbetrag);
         return zahlungDtoMapper.toDto(zahlungsanforderung);
     }
@@ -86,11 +91,11 @@ public class KartenverkaufController {
             throw new IllegalArgumentException("Karten wurde nicht bezahlt");
         }
 
-        var vorstellungUuid = UUID.fromString(zahlunsbestaetigungDto.zahlungsanforderung().vorstellung().uuid());
-        var vorstellung = vorstellungen.holeVorstellung(vorstellungUuid);
+        var vorstellungId = new VorstellungId(zahlunsbestaetigungDto.zahlungsanforderung().vorstellung().uuid());
+        var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
         var zusammenhaengendePlaetze = platzDtoMapper.toDomain(zahlunsbestaetigungDto.zahlungsanforderung().plaetze());
         var kinokarten = kartenBlock.erstelleKarten(vorstellung, zusammenhaengendePlaetze);
-        var saalplan = saalplanStapel.holeSaalplan(vorstellungUuid);
+        var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
         saalplan.markiereAlsVerkauft(zusammenhaengendePlaetze);
 
         return kartenDtoMapper.toDto(kinokarten);

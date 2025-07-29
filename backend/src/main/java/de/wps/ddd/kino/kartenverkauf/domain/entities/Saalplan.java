@@ -4,6 +4,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import lombok.Getter;
 import org.springframework.util.Assert;
@@ -12,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.TreeMap;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -20,14 +20,14 @@ import java.util.stream.Stream;
 @Getter
 public class Saalplan {
     private final Long id;
-    private final UUID vorstellungUUID;
+    private final VorstellungId vorstellungId;
     private final TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze;
 
-    public Saalplan(Long id, UUID vorstellungUUID, List<Platz> plaetze) {
+    public Saalplan(Long id, VorstellungId vorstellungId, List<Platz> plaetze) {
         Assert.notNull(id, "id must not be null");
-        Assert.notNull(vorstellungUUID, "vorstellungUUID must not be null");
+        Assert.notNull(vorstellungId, "vorstellungId must not be null");
         this.id = id;
-        this.vorstellungUUID = vorstellungUUID;
+        this.vorstellungId = vorstellungId;
         this.plaetze = plaetze.stream()
                 .collect(Collectors.groupingBy(
                         p -> p.getPlatzId().reiheNr(),
@@ -43,7 +43,7 @@ public class Saalplan {
 
     /**
      * @param anzahlPlaetze die Anzahl der gewünschten freien zusammenhängenden Plätze
-     * @return die ersten freien zusammenhängenden Plätze startend von der hintersten Reihe oder eine leere Liste, wenn es keine anzahlPlaetze zusammenhängende Plätze gibt
+     * @return die ersten freien zusammenhängenden Plätze startend von der hintersten Reihe oder eine leere Liste, wenn es keine anzahlPlaetze zusammenhängenden Plätze gibt
      */
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var result = new ArrayList<PlatzId>();
@@ -66,15 +66,13 @@ public class Saalplan {
 
     public void markiereAlsVerkauft(ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
-            var platz = plaetze.get(p.reiheNr()).get(p.platzNr());
-            platz.markiereAlsVerkauft();
+            platz(p).markiereAlsVerkauft();
         }
     }
 
     public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
         for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
-            var platz = plaetze.get(p.reiheNr()).get(p.platzNr());
-            platz.markiereAlsReserviert(reservierungsnummer);
+            platz(p).markiereAlsReserviert(reservierungsnummer);
         }
     }
 

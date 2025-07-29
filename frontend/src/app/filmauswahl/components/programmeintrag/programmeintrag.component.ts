@@ -23,7 +23,7 @@ export class ProgrammeintragComponent {
   constructor(private router: Router) {
   }
 
-  waehleVorstellung(vorstellungUuid: string) {
-    this.router.navigate(['/kartenverkauf', vorstellungUuid]);
+  waehleVorstellung(vorstellungId: string) {
+    this.router.navigate(['/kartenverkauf', vorstellungId]);
   }
 }

@@ -6,6 +6,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 public class SaalplanTest {
 
-    private final UUID vorstellungUUID = UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74");
+    private final VorstellungId vorstellungId = new VorstellungId(UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74"));
     private Saalplan saalplan;
     private List<Platz> plaetze;
 
@@ -39,7 +40,7 @@ public class SaalplanTest {
             }
         }
 
-        saalplan = new Saalplan(1L, vorstellungUUID, plaetze);
+        saalplan = new Saalplan(1L, vorstellungId, plaetze);
 
     }
 
@@ -161,7 +162,7 @@ public class SaalplanTest {
 
         var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5);
 
-        saalplan = new Saalplan(1L, vorstellungUUID, lokalePlatzliste);
+        saalplan = new Saalplan(1L, vorstellungId, lokalePlatzliste);
 
         // act
         saalplan.markiereAlsVerkauft(reservierungsnummer);
@@ -187,7 +188,7 @@ public class SaalplanTest {
 
         var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5, platz6);
 
-        saalplan = new Saalplan(1L, vorstellungUUID, lokalePlatzliste);
+        saalplan = new Saalplan(1L, vorstellungId, lokalePlatzliste);
 
         // act
         saalplan.gebeNichtAbgeholteReservierungenFrei();

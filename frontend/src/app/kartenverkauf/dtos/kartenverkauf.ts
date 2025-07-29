@@ -40,7 +40,7 @@ export enum Waehrung {
 }
 
 export interface Preisanfrage {
-  vorstellungUuid: string,
+  vorstellungId: string,
   plaetze: ZusammenhaengendePlaetze,
 }
 
