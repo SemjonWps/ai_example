@@ -61,8 +61,11 @@ export enum ZahlungStatus {
 }
 
 export interface Kinokarte {
-  vorstellung: Vorstellung,
-  platz: PlatzId,
+  film: string,
+  beginn: string,
+  saal: string,
+  reihe: number,
+  platz: number,
 }
 
 

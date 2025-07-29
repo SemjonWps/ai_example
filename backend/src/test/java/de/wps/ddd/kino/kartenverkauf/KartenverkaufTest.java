@@ -80,7 +80,9 @@ public class KartenverkaufTest {
         var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
         assertThat(kinokarten).hasSize(anzahlPlaetze);
         assertThat(kinokarten).allSatisfy(kinokarte -> {
-            assertThat(kinokarte.getVorstellung()).isEqualTo(vorstellung);
+            assertThat(kinokarte.getFilm()).isEqualTo(vorstellung.getFilmname());
+            assertThat(kinokarte.getBeginn()).isEqualTo(vorstellung.getAnfangszeit());
+            assertThat(kinokarte.getSaal()).isEqualTo(vorstellung.getSaal());
             // TODO Platz prüfen
         });
 

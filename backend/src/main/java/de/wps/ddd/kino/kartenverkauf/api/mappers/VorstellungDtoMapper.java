@@ -10,7 +10,7 @@ public interface VorstellungDtoMapper {
     @Mapping(source = "id.uuid", target = "uuid")
     @Mapping(source = "anfangszeit.zeitpunkt", target = "anfangszeit")
     @Mapping(source = "saal.name", target = "saal")
-    @Mapping(source = "filmname.originalTitel", target = "filmname")
+    @Mapping(source = "filmname.name", target = "filmname")
     VorstellungDto toDto(Vorstellung vorstellung);
 
 }

@@ -8,10 +8,10 @@
         <div *ngFor="let kinokarte of kinokarten">
           <div class="card card-side card-dash rounded-md shadow-sm items-center bg-white">
             <div class="card-body">
-              <p>{{ kinokarte.vorstellung.filmname }}</p>
-              <p>{{ kinokarte.vorstellung.anfangszeit | date : 'dd.MM.YYYY HH:mm' }} Uhr</p>
-              <p>{{ kinokarte.vorstellung.saal }}</p>
-              <p>Reihe {{ kinokarte.platz.reiheNr }} Platz {{ kinokarte.platz.platzNr }}</p>
+              <p>{{ kinokarte.film }}</p>
+              <p>{{ kinokarte.beginn | date : 'dd.MM.YYYY HH:mm' }} Uhr</p>
+              <p>{{ kinokarte.saal }}</p>
+              <p>Reihe {{ kinokarte.reihe }} Platz {{ kinokarte.platz }}</p>
             </div>
             <figure class="mr-4">
               <img class="h-32 w-32" src="assets/qr-code.png" alt="https://www.wps.de"/>
