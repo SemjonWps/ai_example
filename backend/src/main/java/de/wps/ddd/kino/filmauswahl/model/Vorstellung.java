@@ -21,6 +21,7 @@ import java.util.UUID;
 public class Vorstellung {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private UUID uuid;
     @JsonIgnore

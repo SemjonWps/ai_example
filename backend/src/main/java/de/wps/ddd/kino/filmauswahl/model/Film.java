@@ -21,6 +21,7 @@ import java.util.List;
 public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     private String titel;
     private Integer laufzeit;
@@ -34,6 +35,5 @@ public class Film {
     private String sprache;
     @OneToMany
     @JoinColumn(name = "filmId")
-    @JsonIgnore
     private List<Vorstellung> vorstellungen;
 }

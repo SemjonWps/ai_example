@@ -1,12 +1,7 @@
 export interface Programm {
   von: Date
   bis: Date
-  programmeintraege: Programmeintrag[]
-}
-
-export interface Programmeintrag {
-  film: Film
-  vorstellungen: Vorstellung[]
+  filmvorstellungen: Film[]
 }
 
 export interface Film {
@@ -20,6 +15,7 @@ export interface Film {
   hauptdarsteller: string
   regie: string
   sprache: string
+  vorstellungen: Vorstellung[]
 }
 
 export interface Vorstellung {

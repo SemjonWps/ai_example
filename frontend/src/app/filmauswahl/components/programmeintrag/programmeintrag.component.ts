@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Programmeintrag} from '../../dtos/programm';
+import {Film} from '../../dtos/programm';
 import {DurationPipe} from '../../services/filmlaufzeit.pipe';
 import {DatePipe, NgForOf} from '@angular/common';
 import {Router} from '@angular/router';
@@ -18,20 +18,12 @@ import {Router} from '@angular/router';
 export class ProgrammeintragComponent {
 
   @Input({required: true})
-  public programmeintrag: Programmeintrag | undefined;
+  public film!: Film;
 
   constructor(private router: Router) {
   }
 
-  get film() {
-    return this.programmeintrag!.film
-  }
-
-  get vorstellungen() {
-    return this.programmeintrag!.vorstellungen
-  }
-  
-  navigateToKartenverkauf(vorstellungUuid: string) {
+  waehleVorstellung(vorstellungUuid: string) {
     this.router.navigate(['/kartenverkauf', vorstellungUuid]);
   }
 }

@@ -20,8 +20,8 @@
       <span>{{ film.sprache }}</span>
     </div>
     <div class="card-actions">
-      <button class="btn btn-primary mt-3 min-w-32 min-h-20" *ngFor="let vorstellung of vorstellungen"
-              (click)="navigateToKartenverkauf(vorstellung.uuid)">
+      <button class="btn btn-primary mt-3 min-w-32 min-h-20" *ngFor="let vorstellung of film.vorstellungen"
+              (click)="waehleVorstellung(vorstellung.uuid)">
         {{ vorstellung.anfangszeit | date:'HH:mm' }} <br/> {{ vorstellung.saal }}
       </button>
     </div>

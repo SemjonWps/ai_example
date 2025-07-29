@@ -11,5 +11,5 @@ import java.util.List;
 public class Programm {
     private LocalDateTime von;
     private LocalDateTime bis;
-    private List<Programmeintrag> programmeintraege;
+    private List<Film> filmvorstellungen;
 }

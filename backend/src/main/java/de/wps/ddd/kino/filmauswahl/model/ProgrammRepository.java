@@ -11,13 +11,12 @@ import java.time.LocalTime;
 @Service
 public class ProgrammRepository {
 
-    private final FilmRepository filmRepository;
+    private final AktuelleFilme aktuelleFilme;
 
     public Programm holeProgrammFuerTag(LocalDate datum) {
         LocalDateTime start = datum.atStartOfDay();
         LocalDateTime ende = LocalTime.MAX.atDate(datum);
-        var filme = filmRepository.findFilmsBetween(start, ende);
-        var programmeintraege = filme.stream().map(f -> new Programmeintrag(f, f.getVorstellungen())).toList();
-        return new Programm(start, ende, programmeintraege);
+        var filme = aktuelleFilme.findeFilmvorstellungenZwischen(start, ende);
+        return new Programm(start, ende, filme);
     }
 }
