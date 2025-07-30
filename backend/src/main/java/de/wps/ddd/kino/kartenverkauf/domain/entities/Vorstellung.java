@@ -13,7 +13,7 @@ import lombok.Getter;
 public class Vorstellung {
     private final VorstellungId id;
     private final Saal saal;
-    private final Beginn anfangszeit;
-    private final Filmname filmname;
+    private final Beginn beginn;
+    private final Filmname film;
     private final Geldbetrag eintrittspreis;
 }

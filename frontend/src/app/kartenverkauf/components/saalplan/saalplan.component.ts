@@ -94,7 +94,7 @@ export class SaalplanComponent implements OnInit {
   }
 
   getFarbeFuerPlatzbelegung(platz: Platz): String {
-    if (this.angebotenePlaetze?.plaetze.some(angebotenerPlatz => angebotenerPlatz.platzNr === platz.platzNr && angebotenerPlatz.reiheNr === platz.reiheNr)) {
+    if (this.angebotenePlaetze?.plaetze.some(angebotenerPlatz => angebotenerPlatz.platz === platz.platz && angebotenerPlatz.reihe === platz.reihe)) {
       return 'lightgreen';
     }
 
@@ -107,9 +107,9 @@ export class SaalplanComponent implements OnInit {
 
   get plaetzeString(): string {
     if (this.gewaehltePlaetze?.plaetze?.length == 1) {
-      return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reiheNr} ⋅ Platz ${this.gewaehltePlaetze?.plaetze?.[0].platzNr}`;
+      return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reihe} ⋅ Platz ${this.gewaehltePlaetze?.plaetze?.[0].platz}`;
     } else {
-      return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reiheNr} ⋅ Plätze ${this.gewaehltePlaetze?.plaetze?.[0].platzNr} - ${this.gewaehltePlaetze?.plaetze?.at(-1)?.platzNr}`;
+      return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reihe} ⋅ Plätze ${this.gewaehltePlaetze?.plaetze?.[0].platz} - ${this.gewaehltePlaetze?.plaetze?.at(-1)?.platz}`;
     }
   }
 }

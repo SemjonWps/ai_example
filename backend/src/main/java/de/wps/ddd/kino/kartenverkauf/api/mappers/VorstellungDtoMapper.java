@@ -8,9 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface VorstellungDtoMapper {
     @Mapping(source = "id.uuid", target = "uuid")
-    @Mapping(source = "anfangszeit.zeitpunkt", target = "anfangszeit")
+    @Mapping(source = "beginn.zeitpunkt", target = "beginn")
     @Mapping(source = "saal.name", target = "saal")
-    @Mapping(source = "filmname.name", target = "filmname")
+    @Mapping(source = "film.name", target = "film")
     VorstellungDto toDto(Vorstellung vorstellung);
 
 }

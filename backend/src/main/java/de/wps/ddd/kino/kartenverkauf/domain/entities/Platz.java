@@ -8,17 +8,17 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Platz {
-    
-    private PlatzId platzId;
+
+    private PlatzId id;
     private boolean istVerkauft;
-    private Reservierungsnummer reservierungsnummer;
+    private Reservierungsnummer reservierung;
 
     public void markiereAlsVerkauft() {
         istVerkauft = true;
     }
 
     public boolean istFrei() {
-        return !istVerkauft && reservierungsnummer == null;
+        return !istVerkauft && reservierung == null;
     }
 
     public boolean istVerkauft() {
@@ -26,10 +26,10 @@ public class Platz {
     }
 
     public void markiereAlsReserviert(Reservierungsnummer reservierungsnummer) {
-        this.reservierungsnummer = reservierungsnummer;
+        this.reservierung = reservierungsnummer;
     }
 
     public void gebeReservierungFrei() {
-        reservierungsnummer = null;
+        reservierung = null;
     }
 }

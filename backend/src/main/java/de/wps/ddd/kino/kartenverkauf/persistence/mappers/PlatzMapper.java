@@ -11,14 +11,14 @@ import org.springframework.lang.Nullable;
 @Mapper
 public interface PlatzMapper {
 
-    @Mapping(target = "platzId.reiheNr.nummer", source = "id.reiheNr")
-    @Mapping(target = "platzId.platzNr.nummer", source = "id.platzNr")
+    @Mapping(target = "id.reihe.nummer", source = "id.reihe")
+    @Mapping(target = "id.platz.nummer", source = "id.platz")
     Platz platzEntityToPlatz(PlatzEntity platzEntity);
 
     @Mapping(target = "id.saalplanId", expression = "java(saalplanId)")
-    @Mapping(target = "id.reiheNr", source = "platz.platzId.reiheNr.nummer")
-    @Mapping(target = "id.platzNr", source = "platz.platzId.platzNr.nummer")
-    @Mapping(target = "reservierungsnummer", source = "platz.reservierungsnummer.nummer")
+    @Mapping(target = "id.reihe", source = "platz.id.reihe.nummer")
+    @Mapping(target = "id.platz", source = "platz.id.platz.nummer")
+    @Mapping(target = "reservierung", source = "platz.reservierung.nummer")
     PlatzEntity platzToPlatzEntity(Platz platz, @Context int saalplanId);
 
     default Reservierungsnummer mapReservierungsnummer(@Nullable String reservierungsnummer) {

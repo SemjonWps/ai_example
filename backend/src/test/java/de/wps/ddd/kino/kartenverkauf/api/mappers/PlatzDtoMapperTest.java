@@ -27,8 +27,8 @@ class PlatzDtoMapperTest {
         PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
-        assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
+        assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.istFrei()).isTrue();
     }
 
@@ -41,8 +41,8 @@ class PlatzDtoMapperTest {
         PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
-        assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
+        assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.istFrei()).isFalse();
     }
 
@@ -55,8 +55,8 @@ class PlatzDtoMapperTest {
         PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
-        assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
+        assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.istFrei()).isFalse();
     }
 }

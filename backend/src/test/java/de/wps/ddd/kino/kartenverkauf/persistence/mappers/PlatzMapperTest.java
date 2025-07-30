@@ -28,10 +28,10 @@ class PlatzMapperTest {
         Platz platz = platzMapper.platzEntityToPlatz(platzEntity);
 
         // assert
-        assertThat(platz.getPlatzId().reiheNr().nummer()).isEqualTo(reiheNr.nummer());
-        assertThat(platz.getPlatzId().platzNr().nummer()).isEqualTo(platzNr.nummer());
+        assertThat(platz.getId().reihe().nummer()).isEqualTo(reiheNr.nummer());
+        assertThat(platz.getId().platz().nummer()).isEqualTo(platzNr.nummer());
         assertThat(platz.isIstVerkauft()).isFalse();
-        assertThat(platz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(platz.getReservierung()).isEqualTo(reservierungsnummer);
     }
 
     @Test
@@ -43,10 +43,10 @@ class PlatzMapperTest {
         Platz platz = platzMapper.platzEntityToPlatz(platzEntity);
 
         // assert
-        assertThat(platz.getPlatzId().reiheNr().nummer()).isEqualTo(reiheNr.nummer());
-        assertThat(platz.getPlatzId().platzNr().nummer()).isEqualTo(platzNr.nummer());
+        assertThat(platz.getId().reihe().nummer()).isEqualTo(reiheNr.nummer());
+        assertThat(platz.getId().platz().nummer()).isEqualTo(platzNr.nummer());
         assertThat(platz.isIstVerkauft()).isTrue();
-        assertThat(platz.getReservierungsnummer()).isNull();
+        assertThat(platz.getReservierung()).isNull();
     }
 
     @Test
@@ -59,10 +59,10 @@ class PlatzMapperTest {
 
         // assert
         assertThat(platzEntity.getId().getSaalplanId()).isEqualTo(saalplanId);
-        assertThat(platzEntity.getId().getReiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzEntity.getId().getPlatzNr()).isEqualTo(platzNr.nummer());
+        assertThat(platzEntity.getId().getReihe()).isEqualTo(reiheNr.nummer());
+        assertThat(platzEntity.getId().getPlatz()).isEqualTo(platzNr.nummer());
         assertThat(platzEntity.isIstVerkauft()).isFalse();
-        assertThat(platzEntity.getReservierungsnummer()).isEqualTo(reservierungsnummer.nummer());
+        assertThat(platzEntity.getReservierung()).isEqualTo(reservierungsnummer.nummer());
     }
 
     @Test
@@ -75,10 +75,10 @@ class PlatzMapperTest {
 
         // assert
         assertThat(platzEntity.getId().getSaalplanId()).isEqualTo(saalplanId);
-        assertThat(platzEntity.getId().getReiheNr()).isEqualTo(reiheNr.nummer());
-        assertThat(platzEntity.getId().getPlatzNr()).isEqualTo(platzNr.nummer());
+        assertThat(platzEntity.getId().getReihe()).isEqualTo(reiheNr.nummer());
+        assertThat(platzEntity.getId().getPlatz()).isEqualTo(platzNr.nummer());
         assertThat(platzEntity.isIstVerkauft()).isTrue();
-        assertThat(platzEntity.getReservierungsnummer()).isNull();
+        assertThat(platzEntity.getReservierung()).isNull();
     }
 
 }

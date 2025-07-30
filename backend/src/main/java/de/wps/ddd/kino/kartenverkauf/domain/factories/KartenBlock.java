@@ -10,12 +10,12 @@ import java.util.List;
 @Component
 public class KartenBlock {
     public List<Kinokarte> erstelleKarten(Vorstellung vorstellung, ZusammenhaengendePlaetze gewaehltePlaetze) {
-        return gewaehltePlaetze.plaetze().stream().map(platz -> new Kinokarte(
-                vorstellung.getFilmname(),
-                vorstellung.getAnfangszeit(),
+        return gewaehltePlaetze.plaetze().stream().map(platzId -> new Kinokarte(
+                vorstellung.getFilm(),
+                vorstellung.getBeginn(),
                 vorstellung.getSaal(),
-                platz.reiheNr(),
-                platz.platzNr()
+                platzId.reihe(),
+                platzId.platz()
         )).toList();
     }
 }

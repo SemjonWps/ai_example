@@ -1,4 +1,4 @@
 package de.wps.ddd.kino.kartenverkauf.api.model;
 
-public record PlatzDto(int reiheNr, int platzNr, boolean istFrei) {
+public record PlatzDto(int reihe, int platz, boolean istFrei) {
 }

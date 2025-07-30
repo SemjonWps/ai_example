@@ -1,6 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.domain.services;
 
-import de.wps.ddd.kino.kartenverkauf.domain.repositories.Vorstellungen;
+import de.wps.ddd.kino.kartenverkauf.domain.repositories.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PreisService {
 
-    private final Vorstellungen vorstellungen;
+    private final AktuelleVorstellungen vorstellungen;
 
     public Geldbetrag ermittlePreis(VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         var vorstellung = vorstellungen.holeVorstellung(vorstellungId);

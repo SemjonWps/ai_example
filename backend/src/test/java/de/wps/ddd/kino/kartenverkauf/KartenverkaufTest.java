@@ -1,8 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf;
 
 import de.wps.ddd.kino.kartenverkauf.domain.factories.KartenBlock;
+import de.wps.ddd.kino.kartenverkauf.domain.repositories.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.repositories.Vorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.services.PreisService;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Beginn;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Filmname;
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class KartenverkaufTest {
 
     @Autowired
-    private Vorstellungen vorstellungen;
+    private AktuelleVorstellungen vorstellungen;
 
     @Autowired
     private SaalplanStapel saalplanStapel;
@@ -41,9 +41,9 @@ public class KartenverkaufTest {
         // 1. Kinobesucher sucht Vorstellung in Wochenplan aus → Vorstellung ausgesucht
         var vorstellungId = new VorstellungId(UUID.fromString("090c173a-3636-4980-865a-1ec859eb4f90"));
         var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
-        assertThat(vorstellung.getFilmname()).isEqualTo(new Filmname("Fast and the Curious"));
+        assertThat(vorstellung.getFilm()).isEqualTo(new Filmname("Fast and the Curious"));
         assertThat(vorstellung.getSaal()).isEqualTo(new Saal("großer Saal"));
-        assertThat(vorstellung.getAnfangszeit()).isEqualTo(new Beginn(LocalDateTime.parse("2025-03-23T15:30")));
+        assertThat(vorstellung.getBeginn()).isEqualTo(new Beginn(LocalDateTime.parse("2025-03-23T15:30")));
 
         // 2. Kinobesucher fragt nach Karten für Vorstellung → Platz-/Kartenanzahl angefragt
         var anzahlPlaetze = 4; // TODO value object?
@@ -80,8 +80,8 @@ public class KartenverkaufTest {
         var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
         assertThat(kinokarten).hasSize(anzahlPlaetze);
         assertThat(kinokarten).allSatisfy(kinokarte -> {
-            assertThat(kinokarte.getFilm()).isEqualTo(vorstellung.getFilmname());
-            assertThat(kinokarte.getBeginn()).isEqualTo(vorstellung.getAnfangszeit());
+            assertThat(kinokarte.getFilm()).isEqualTo(vorstellung.getFilm());
+            assertThat(kinokarte.getBeginn()).isEqualTo(vorstellung.getBeginn());
             assertThat(kinokarte.getSaal()).isEqualTo(vorstellung.getSaal());
             // TODO Platz prüfen
         });

@@ -13,8 +13,8 @@ import de.wps.ddd.kino.kartenverkauf.api.model.ZahlungsbestaetigungDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.ZahlunsanforderungDto;
 import de.wps.ddd.kino.kartenverkauf.api.model.ZusammenhaengendePlaetzeDto;
 import de.wps.ddd.kino.kartenverkauf.domain.factories.KartenBlock;
+import de.wps.ddd.kino.kartenverkauf.domain.repositories.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.repositories.Vorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.services.PreisService;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsanforderung;
@@ -40,7 +40,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class KartenverkaufController {
 
-    private final Vorstellungen vorstellungen;
+    private final AktuelleVorstellungen vorstellungen;
     private final VorstellungDtoMapper vorstellungDtoMapper;
 
     private final SaalplanStapel saalplanStapel;

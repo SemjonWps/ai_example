@@ -17,8 +17,8 @@ public interface PlatzDtoMapper {
 
     ZusammenhaengendePlaetze toDomain(ZusammenhaengendePlaetzeDto plaetze);
 
-    @Mapping(target = "platzNr", source = "platzId.platzNr.nummer")
-    @Mapping(target = "reiheNr", source = "platzId.reiheNr.nummer")
+    @Mapping(target = "platz", source = "id.platz.nummer")
+    @Mapping(target = "reihe", source = "id.reihe.nummer")
     @Mapping(target = "istFrei", source = "platz", qualifiedByName = "mapIstFrei")
     PlatzDto toDto(Platz platz);
 
@@ -27,11 +27,11 @@ public interface PlatzDtoMapper {
         return platz.istFrei();
     }
 
-    @Mapping(target = "reiheNr.nummer", source = "platzIdDto.reiheNr")
-    @Mapping(target = "platzNr.nummer", source = "platzIdDto.platzNr")
+    @Mapping(target = "reihe.nummer", source = "platzIdDto.reihe")
+    @Mapping(target = "platz.nummer", source = "platzIdDto.platz")
     PlatzId toDomain(PlatzIdDto platzIdDto);
 
-    @Mapping(target = "platzNr", source = "platzNr.nummer")
-    @Mapping(target = "reiheNr", source = "reiheNr.nummer")
+    @Mapping(target = "platz", source = "platz.nummer")
+    @Mapping(target = "reihe", source = "reihe.nummer")
     PlatzIdDto toDto(PlatzId platzId);
 }

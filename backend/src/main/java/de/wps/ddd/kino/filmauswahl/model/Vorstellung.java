@@ -26,7 +26,7 @@ public class Vorstellung {
     private UUID uuid;
     @JsonIgnore
     private Long filmId;
-    private LocalDateTime anfangszeit;
+    private LocalDateTime beginn;
     private Integer preis;
     @ManyToOne
     @JoinColumn(name = "saal_id", nullable = false)

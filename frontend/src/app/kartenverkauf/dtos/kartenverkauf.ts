@@ -1,8 +1,8 @@
 export interface Vorstellung {
   uuid: string,
-  anfangszeit: string,
+  beginn: string,
   saal: string,
-  filmname: string,
+  film: string,
 }
 
 export interface Angebot {
@@ -16,14 +16,14 @@ export interface Saalplan {
 }
 
 export interface Platz {
-  reiheNr: number,
-  platzNr: number,
+  reihe: number,
+  platz: number,
   istFrei: boolean,
 }
 
 export interface PlatzId {
-  reiheNr: number,
-  platzNr: number,
+  reihe: number,
+  platz: number,
 }
 
 export interface ZusammenhaengendePlaetze {

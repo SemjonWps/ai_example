@@ -3,14 +3,14 @@
       <p class="italic">Sie haben folgende Vorstellung gewählt:</p>
     @if (vorstellung) {
       <div class="card-title">
-        {{ vorstellung.filmname }}
+        {{ vorstellung.film }}
       </div>
       <div class="text-info-content">
-        {{ vorstellung.anfangszeit | date : 'EEEE' }}
+        {{ vorstellung.beginn | date : 'EEEE' }}
         <span>⋅</span>
-        {{ vorstellung.anfangszeit | date : 'dd.MM.yyyy' }}
+        {{ vorstellung.beginn | date : 'dd.MM.yyyy' }}
         <span>⋅</span>
-        {{ vorstellung.anfangszeit | date : 'HH:mm' }} Uhr
+        {{ vorstellung.beginn | date : 'HH:mm' }} Uhr
         <span>⋅</span>
         {{ vorstellung.saal }}
       </div>

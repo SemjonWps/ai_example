@@ -18,7 +18,7 @@ public class PlatzEntity {
     @EmbeddedId
     private Id id;
     private boolean istVerkauft;
-    private String reservierungsnummer;
+    private String reservierung;
 
     @Embeddable
     @Data
@@ -27,7 +27,7 @@ public class PlatzEntity {
     public static class Id {
         @Column(name = "saalplan_id")
         private int saalplanId;
-        private int reiheNr;
-        private int platzNr;
+        private int reihe;
+        private int platz;
     }
 }

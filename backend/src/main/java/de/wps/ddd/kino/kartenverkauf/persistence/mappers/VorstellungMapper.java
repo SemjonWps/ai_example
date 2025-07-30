@@ -16,8 +16,8 @@ public class VorstellungMapper {
         return new Vorstellung(
                 new VorstellungId(entity.getUuid()),
                 new Saal(entity.getSaal()),
-                new Beginn(entity.getAnfangszeit()),
-                new Filmname(entity.getFilmname()),
+                new Beginn(entity.getBeginn()),
+                new Filmname(entity.getFilm()),
                 Geldbetrag.euroInCent(entity.getEintrittspreis())
         );
     }

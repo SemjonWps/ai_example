@@ -28,10 +28,10 @@ public class Saalplan {
         this.vorstellungId = vorstellungId;
         this.plaetze = plaetze.stream()
                 .collect(Collectors.groupingBy(
-                        p -> p.getPlatzId().reiheNr(),
+                        p -> p.getId().reihe(),
                         TreeMap::new, // outer map - sorted by Reihennummer
                         Collectors.toMap(
-                                p -> p.getPlatzId().platzNr(),
+                                p -> p.getId().platz(),
                                 Function.identity(),
                                 (p1, p2) -> p1, // handle duplicate keys if needed
                                 TreeMap::new    // inner map - sorted by Platznummer
@@ -48,7 +48,7 @@ public class Saalplan {
         for (var reihe : plaetze.descendingMap().values()) {
             for (Platz platz : reihe.values()) {
                 if (platz.istFrei()) {
-                    result.add(platz.getPlatzId());
+                    result.add(platz.getId());
                     if (result.size() == anzahlPlaetze) {
                         return new ZusammenhaengendePlaetze(result);
                     }
@@ -75,7 +75,7 @@ public class Saalplan {
 
     public void markiereAlsVerkauft(Reservierungsnummer reservierungsnummer) {
         allePlaetze()
-                .filter(platz -> Objects.equals(platz.getReservierungsnummer(), reservierungsnummer))
+                .filter(platz -> Objects.equals(platz.getReservierung(), reservierungsnummer))
                 .forEach(Platz::markiereAlsVerkauft);
     }
 
@@ -85,8 +85,8 @@ public class Saalplan {
                 .forEach(Platz::gebeReservierungFrei);
     }
 
-    public Platz platz(PlatzId platzId) {
-        return this.plaetze.get(platzId.reiheNr()).get(platzId.platzNr());
+    public Platz platz(PlatzId id) {
+        return this.plaetze.get(id.reihe()).get(id.platz());
     }
 
     private Stream<Platz> allePlaetze() {

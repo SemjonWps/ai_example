@@ -62,9 +62,9 @@ class SaalplanMapperTest {
         // assert
         assertThat(saalplan.getVorstellungId()).isEqualTo(vorstellungId);
         Platz mappedPlatz = saalplan.getPlaetze().get(reiheNr).get(platzNr);
-        assertThat(mappedPlatz.getPlatzId().reiheNr()).isEqualTo(reiheNr);
-        assertThat(mappedPlatz.getPlatzId().platzNr()).isEqualTo(platzNr);
+        assertThat(mappedPlatz.getId().reihe()).isEqualTo(reiheNr);
+        assertThat(mappedPlatz.getId().platz()).isEqualTo(platzNr);
         assertThat(mappedPlatz.isIstVerkauft()).isEqualTo(istVerkauft);
-        assertThat(mappedPlatz.getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(mappedPlatz.getReservierung()).isEqualTo(reservierungsnummer);
     }
 }

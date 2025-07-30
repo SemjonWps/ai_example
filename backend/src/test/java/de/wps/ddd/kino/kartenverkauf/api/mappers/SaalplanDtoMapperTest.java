@@ -46,7 +46,7 @@ class SaalplanDtoMapperTest {
         var reihe1_platz1 = new Platz(platzId1, false, null);
         var reihe1_platz2 = new Platz(platzId2, true, null);
         var reihe2_platz1 = new Platz(platzId3, true, null);
-        var reihe2_platz2 = new Platz(platzId4, false, new Reservierungsnummer("reservierungsnummer"));
+        var reihe2_platz2 = new Platz(platzId4, false, new Reservierungsnummer("R-4711"));
 
         var plaetze = List.of(reihe1_platz1, reihe1_platz2, reihe2_platz1, reihe2_platz2);
 

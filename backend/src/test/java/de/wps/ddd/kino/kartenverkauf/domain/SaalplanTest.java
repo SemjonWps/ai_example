@@ -73,8 +73,8 @@ public class SaalplanTest {
         assertThat(zusammenhaengendePlaetze.plaetze()).hasSize(anzahlGewuenschtePlaetze);
         var platzIds = zusammenhaengendePlaetze.plaetze();
         assertThat(platzIds).hasSize(anzahlGewuenschtePlaetze);
-        assertThat(zusammenhaengendePlaetze.plaetze().getLast().platzNr().nummer() - zusammenhaengendePlaetze.plaetze().getFirst().platzNr().nummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
-        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.reiheNr().nummer() == vorletzteReihe);
+        assertThat(zusammenhaengendePlaetze.plaetze().getLast().platz().nummer() - zusammenhaengendePlaetze.plaetze().getFirst().platz().nummer()).isEqualTo(anzahlGewuenschtePlaetze - 1);
+        assertThat(zusammenhaengendePlaetze.plaetze()).allMatch(platz -> platz.reihe().nummer() == vorletzteReihe);
     }
 
     @Test
@@ -139,13 +139,13 @@ public class SaalplanTest {
 
         // assert
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).istFrei()).isFalse();
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).getReservierung()).isEqualTo(reservierungsnummer);
 
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).istFrei()).isFalse();
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).getReservierung()).isEqualTo(reservierungsnummer);
 
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).istFrei()).isFalse();
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).getReservierungsnummer()).isEqualTo(reservierungsnummer);
+        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).getReservierung()).isEqualTo(reservierungsnummer);
     }
 
     @Test
@@ -192,11 +192,11 @@ public class SaalplanTest {
         saalplan.gebeNichtAbgeholteReservierungenFrei();
 
         // assert
-        assertThat(platz1.getReservierungsnummer()).isEqualTo(reservierungsnummer);
-        assertThat(platz2.getReservierungsnummer()).isEqualTo(reservierungsnummer);
-        assertThat(platz3.getReservierungsnummer()).isEqualTo(null);
-        assertThat(platz4.getReservierungsnummer()).isEqualTo(null);
-        assertThat(platz5.getReservierungsnummer()).isEqualTo(null);
-        assertThat(platz6.getReservierungsnummer()).isEqualTo(null);
+        assertThat(platz1.getReservierung()).isEqualTo(reservierungsnummer);
+        assertThat(platz2.getReservierung()).isEqualTo(reservierungsnummer);
+        assertThat(platz3.getReservierung()).isEqualTo(null);
+        assertThat(platz4.getReservierung()).isEqualTo(null);
+        assertThat(platz5.getReservierung()).isEqualTo(null);
+        assertThat(platz6.getReservierung()).isEqualTo(null);
     }
 }

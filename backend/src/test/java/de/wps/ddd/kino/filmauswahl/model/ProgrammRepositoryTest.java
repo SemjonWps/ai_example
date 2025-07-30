@@ -27,8 +27,8 @@ public class ProgrammRepositoryTest {
         assertThat(film2.getTitel()).isEqualTo("Back to the Futura");
         assertThat(film1.getVorstellungen()).hasSize(1);
         assertThat(film2.getVorstellungen()).hasSize(2);
-        assertThat(film1.getVorstellungen().get(0).getAnfangszeit()).isEqualTo("2025-03-19T14:30:00");
-        assertThat(film2.getVorstellungen().get(0).getAnfangszeit()).isEqualTo("2025-03-19T15:30:00");
-        assertThat(film2.getVorstellungen().get(1).getAnfangszeit()).isEqualTo("2025-03-19T20:30:00");
+        assertThat(film1.getVorstellungen().get(0).getBeginn()).isEqualTo("2025-03-19T14:30:00");
+        assertThat(film2.getVorstellungen().get(0).getBeginn()).isEqualTo("2025-03-19T15:30:00");
+        assertThat(film2.getVorstellungen().get(1).getBeginn()).isEqualTo("2025-03-19T20:30:00");
     }
 }

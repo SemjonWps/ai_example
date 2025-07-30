@@ -18,8 +18,8 @@ import java.util.UUID;
 public class VorstellungEntity {
     @Id
     private UUID uuid;
-    private LocalDateTime anfangszeit;
+    private LocalDateTime beginn;
     private String saal;
-    private String filmname;
+    private String film;
     private int eintrittspreis;
 }
