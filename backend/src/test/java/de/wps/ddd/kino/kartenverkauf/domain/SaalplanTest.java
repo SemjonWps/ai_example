@@ -30,18 +30,16 @@ public class SaalplanTest {
     public void setup() {
 
         plaetze = new ArrayList<>();
-        long id = 0;
         for (int r = 1; r <= 4; r++) {
             for (int p = 1; p <= 6; p++) {
                 var reiheNr = new ReiheNummer(r);
                 var platzNr = new PlatzNummer(p);
                 var platzId = new PlatzId(reiheNr, platzNr);
-                plaetze.add(new Platz(id++, platzId, true, null));
+                plaetze.add(new Platz(platzId, true, null));
             }
         }
 
-        saalplan = new Saalplan(1L, vorstellungId, plaetze);
-
+        saalplan = new Saalplan(vorstellungId, plaetze);
     }
 
     @Test
@@ -154,15 +152,15 @@ public class SaalplanTest {
     public void markiereAlsVerkauft_MitReservierungsnummer() {
         // arrange
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-        var platz1 = new Platz(1L, new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), false, reservierungsnummer);
-        var platz3 = new Platz(3L, new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
-        var platz2 = new Platz(2L, new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), false, reservierungsnummer);
-        var platz4 = new Platz(4L, new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
-        var platz5 = new Platz(5L, new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, new Reservierungsnummer("andereReservierungsnummer"));
+        var platz1 = new Platz(new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), false, reservierungsnummer);
+        var platz3 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
+        var platz2 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), false, reservierungsnummer);
+        var platz4 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
+        var platz5 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, new Reservierungsnummer("andereReservierungsnummer"));
 
         var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5);
 
-        saalplan = new Saalplan(1L, vorstellungId, lokalePlatzliste);
+        saalplan = new Saalplan(vorstellungId, lokalePlatzliste);
 
         // act
         saalplan.markiereAlsVerkauft(reservierungsnummer);
@@ -179,16 +177,16 @@ public class SaalplanTest {
     public void gebeNichtAbgeholteReservierungenFrei() {
         // arrange
         var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-        var platz1 = new Platz(1L, new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), true, reservierungsnummer);
-        var platz2 = new Platz(2L, new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), true, reservierungsnummer);
-        var platz3 = new Platz(3L, new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
-        var platz4 = new Platz(4L, new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
-        var platz5 = new Platz(5L, new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, reservierungsnummer);
-        var platz6 = new Platz(6L, new PlatzId(new ReiheNummer(3), new PlatzNummer(6)), true, null);
+        var platz1 = new Platz(new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), true, reservierungsnummer);
+        var platz2 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), true, reservierungsnummer);
+        var platz3 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
+        var platz4 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
+        var platz5 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, reservierungsnummer);
+        var platz6 = new Platz(new PlatzId(new ReiheNummer(3), new PlatzNummer(6)), true, null);
 
         var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5, platz6);
 
-        saalplan = new Saalplan(1L, vorstellungId, lokalePlatzliste);
+        saalplan = new Saalplan(vorstellungId, lokalePlatzliste);
 
         // act
         saalplan.gebeNichtAbgeholteReservierungenFrei();

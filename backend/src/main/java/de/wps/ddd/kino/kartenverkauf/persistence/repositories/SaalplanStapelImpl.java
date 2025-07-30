@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class SaalplanStapelImpl implements SaalplanStapel {
+
     private final SaalplanRepository saalplanRepository;
     private final SaalplanMapper saalplanMapper;
 
@@ -20,7 +21,10 @@ public class SaalplanStapelImpl implements SaalplanStapel {
     }
 
     public void legeZurueck(Saalplan saalplan) {
-        SaalplanEntity saalplanEntity = saalplanMapper.saalplanToSaalplanEntity(saalplan);
+        int saalplanEntityId = saalplanRepository.findIdByVorstellungUUID(saalplan.getVorstellungId().uuid()).orElseThrow(
+                () -> new IllegalStateException("Saalplan not found: " + saalplan.getVorstellungId().uuid())
+        );
+        SaalplanEntity saalplanEntity = saalplanMapper.saalplanToSaalplanEntity(saalplan, saalplanEntityId);
         saalplanRepository.save(saalplanEntity);
     }
 }

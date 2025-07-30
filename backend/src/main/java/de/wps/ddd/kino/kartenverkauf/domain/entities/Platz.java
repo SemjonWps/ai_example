@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class Platz {
-    private Long id;
+    
     private PlatzId platzId;
     private boolean istVerkauft;
     private Reservierungsnummer reservierungsnummer;

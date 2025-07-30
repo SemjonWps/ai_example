@@ -19,14 +19,12 @@ import java.util.stream.Stream;
 
 @Getter
 public class Saalplan {
-    private final Long id;
+
     private final VorstellungId vorstellungId;
     private final TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze;
 
-    public Saalplan(Long id, VorstellungId vorstellungId, List<Platz> plaetze) {
-        Assert.notNull(id, "id must not be null");
+    public Saalplan(VorstellungId vorstellungId, List<Platz> plaetze) {
         Assert.notNull(vorstellungId, "vorstellungId must not be null");
-        this.id = id;
         this.vorstellungId = vorstellungId;
         this.plaetze = plaetze.stream()
                 .collect(Collectors.groupingBy(
@@ -47,7 +45,6 @@ public class Saalplan {
      */
     public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
         var result = new ArrayList<PlatzId>();
-
         for (var reihe : plaetze.descendingMap().values()) {
             for (Platz platz : reihe.values()) {
                 if (platz.istFrei()) {
@@ -84,7 +81,7 @@ public class Saalplan {
 
     public void gebeNichtAbgeholteReservierungenFrei() {
         allePlaetze()
-                .filter(platz -> !platz.isIstVerkauft())
+                .filter(platz -> !platz.isIstVerkauft()) // TODO
                 .forEach(Platz::gebeReservierungFrei);
     }
 

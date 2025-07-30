@@ -22,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class SaalplanDtoMapperTest {
+
     @Mock
     PlatzDtoMapper platzDtoMapper;
     @InjectMocks
@@ -42,12 +43,12 @@ class SaalplanDtoMapperTest {
         var platzId3 = new PlatzId(reiheNr2, platzNr1);
         var platzId4 = new PlatzId(reiheNr2, platzNr2);
 
-        var reihe1_platz1 = new Platz(null, platzId1, false, null);
-        var rehie1_platz2 = new Platz(null, platzId2, true, null);
-        var reihe2_platz1 = new Platz(null, platzId3, true, null);
-        var reihe2_platz2 = new Platz(null, platzId4, false, new Reservierungsnummer("reservierungsnummer"));
+        var reihe1_platz1 = new Platz(platzId1, false, null);
+        var reihe1_platz2 = new Platz(platzId2, true, null);
+        var reihe2_platz1 = new Platz(platzId3, true, null);
+        var reihe2_platz2 = new Platz(platzId4, false, new Reservierungsnummer("reservierungsnummer"));
 
-        var plaetze = List.of(reihe1_platz1, rehie1_platz2, reihe2_platz1, reihe2_platz2);
+        var plaetze = List.of(reihe1_platz1, reihe1_platz2, reihe2_platz1, reihe2_platz2);
 
         var reihe1_platz1_dto = new PlatzDto(1, 1, false);
         var reihe1_platz2_dto = new PlatzDto(1, 1, true);
@@ -55,12 +56,12 @@ class SaalplanDtoMapperTest {
         var reihe2_platz2_dto = new PlatzDto(2, 1, false);
 
         Mockito.when(platzDtoMapper.toDto(reihe1_platz1)).thenReturn(reihe1_platz1_dto);
-        Mockito.when(platzDtoMapper.toDto(rehie1_platz2)).thenReturn(reihe1_platz2_dto);
+        Mockito.when(platzDtoMapper.toDto(reihe1_platz2)).thenReturn(reihe1_platz2_dto);
         Mockito.when(platzDtoMapper.toDto(reihe2_platz1)).thenReturn(reihe2_platz1_dto);
         Mockito.when(platzDtoMapper.toDto(reihe2_platz2)).thenReturn(reihe2_platz2_dto);
 
         var vorstellungId = new VorstellungId(UUID.randomUUID());
-        var saalplan = new Saalplan(1L, vorstellungId, plaetze);
+        var saalplan = new Saalplan(vorstellungId, plaetze);
         PlatzDto[][] expectedPlatzDtos = {
                 {reihe1_platz1_dto, reihe1_platz2_dto},
                 {reihe2_platz1_dto, reihe2_platz2_dto},

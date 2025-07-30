@@ -11,55 +11,52 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class PlatzDtoMapperTest {
+
     PlatzDtoMapper platzDtoMapper = new PlatzDtoMapperImpl();
 
-    private final long id = 1L;
-    private final PlatzNummer platzNr = new PlatzNummer(2);
     private final ReiheNummer reiheNr = new ReiheNummer(3);
+    private final PlatzNummer platzNr = new PlatzNummer(2);
     private final PlatzId platzId = new PlatzId(reiheNr, platzNr);
 
     @Test
     void testPlatzToPlatzDto_nichtVerkauftNichtReserviert() {
         // arrange
-        boolean istVerkauft = false;
-        Platz platz = new Platz(id, platzId, istVerkauft, null);
+        Platz platz = new Platz(platzId, false, null);
 
         // act
         PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
-        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.istFrei()).isTrue();
     }
 
     @Test
     void testPlatzToPlatzDto_verkauft() {
         // arrange
-        boolean istVerkauft = true;
-        Platz platz = new Platz(id, platzId, istVerkauft, null);
+        Platz platz = new Platz(platzId, true, null);
 
         // act
         PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
-        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.istFrei()).isFalse();
     }
 
     @Test
     void testPlatzToPlatzDto_reserviertNichtVerkauft() {
         // arrange
-        boolean istVerkauft = false;
-        Platz platz = new Platz(id, platzId, istVerkauft, new Reservierungsnummer("reservierungsnummer"));
+        Platz platz = new Platz(platzId, false, new Reservierungsnummer("reservierungsnummer"));
 
         // act
         PlatzDto platzDto = platzDtoMapper.toDto(platz);
 
         // assert
-        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.reiheNr()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platzNr()).isEqualTo(platzNr.nummer());
         assertThat(platzDto.istFrei()).isFalse();
     }
 }

@@ -22,7 +22,7 @@ public class KartenverkaufFixtures implements CommandLineRunner {
     private final SaalplanRepository saalplanRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         log.info("Erzeuge Saalpläne...");
 
         var random = new Random(42);
@@ -30,25 +30,32 @@ public class KartenverkaufFixtures implements CommandLineRunner {
         var vorstellungen = vorstellungRepository.findAll();
         for (var vorstellung : vorstellungen) {
             log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
+
             var reihen = switch (vorstellung.getSaal()) {
                 case "kleiner Saal" -> 4;
                 case "großer Saal" -> 6;
                 default -> throw new IllegalStateException("Unexpected value: " + vorstellung.getSaal());
             };
+
             var spalten = switch (vorstellung.getSaal()) {
                 case "kleiner Saal" -> 8;
                 case "großer Saal" -> 12;
                 default -> throw new IllegalStateException("Unexpected value: " + vorstellung.getSaal());
             };
+
+            var saalplanEntity = new SaalplanEntity(null, vorstellung.getUuid(), new ArrayList<>());
+            saalplanEntity = saalplanRepository.save(saalplanEntity); // generates ID
+
             var plaetze = new ArrayList<PlatzEntity>(reihen * spalten);
             for (int reihe = 1; reihe <= reihen; reihe++) {
                 for (int spalte = 1; spalte <= spalten; spalte++) {
                     var istVerkauft = random.nextInt(4) == 0;
-                    var platz = new PlatzEntity(null, spalte, reihe, istVerkauft, null);
+                    var platz = new PlatzEntity(new PlatzEntity.Id(saalplanEntity.getId(), reihe, spalte), istVerkauft, null);
                     plaetze.add(platz);
                 }
             }
-            var saalplanEntity = new SaalplanEntity(null, vorstellung.getUuid(), plaetze);
+
+            saalplanEntity.setPlaetze(plaetze);
             saalplanRepository.save(saalplanEntity);
         }
 

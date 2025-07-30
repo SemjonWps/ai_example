@@ -30,9 +30,9 @@ class SaalplanStapelImplTest {
         assertThat(saalplan).isNotNull();
         assertThat(saalplan.getVorstellungId()).isEqualTo(vorstellungId);
         int reihenAnzahl = 4;
+        int platzAnzahlInReihe = 8;
         List<ReiheNummer> reihen = saalplan.getPlaetze().keySet().stream().toList();
         assertThat(reihen).hasSize(reihenAnzahl);
-        int platzAnzahlInReihe = 8;
         saalplan.getPlaetze().forEach((reihe, plaetzeListe) -> assertThat(plaetzeListe).hasSize(platzAnzahlInReihe));
     }
 }
