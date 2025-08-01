@@ -1,8 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf;
 
+import de.wps.ddd.kino.kartenverkauf.application.ports.out.AktuelleVorstellungen;
+import de.wps.ddd.kino.kartenverkauf.application.ports.out.SaalplanStapel;
 import de.wps.ddd.kino.kartenverkauf.domain.factories.KartenBlock;
-import de.wps.ddd.kino.kartenverkauf.domain.repositories.AktuelleVorstellungen;
-import de.wps.ddd.kino.kartenverkauf.domain.repositories.SaalplanStapel;
 import de.wps.ddd.kino.kartenverkauf.domain.services.PreisService;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Beginn;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Filmname;

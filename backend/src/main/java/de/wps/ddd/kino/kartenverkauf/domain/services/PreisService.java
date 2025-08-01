@@ -1,6 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.domain.services;
 
-import de.wps.ddd.kino.kartenverkauf.domain.repositories.AktuelleVorstellungen;
+import de.wps.ddd.kino.kartenverkauf.application.ports.out.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
