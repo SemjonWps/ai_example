@@ -6,7 +6,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsanforderung;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = {VorstellungDtoMapper.class, PlatzDtoMapper.class})
+@Mapper(uses = {VorstellungDtoMapper.class, SaalplanDtoMapper.class})
 public interface ZahlungDtoMapper {
 
     ZahlunsanforderungDto toDto(Zahlungsanforderung zahlunsanforderung);

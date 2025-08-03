@@ -1,7 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.web.controllers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.KartenDtoMapper;
-import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.PlatzDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.VorstellungDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.ZahlungDtoMapper;
@@ -38,7 +37,6 @@ class KartenverkaufController {
 
     private final VorstellungDtoMapper vorstellungDtoMapper;
     private final SaalplanDtoMapper saalplanDtoMapper;
-    private final PlatzDtoMapper platzDtoMapper;
     private final ZahlungDtoMapper zahlungDtoMapper;
     private final KartenDtoMapper kartenDtoMapper;
 
@@ -64,13 +62,13 @@ class KartenverkaufController {
 
         var plaetze = kartenverkauf.sucheZusammenhaengendePlaetze(vorstellungId, platzanzahl);
 
-        return platzDtoMapper.toDto(plaetze);
+        return saalplanDtoMapper.toDto(plaetze);
     }
 
     @PostMapping("/preisanfrage")
     public ZahlunsanforderungDto preisanfrage(@RequestBody PreisanfrageDto preisanfrageDto) {
         var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
-        var zusammenhaengendePlaetze = platzDtoMapper.toDomain(preisanfrageDto.plaetze());
+        var zusammenhaengendePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
 
         var zahlungsanforderung = kartenverkauf.fordereBezahlungAn(vorstellungId, zusammenhaengendePlaetze);
 
@@ -84,7 +82,7 @@ class KartenverkaufController {
         }
 
         var vorstellungId = new VorstellungId(zahlunsbestaetigungDto.zahlungsanforderung().vorstellung().uuid());
-        var zusammenhaengendePlaetze = platzDtoMapper.toDomain(zahlunsbestaetigungDto.zahlungsanforderung().plaetze());
+        var zusammenhaengendePlaetze = saalplanDtoMapper.toDomain(zahlunsbestaetigungDto.zahlungsanforderung().plaetze());
 
         var kinokarten = kartenverkauf.erstelleKinokarten(vorstellungId, zusammenhaengendePlaetze);
 

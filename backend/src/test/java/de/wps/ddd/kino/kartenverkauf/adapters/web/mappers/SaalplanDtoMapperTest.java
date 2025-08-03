@@ -8,25 +8,21 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
 class SaalplanDtoMapperTest {
 
-    @Mock
-    PlatzDtoMapper platzDtoMapper;
-    @InjectMocks
-    SaalplanDtoMapper mapper;
+    private final SaalplanDtoMapper mapper = new SaalplanDtoMapperImpl();
+
+    private final ReiheNummer reiheNr = new ReiheNummer(3);
+    private final PlatzNummer platzNr = new PlatzNummer(2);
+    private final PlatzId platzId = new PlatzId(reiheNr, platzNr);
 
     @Test
     void saalplantoSaalplanDto() {
@@ -50,15 +46,10 @@ class SaalplanDtoMapperTest {
 
         var plaetze = List.of(reihe1_platz1, reihe1_platz2, reihe2_platz1, reihe2_platz2);
 
-        var reihe1_platz1_dto = new PlatzDto(1, 1, false);
-        var reihe1_platz2_dto = new PlatzDto(1, 1, true);
-        var reihe2_platz1_dto = new PlatzDto(2, 1, true);
-        var reihe2_platz2_dto = new PlatzDto(2, 1, false);
-
-        Mockito.when(platzDtoMapper.toDto(reihe1_platz1)).thenReturn(reihe1_platz1_dto);
-        Mockito.when(platzDtoMapper.toDto(reihe1_platz2)).thenReturn(reihe1_platz2_dto);
-        Mockito.when(platzDtoMapper.toDto(reihe2_platz1)).thenReturn(reihe2_platz1_dto);
-        Mockito.when(platzDtoMapper.toDto(reihe2_platz2)).thenReturn(reihe2_platz2_dto);
+        var reihe1_platz1_dto = new PlatzDto(1, 1, true);
+        var reihe1_platz2_dto = new PlatzDto(1, 2, false);
+        var reihe2_platz1_dto = new PlatzDto(2, 1, false);
+        var reihe2_platz2_dto = new PlatzDto(2, 2, false);
 
         var vorstellungId = new VorstellungId(UUID.randomUUID());
         var saalplan = new Saalplan(vorstellungId, plaetze);
@@ -72,5 +63,47 @@ class SaalplanDtoMapperTest {
 
         // assert
         assertThat(saalplanDto.plaetze()).isEqualTo(expectedPlatzDtos);
+    }
+
+    @Test
+    void testPlatzToPlatzDto_nichtVerkauftNichtReserviert() {
+        // arrange
+        Platz platz = new Platz(platzId, false, null);
+
+        // act
+        PlatzDto platzDto = mapper.toDto(platz);
+
+        // assert
+        AssertionsForClassTypes.assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        AssertionsForClassTypes.assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
+        AssertionsForClassTypes.assertThat(platzDto.istFrei()).isTrue();
+    }
+
+    @Test
+    void testPlatzToPlatzDto_verkauft() {
+        // arrange
+        Platz platz = new Platz(platzId, true, null);
+
+        // act
+        PlatzDto platzDto = mapper.toDto(platz);
+
+        // assert
+        AssertionsForClassTypes.assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        AssertionsForClassTypes.assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
+        AssertionsForClassTypes.assertThat(platzDto.istFrei()).isFalse();
+    }
+
+    @Test
+    void testPlatzToPlatzDto_reserviertNichtVerkauft() {
+        // arrange
+        Platz platz = new Platz(platzId, false, new Reservierungsnummer("reservierungsnummer"));
+
+        // act
+        PlatzDto platzDto = mapper.toDto(platz);
+
+        // assert
+        AssertionsForClassTypes.assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        AssertionsForClassTypes.assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
+        AssertionsForClassTypes.assertThat(platzDto.istFrei()).isFalse();
     }
 }

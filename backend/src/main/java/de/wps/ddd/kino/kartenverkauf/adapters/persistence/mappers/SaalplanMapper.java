@@ -6,42 +6,52 @@ import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
-import lombok.Setter;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 import java.util.TreeMap;
 
-@Mapper(uses = {PlatzMapper.class})
-public abstract class SaalplanMapper {
-
-    @Autowired
-    @Setter
-    private PlatzMapper platzMapper;
+@Mapper
+public interface SaalplanMapper {
 
     @Mapping(target = "id", expression = "java(saalplanId)")
     @Mapping(target = "vorstellungUUID", source = "saalplan.vorstellungId.uuid")
     @Mapping(target = "plaetze", source = "saalplan.plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
-    public abstract SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan, @Context int saalplanId);
+    SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan, @Context int saalplanId);
 
     @Mapping(target = "vorstellungId.uuid", source = "vorstellungUUID")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlatzEntitiesToPlaetze")
-    public abstract Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
+    Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
 
     @Named("PlaetzeToPlatzEntities")
-    protected List<PlatzEntity> mapPlaetzeToPlatzEntities(TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze, @Context int saalplanId) {
+    default List<PlatzEntity> mapPlaetzeToPlatzEntities(TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze, @Context int saalplanId) {
         return plaetze.values().stream()
                 .flatMap(innerMap -> innerMap.values().stream())
-                .map(p -> platzMapper.platzToPlatzEntity(p, saalplanId))
+                .map(p -> platzToPlatzEntity(p, saalplanId))
                 .toList();
     }
 
     @Named("PlatzEntitiesToPlaetze")
-    protected List<Platz> mapPlatzEntitiesToPlaetze(List<PlatzEntity> platzEntities) {
-        return platzEntities.stream().map(platzMapper::platzEntityToPlatz).toList();
+    default List<Platz> mapPlatzEntitiesToPlaetze(List<PlatzEntity> platzEntities) {
+        return platzEntities.stream().map(this::platzEntityToPlatz).toList();
+    }
+
+    @Mapping(target = "id.reihe.nummer", source = "id.reihe")
+    @Mapping(target = "id.platz.nummer", source = "id.platz")
+    Platz platzEntityToPlatz(PlatzEntity platzEntity);
+
+    @Mapping(target = "id.saalplanId", expression = "java(saalplanId)")
+    @Mapping(target = "id.reihe", source = "platz.id.reihe.nummer")
+    @Mapping(target = "id.platz", source = "platz.id.platz.nummer")
+    @Mapping(target = "reservierung", source = "platz.reservierung.nummer")
+    PlatzEntity platzToPlatzEntity(Platz platz, @Context int saalplanId);
+
+    default Reservierungsnummer mapReservierungsnummer(@Nullable String reservierungsnummer) {
+        return reservierungsnummer == null ? null : new Reservierungsnummer(reservierungsnummer);
     }
 }
