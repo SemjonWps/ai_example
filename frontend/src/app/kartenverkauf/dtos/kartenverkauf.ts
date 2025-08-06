@@ -44,20 +44,15 @@ export interface Preisanfrage {
   plaetze: ZusammenhaengendePlaetze,
 }
 
-export interface Zahlungsanforderung {
-  vorstellung: Vorstellung,
+export interface Zahlungsvorgang {
+  auftragsnummer: string,
+  vorstellungId: string,
   plaetze: ZusammenhaengendePlaetze,
   betrag: Geldbetrag,
 }
 
-export interface Zahlungsbestaetigung {
-  zahlungsanforderung: Zahlungsanforderung,
-  status: ZahlungStatus,
-}
-
-export enum ZahlungStatus {
-  ABGELEHNT = 'ABGELEHNT',
-  BEZAHLT = 'BEZAHLT',
+export interface Zahlungsstatus {
+  status: String
 }
 
 export interface Kinokarte {

@@ -4,16 +4,19 @@ import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.KartenDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.SaalplanDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.VorstellungDtoMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.mappers.ZahlungDtoMapper;
+import de.wps.ddd.kino.kartenverkauf.adapters.web.model.GeldbetragDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.model.KinokarteDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.model.PreisanfrageDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.model.VorstellungDto;
-import de.wps.ddd.kino.kartenverkauf.adapters.web.model.ZahlungsbestaetigungDto;
-import de.wps.ddd.kino.kartenverkauf.adapters.web.model.ZahlunsanforderungDto;
+import de.wps.ddd.kino.kartenverkauf.adapters.web.model.ZahlungsstatusDto;
+import de.wps.ddd.kino.kartenverkauf.adapters.web.model.ZahlungsvorgangDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.web.model.ZusammenhaengendePlaetzeDto;
 import de.wps.ddd.kino.kartenverkauf.application.ports.in.Kartenverkauf;
+import de.wps.ddd.kino.kartenverkauf.application.ports.in.Zahlung;
+import de.wps.ddd.kino.kartenverkauf.domain.events.ZahlungEingegangen;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Auftragsnummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsbestaetigung;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,6 +44,7 @@ class KartenverkaufController {
     private final KartenDtoMapper kartenDtoMapper;
 
     private final Kartenverkauf kartenverkauf;
+    private final Zahlung zahlung;
 
     @GetMapping("/vorstellungen/{id}")
     public VorstellungDto holeVorstellung(@PathVariable UUID id) {
@@ -66,25 +70,53 @@ class KartenverkaufController {
     }
 
     @PostMapping("/preisanfrage")
-    public ZahlunsanforderungDto preisanfrage(@RequestBody PreisanfrageDto preisanfrageDto) {
+    public GeldbetragDto preisanfrage(@RequestBody PreisanfrageDto preisanfrageDto) {
         var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
-        var zusammenhaengendePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
+        var gewaehltePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
 
-        var zahlungsanforderung = kartenverkauf.fordereBezahlungAn(vorstellungId, zusammenhaengendePlaetze);
+        var gesamtpreis = kartenverkauf.berechneGesamtpreis(vorstellungId, gewaehltePlaetze);
 
-        return zahlungDtoMapper.toDto(zahlungsanforderung);
+        return zahlungDtoMapper.toDto(gesamtpreis);
     }
 
-    @PostMapping("/kinokarten")
-    public List<KinokarteDto> erstelleKinokarten(@RequestBody ZahlungsbestaetigungDto zahlunsbestaetigungDto) {
-        if (!zahlunsbestaetigungDto.status().equals(Zahlungsbestaetigung.Status.BEZAHLT)) {
-            throw new IllegalArgumentException("Karten wurde nicht bezahlt");
-        }
+    @PostMapping("/zahlung")
+    public ZahlungsvorgangDto starteZahlungsvorgang(@RequestBody PreisanfrageDto preisanfrageDto) {
+        var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
+        var gewaehltePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
 
-        var vorstellungId = new VorstellungId(zahlunsbestaetigungDto.zahlungsanforderung().vorstellung().uuid());
-        var zusammenhaengendePlaetze = saalplanDtoMapper.toDomain(zahlunsbestaetigungDto.zahlungsanforderung().plaetze());
+        var gesamtpreis = kartenverkauf.berechneGesamtpreis(vorstellungId, gewaehltePlaetze);
+        var auftragsnummer = zahlung.starteZahlungsvorgang(gesamtpreis, vorstellungId, gewaehltePlaetze);
 
-        var kinokarten = kartenverkauf.erstelleKinokarten(vorstellungId, zusammenhaengendePlaetze);
+        return new ZahlungsvorgangDto(
+                auftragsnummer.nummer().toString(),
+                preisanfrageDto.vorstellungId().toString(),
+                preisanfrageDto.plaetze(),
+                zahlungDtoMapper.toDto(gesamtpreis));
+    }
+
+    @GetMapping("/zahlung/{id}/status")
+    public ZahlungsstatusDto zahlungStatus(@PathVariable UUID id) {
+        var auftragsnummer = new Auftragsnummer(id);
+        var status = zahlung.status(auftragsnummer);
+        return zahlungDtoMapper.toDto(status);
+    }
+
+    // In Wirklichkeit würde diese Bestätigung vom externen Zahlungsdienstleister kommen, nicht von der UI
+    @PostMapping("/zahlung/{id}/bestaetigen")
+    public ZahlungsstatusDto bestaetigeZahlungseingang(@PathVariable UUID id) {
+        var auftragsnummer = new Auftragsnummer(id);
+        zahlung.verarbeite(new ZahlungEingegangen(auftragsnummer));
+        return zahlungDtoMapper.toDto(zahlung.status(auftragsnummer));
+    }
+
+    @PostMapping("/kinokarten/{id}")
+    public List<KinokarteDto> erstelleKinokarten(@PathVariable UUID id, @RequestBody PreisanfrageDto preisanfrageDto) {
+        var auftragsnummer = new Auftragsnummer(id);
+        // TODO sollte aus Auftragsnummer hervorgehen. get statt post request
+        var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
+        var gewaehltePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
+
+        var kinokarten = kartenverkauf.erstelleKinokarten(auftragsnummer, vorstellungId, gewaehltePlaetze);
 
         return kartenDtoMapper.toDto(kinokarten);
     }

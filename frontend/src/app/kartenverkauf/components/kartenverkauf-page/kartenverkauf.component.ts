@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {VorstellungComponent} from '../vorstellung/vorstellung.component';
-import {Kinokarte, Vorstellung, Zahlungsbestaetigung, ZusammenhaengendePlaetze} from '../../dtos/kartenverkauf';
+import {Kinokarte, Vorstellung, Zahlungsvorgang, ZusammenhaengendePlaetze} from '../../dtos/kartenverkauf';
 import {PlatzanzahlComponent} from '../platzanzahl/platzanzahl.component';
 import {SaalplanComponent} from '../saalplan/saalplan.component';
 import {ZahlungComponent} from '../zahlung/zahlung.component';
@@ -30,7 +30,7 @@ export class KartenverkaufComponent implements OnInit {
   gewaehlteVorstellung: Vorstellung | undefined;
   gewaehltePlatzanzahl: number | undefined;
   gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
-  zahlungsbestaetigung: Zahlungsbestaetigung | undefined;
+  zahlungsbestaetigung: Zahlungsvorgang | undefined;
   erhalteneKinokarten: Kinokarte[] | undefined;
 
   @ViewChild('platzanzahlComponent')
@@ -89,7 +89,6 @@ export class KartenverkaufComponent implements OnInit {
     return this.erhalteneKinokarten !== undefined;
   }
 
-
   vorstellungGeladen(vorstellung: Vorstellung) {
     this.gewaehlteVorstellung = vorstellung;
   }
@@ -102,7 +101,7 @@ export class KartenverkaufComponent implements OnInit {
     this.gewaehltePlaetze = plaetze;
   }
 
-  zahlungBestaetigt(zahlungsbestaetigung: Zahlungsbestaetigung) {
+  zahlungBestaetigt(zahlungsbestaetigung: Zahlungsvorgang) {
     this.zahlungsbestaetigung = zahlungsbestaetigung;
   }
 

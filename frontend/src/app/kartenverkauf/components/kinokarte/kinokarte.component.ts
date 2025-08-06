@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Kinokarte, Zahlungsbestaetigung} from '../../dtos/kartenverkauf';
+import {Kinokarte, Zahlungsvorgang} from '../../dtos/kartenverkauf';
 import {KartenverkaufService} from '../../services/kartenverkauf.service';
 import {DatePipe, NgClass, NgForOf} from '@angular/common';
 
@@ -16,7 +16,7 @@ import {DatePipe, NgClass, NgForOf} from '@angular/common';
 export class KinokarteComponent implements OnInit {
 
   @Input()
-  zahlungsbestaetigung!: Zahlungsbestaetigung;
+  zahlungsbestaetigung!: Zahlungsvorgang;
 
   @Output()
   onKinokartenGedruckt: EventEmitter<Kinokarte[]> = new EventEmitter();
@@ -29,7 +29,7 @@ export class KinokarteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.kartenverkaufService.erstelleKinokarten(this.zahlungsbestaetigung).subscribe(
+    this.kartenverkaufService.erstelleKinokarten(this.zahlungsbestaetigung.auftragsnummer, this.zahlungsbestaetigung.vorstellungId, this.zahlungsbestaetigung.plaetze).subscribe(
       (data: Kinokarte[]) => {
         this.kinokarten = data;
       }

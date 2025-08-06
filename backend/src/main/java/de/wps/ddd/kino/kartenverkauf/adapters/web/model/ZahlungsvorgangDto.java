@@ -1,7 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.web.model;
 
-public record ZahlunsanforderungDto(
-        VorstellungDto vorstellung,
+public record ZahlungsvorgangDto(
+        String auftragsnummer,
+        String vorstellungId,
         ZusammenhaengendePlaetzeDto plaetze,
         GeldbetragDto betrag
 ) {

@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {
+  Geldbetrag,
   Vorstellung,
-  Zahlungsanforderung,
-  Zahlungsbestaetigung,
+  Zahlungsstatus,
+  Zahlungsvorgang,
   ZusammenhaengendePlaetze
 } from '../../dtos/kartenverkauf';
 import {GeldbetragPipe} from '../../services/geldbetrag.pipe';
@@ -27,33 +28,40 @@ export class ZahlungComponent implements OnInit {
   plaetze!: ZusammenhaengendePlaetze;
 
   @Output()
-  onZahlungBestaetigt: EventEmitter<Zahlungsbestaetigung> = new EventEmitter();
+  onZahlungBestaetigt: EventEmitter<Zahlungsvorgang> = new EventEmitter();
 
-  zahlungsanforderung: Zahlungsanforderung | undefined;
-  zahlungsbestaetigung: Zahlungsbestaetigung | undefined;
+  gesamtbetrag: Geldbetrag | undefined;
+
+  zahlungsvorgang: Zahlungsvorgang | undefined;
+
   fertig: boolean = false;
 
   @ViewChild('zahlungDialog')
   zahlungDialog!: ZahlungdialogComponent;
 
-
   constructor(private kartenverkaufService: KartenverkaufService) {
   }
 
   ngOnInit(): void {
-    this.kartenverkaufService.holeZahlungsanforderung(this.vorstellung.uuid, this.plaetze).subscribe((zahlungsanforderung: Zahlungsanforderung) => {
-      this.zahlungsanforderung = zahlungsanforderung;
+    this.kartenverkaufService.ermittlePreis(this.vorstellung.uuid, this.plaetze).subscribe((gesamtbetrag: Geldbetrag) => {
+      this.gesamtbetrag = gesamtbetrag
     });
   }
 
   oeffneZahlungDialog() {
-    this.zahlungDialog.oeffneDialog()
+    this.kartenverkaufService.starteZahlungsvorgang(this.vorstellung.uuid, this.plaetze).subscribe((zahlungsvorgang: Zahlungsvorgang) => {
+      this.zahlungsvorgang = zahlungsvorgang;
+      this.zahlungDialog.oeffneDialog(zahlungsvorgang)
+    });
   }
 
-  zahlungDialogGeschlossen(zahlungsbestaetigung: Zahlungsbestaetigung) {
-    this.fertig = true;
-    this.zahlungsbestaetigung = zahlungsbestaetigung;
-    this.onZahlungBestaetigt.emit(zahlungsbestaetigung);
+  zahlungDialogGeschlossen(zahlungsvorgang: Zahlungsvorgang) {
+    this.kartenverkaufService.bestaetigeZahlung(this.zahlungsvorgang!.auftragsnummer).subscribe((zahlungsstatus: Zahlungsstatus) => {
+      if (zahlungsstatus.status == "Eingegangen") {
+        this.onZahlungBestaetigt.emit(zahlungsvorgang);
+        this.fertig = true;
+      }
+    })
   }
 
 }

@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {
+  Geldbetrag,
   Kinokarte,
   Preisanfrage,
   Saalplan,
   Vorstellung,
-  Zahlungsanforderung,
-  Zahlungsbestaetigung,
+  Zahlungsstatus,
+  Zahlungsvorgang,
   ZusammenhaengendePlaetze
 } from '../dtos/kartenverkauf';
 
@@ -37,12 +38,22 @@ export class KartenverkaufService {
     })
   }
 
-  public holeZahlungsanforderung(vorstellungId: string, plaetze: ZusammenhaengendePlaetze): Observable<Zahlungsanforderung> {
+  public ermittlePreis(vorstellungId: string, plaetze: ZusammenhaengendePlaetze): Observable<Geldbetrag> {
     const preisanfrage: Preisanfrage = {vorstellungId, plaetze};
-    return this.http.post<Zahlungsanforderung>(`${this.kartenverkaufUrl}/preisanfrage`, preisanfrage);
+    return this.http.post<Geldbetrag>(`${this.kartenverkaufUrl}/preisanfrage`, preisanfrage);
   }
 
-  public erstelleKinokarten(zahlungsbestaetigung: Zahlungsbestaetigung): Observable<Kinokarte[]> {
-    return this.http.post<Kinokarte[]>(this.kartenverkaufUrl + '/kinokarten', zahlungsbestaetigung);
+  public starteZahlungsvorgang(vorstellungId: string, plaetze: ZusammenhaengendePlaetze): Observable<Zahlungsvorgang> {
+    const preisanfrage: Preisanfrage = {vorstellungId, plaetze};
+    return this.http.post<Zahlungsvorgang>(`${this.kartenverkaufUrl}/zahlung`, preisanfrage);
+  }
+
+  public bestaetigeZahlung(auftragsnummer: string): Observable<Zahlungsstatus> {
+    return this.http.post<Zahlungsstatus>(`${this.kartenverkaufUrl}/zahlung/${auftragsnummer}/bestaetigen`, {});
+  }
+
+  public erstelleKinokarten(auftragsnummer: string, vorstellungId: string, plaetze: ZusammenhaengendePlaetze): Observable<Kinokarte[]> {
+    const preisanfrage: Preisanfrage = {vorstellungId, plaetze};
+    return this.http.post<Kinokarte[]>(this.kartenverkaufUrl + '/kinokarten/' + auftragsnummer, preisanfrage);
   }
 }

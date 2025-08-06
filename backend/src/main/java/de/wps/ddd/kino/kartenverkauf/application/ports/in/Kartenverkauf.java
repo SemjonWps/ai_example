@@ -3,8 +3,9 @@ package de.wps.ddd.kino.kartenverkauf.application.ports.in;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Kinokarte;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.domain.entities.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsanforderung;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 
 import java.util.List;
@@ -17,8 +18,8 @@ public interface Kartenverkauf {
 
     ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(VorstellungId vorstellungId, int platzanzahl);
 
-    Zahlungsanforderung fordereBezahlungAn(VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze);
+    Geldbetrag berechneGesamtpreis(VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze);
 
-    List<Kinokarte> erstelleKinokarten(VorstellungId vorstellungId, ZusammenhaengendePlaetze gewaehltePlaetze);
+    List<Kinokarte> erstelleKinokarten(Auftragsnummer auftragsnummer, VorstellungId vorstellungId, ZusammenhaengendePlaetze gewaehltePlaetze);
 
 }

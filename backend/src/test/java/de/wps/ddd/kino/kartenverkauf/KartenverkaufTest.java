@@ -1,14 +1,17 @@
 package de.wps.ddd.kino.kartenverkauf;
 
+import de.wps.ddd.kino.kartenverkauf.application.ports.in.Zahlung;
 import de.wps.ddd.kino.kartenverkauf.application.ports.out.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.application.ports.out.SaalplanStapel;
+import de.wps.ddd.kino.kartenverkauf.domain.events.ZahlungEingegangen;
 import de.wps.ddd.kino.kartenverkauf.domain.factories.KartenBlock;
-import de.wps.ddd.kino.kartenverkauf.domain.services.PreisService;
+import de.wps.ddd.kino.kartenverkauf.domain.services.Preisberechnung;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Beginn;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Filmname;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Saal;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsstatus;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,10 @@ public class KartenverkaufTest {
     private SaalplanStapel saalplanStapel;
 
     @Autowired
-    private PreisService preisService;
+    private Preisberechnung preisberechnung;
+
+    @Autowired
+    private Zahlung zahlung;
 
     @Autowired
     private KartenBlock kinokartenblock;
@@ -58,16 +64,19 @@ public class KartenverkaufTest {
         assertThat(vorgeschlagenePlaetze.anzahl()).isEqualTo(anzahlPlaetze);
         // TODO Plätze prüfen
 
-        // 5b. Kinobesucher stimmt den Plätzen zu → Plätzen gewählt
+        // 5b. Kinobesucher stimmt den Plätzen zu → Plätze gewählt
         var gewaehltePlaetze = new ZusammenhaengendePlaetze(vorgeschlagenePlaetze.plaetze().stream().toList());
         assertThat(gewaehltePlaetze.anzahl()).isEqualTo(anzahlPlaetze);
 
-        // 6. Kinobesucher bezahlt Geldbetrag
-        var gesamtbetrag = preisService.ermittlePreis(vorstellungId, gewaehltePlaetze);
+        // 6. Kinobesucher bezahlt Geldbetrag -> Zahlung erfolgt
+        var gesamtbetrag = preisberechnung.ermittlePreis(vorstellung, gewaehltePlaetze);
         assertThat(vorstellung.getEintrittspreis()).isEqualTo(Geldbetrag.euro(7, 50));
         assertThat(gesamtbetrag).isEqualTo(Geldbetrag.euro(30, 0));
 
-        // Die eigentliche Zahlung erfolgt über den ZahlungService (Zahlung-Context)
+        var auftragsnummer = zahlung.starteZahlungsvorgang(gesamtbetrag, vorstellungId, gewaehltePlaetze);
+        assertThat(zahlung.status(auftragsnummer)).isEqualTo(Zahlungsstatus.Ausstehend);
+        zahlung.verarbeite(new ZahlungEingegangen(auftragsnummer));
+        assertThat(zahlung.status(auftragsnummer)).isEqualTo(Zahlungsstatus.Eingegangen);
 
         // 7. Kassenmitarbeiter markiert verkaufte Plätze im Saalplan → Plätze als verkauft markiert
         saalplan.markiereAlsVerkauft(gewaehltePlaetze);
