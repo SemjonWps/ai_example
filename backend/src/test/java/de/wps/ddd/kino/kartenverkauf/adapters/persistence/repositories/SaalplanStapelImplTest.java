@@ -1,9 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.persistence.repositories;
 
 
-import de.wps.ddd.kino.kartenverkauf.application.ports.out.SaalplanStapel;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

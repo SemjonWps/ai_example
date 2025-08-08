@@ -1,0 +1,30 @@
+package de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories;
+
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanMapper;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.SaalplanEntity;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@AllArgsConstructor
+public class SaalplanStapelImpl implements SaalplanStapel {
+
+    private final SaalplanRepository saalplanRepository;
+    private final SaalplanMapper saalplanMapper;
+
+    public Saalplan holeSaalplan(VorstellungId vorstellungId) {
+        SaalplanEntity saalplanEntity = saalplanRepository.findByVorstellungUUID(vorstellungId.uuid());
+        return saalplanMapper.saalplanEntityToSaalplan(saalplanEntity);
+    }
+
+    public void legeZurueck(Saalplan saalplan) {
+        int saalplanEntityId = saalplanRepository.findIdByVorstellungUUID(saalplan.getVorstellungId().uuid()).orElseThrow(
+                () -> new IllegalStateException("Saalplan not found: " + saalplan.getVorstellungId().uuid())
+        );
+        SaalplanEntity saalplanEntity = saalplanMapper.saalplanToSaalplanEntity(saalplan, saalplanEntityId);
+        saalplanRepository.save(saalplanEntity);
+    }
+}

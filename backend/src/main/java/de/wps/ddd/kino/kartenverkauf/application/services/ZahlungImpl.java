@@ -1,15 +1,15 @@
 package de.wps.ddd.kino.kartenverkauf.application.services;
 
-import de.wps.ddd.kino.kartenverkauf.application.ports.in.Zahlung;
-import de.wps.ddd.kino.kartenverkauf.application.ports.out.Zahlungsvorgaenge;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Zahlungsvorgang;
-import de.wps.ddd.kino.kartenverkauf.domain.events.ZahlungAbgebrochen;
-import de.wps.ddd.kino.kartenverkauf.domain.events.ZahlungEingegangen;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Auftragsnummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsstatus;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Zahlungsvorgang;
+import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungAbgebrochen;
+import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungEingegangen;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.ports.primary.Zahlung;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.Zahlungsvorgaenge;
 import lombok.RequiredArgsConstructor;
 import org.jmolecules.event.annotation.DomainEventHandler;
 import org.springframework.stereotype.Service;

@@ -1,14 +1,16 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.persistence.mappers;
 
-import de.wps.ddd.kino.kartenverkauf.adapters.persistence.model.PlatzEntity;
-import de.wps.ddd.kino.kartenverkauf.adapters.persistence.model.SaalplanEntity;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanMapper;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanMapperImpl;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.PlatzEntity;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.SaalplanEntity;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

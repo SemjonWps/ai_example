@@ -1,9 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.configuration.fixtures;
 
-import de.wps.ddd.kino.kartenverkauf.adapters.persistence.model.PlatzEntity;
-import de.wps.ddd.kino.kartenverkauf.adapters.persistence.model.SaalplanEntity;
-import de.wps.ddd.kino.kartenverkauf.adapters.persistence.repositories.SaalplanRepository;
-import de.wps.ddd.kino.kartenverkauf.adapters.persistence.repositories.VorstellungRepository;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.PlatzEntity;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.SaalplanEntity;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.SaalplanRepository;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.VorstellungRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;

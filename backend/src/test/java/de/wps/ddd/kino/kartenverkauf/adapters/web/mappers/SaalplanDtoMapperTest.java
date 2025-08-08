@@ -1,13 +1,15 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.web.mappers;
 
-import de.wps.ddd.kino.kartenverkauf.adapters.web.model.PlatzDto;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers.SaalplanDtoMapper;
+import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers.SaalplanDtoMapperImpl;
+import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PlatzDto;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 

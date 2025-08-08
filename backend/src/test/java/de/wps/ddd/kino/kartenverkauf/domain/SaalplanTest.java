@@ -1,13 +1,13 @@
 package de.wps.ddd.kino.kartenverkauf.domain;
 
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
