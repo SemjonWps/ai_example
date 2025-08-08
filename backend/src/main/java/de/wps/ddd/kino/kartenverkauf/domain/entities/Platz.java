@@ -4,12 +4,16 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jmolecules.ddd.annotation.Entity;
+import org.jmolecules.ddd.annotation.Identity;
 
+@Entity
 @Getter
 @AllArgsConstructor
 public class Platz {
 
-    private PlatzId id;
+    @Identity
+    private final PlatzId id;
     private boolean istVerkauft;
     private Reservierungsnummer reservierung;
 

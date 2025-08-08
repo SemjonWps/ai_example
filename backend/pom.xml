@@ -20,6 +20,9 @@
         <spring-boot.version>3.4.5</spring-boot.version>
         <lombok.version>1.18.36</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <jmolecules.version>1.10.0</jmolecules.version>
+        <jmolecules-archunit.version>0.28.0</jmolecules-archunit.version>
+        <archunit.version>1.4.1</archunit.version>
         <jib.version>3.4.5</jib.version>
         <jib.console>plain</jib.console>
         <cyclonedx.version>2.9.1</cyclonedx.version>
@@ -73,6 +76,29 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jmolecules</groupId>
+            <artifactId>jmolecules-ddd</artifactId>
+            <version>${jmolecules.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jmolecules</groupId>
+            <artifactId>jmolecules-events</artifactId>
+            <version>${jmolecules.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jmolecules.integrations</groupId>
+            <artifactId>jmolecules-archunit</artifactId>
+            <version>${jmolecules-archunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit-junit5</artifactId>
+            <version>${archunit.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

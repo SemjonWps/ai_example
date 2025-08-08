@@ -11,6 +11,7 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsstatus;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import lombok.RequiredArgsConstructor;
+import org.jmolecules.event.annotation.DomainEventHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ public class ZahlungImpl implements Zahlung {
     }
 
     @Override
+    @DomainEventHandler
     public void verarbeite(ZahlungEingegangen zahlungEingegangen) {
         var zahlungsvorgang = zahlungsvorgaenge.hole(zahlungEingegangen.auftragsnummer());
         zahlungsvorgang.zahlungEingegangen();
@@ -44,6 +46,7 @@ public class ZahlungImpl implements Zahlung {
     }
 
     @Override
+    @DomainEventHandler
     public void verarbeite(ZahlungAbgebrochen zahlungAbgebrochen) {
         var zahlungsvorgang = zahlungsvorgaenge.hole(zahlungAbgebrochen.auftragsnummer());
         zahlungsvorgang.zahlungAbgebrochen();

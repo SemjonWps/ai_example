@@ -8,9 +8,11 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Saal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+// @AggregateRoot
 @Getter
 @AllArgsConstructor
 public class Kinokarte {
+    // TODO: Kinokarten-ID?
     private final Filmname film;
     private final Beginn beginn;
     private final Saal saal;

@@ -7,6 +7,9 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.ZusammenhaengendePlaetze;
 import lombok.Getter;
+import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.ddd.annotation.Association;
+import org.jmolecules.ddd.annotation.Identity;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -18,8 +21,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
+@AggregateRoot
 public class Saalplan {
 
+    @Identity
+    @Association
     private final VorstellungId vorstellungId;
     private final TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze;
 

@@ -4,12 +4,16 @@ import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Auftragsnummer;
 import de.wps.ddd.kino.kartenverkauf.domain.valueobjects.Zahlungsstatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.ddd.annotation.Identity;
 import org.springframework.util.Assert;
 
+@AggregateRoot
 @Getter
 @AllArgsConstructor
 public class Zahlungsvorgang {
 
+    @Identity
     private final Auftragsnummer auftragsnummer;
     private Zahlungsstatus status;
 

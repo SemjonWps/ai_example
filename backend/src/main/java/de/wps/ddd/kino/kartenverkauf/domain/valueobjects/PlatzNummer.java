@@ -1,5 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.domain.valueobjects;
 
+import org.jmolecules.ddd.annotation.ValueObject;
+
+@ValueObject
 public record PlatzNummer(int nummer) implements Comparable<PlatzNummer> {
     @Override
     public int compareTo(PlatzNummer o) {
