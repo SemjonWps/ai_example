@@ -21,9 +21,7 @@ public class SaalplanStapelImpl implements SaalplanStapel {
     }
 
     public void legeZurueck(Saalplan saalplan) {
-        int saalplanEntityId = saalplanRepository.findIdByVorstellungUUID(saalplan.getVorstellungId().uuid()).orElseThrow(
-                () -> new IllegalStateException("Saalplan not found: " + saalplan.getVorstellungId().uuid())
-        );
+        Integer saalplanEntityId = saalplanRepository.findIdByVorstellungUUID(saalplan.getVorstellungId().uuid()).orElse(null);
         SaalplanEntity saalplanEntity = saalplanMapper.saalplanToSaalplanEntity(saalplan, saalplanEntityId);
         saalplanRepository.save(saalplanEntity);
     }

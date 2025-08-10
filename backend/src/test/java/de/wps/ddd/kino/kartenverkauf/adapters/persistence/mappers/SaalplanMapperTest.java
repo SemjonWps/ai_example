@@ -29,7 +29,7 @@ class SaalplanMapperTest {
     private final String reservierungsnummerString = "reservierungsnummer";
     private final Reservierungsnummer reservierungsnummer = new Reservierungsnummer(reservierungsnummerString);
     private final VorstellungId vorstellungId = new VorstellungId(UUID.fromString("a095c8f6-6fa2-4f2e-acf1-52cee0698e74"));
-    private final PlatzEntity platzEntity = new PlatzEntity(new PlatzEntity.Id(saalplanId, reiheNr.nummer(), platzNr.nummer()), istVerkauft, reservierungsnummerString);
+    private final PlatzEntity platzEntity = new PlatzEntity(saalplanId, reiheNr.nummer(), platzNr.nummer(), istVerkauft, reservierungsnummerString);
     private final List<PlatzEntity> platzEntities = List.of(platzEntity);
 
     @Test
@@ -67,7 +67,7 @@ class SaalplanMapperTest {
     @Test
     public void testPlatzEntityToPlatz() {
         // arrange
-        PlatzEntity platzEntity = new PlatzEntity(new PlatzEntity.Id(saalplanId, reiheNr.nummer(), platzNr.nummer()), false, reservierungsnummer.nummer());
+        PlatzEntity platzEntity = new PlatzEntity(saalplanId, reiheNr.nummer(), platzNr.nummer(), false, reservierungsnummer.nummer());
 
         // act
         Platz platz = mapper.platzEntityToPlatz(platzEntity);
@@ -82,7 +82,7 @@ class SaalplanMapperTest {
     @Test
     public void testPlatzEntityToPlatz_reservierungsnummer_null() {
         // arrange
-        PlatzEntity platzEntity = new PlatzEntity(new PlatzEntity.Id(saalplanId, reiheNr.nummer(), platzNr.nummer()), true, null);
+        PlatzEntity platzEntity = new PlatzEntity(saalplanId, reiheNr.nummer(), platzNr.nummer(), true, null);
 
         // act
         Platz platz = mapper.platzEntityToPlatz(platzEntity);

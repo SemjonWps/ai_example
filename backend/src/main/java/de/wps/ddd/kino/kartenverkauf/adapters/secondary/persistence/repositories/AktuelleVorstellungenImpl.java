@@ -7,6 +7,8 @@ import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstel
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class AktuelleVorstellungenImpl implements AktuelleVorstellungen {
@@ -14,6 +16,12 @@ public class AktuelleVorstellungenImpl implements AktuelleVorstellungen {
     private final VorstellungRepository vorstellungRepository;
 
     private final VorstellungMapper vorstellungMapper;
+
+    @Override
+    public List<Vorstellung> alleVorstellungen() {
+        var vorstellungen = vorstellungRepository.findAll();
+        return vorstellungen.stream().map(vorstellungMapper::toDomain).toList();
+    }
 
     @Override
     public Vorstellung holeVorstellung(VorstellungId vorstellungId) {

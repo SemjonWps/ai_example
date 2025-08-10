@@ -22,14 +22,14 @@ public interface SaalplanMapper {
     @Mapping(target = "id", expression = "java(saalplanId)")
     @Mapping(target = "vorstellungUUID", source = "saalplan.vorstellungId.uuid")
     @Mapping(target = "plaetze", source = "saalplan.plaetze", qualifiedByName = "PlaetzeToPlatzEntities")
-    SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan, @Context int saalplanId);
+    SaalplanEntity saalplanToSaalplanEntity(Saalplan saalplan, @Context Integer saalplanId);
 
     @Mapping(target = "vorstellungId.uuid", source = "vorstellungUUID")
     @Mapping(target = "plaetze", source = "plaetze", qualifiedByName = "PlatzEntitiesToPlaetze")
     Saalplan saalplanEntityToSaalplan(SaalplanEntity saalplanEntity);
 
     @Named("PlaetzeToPlatzEntities")
-    default List<PlatzEntity> mapPlaetzeToPlatzEntities(TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze, @Context int saalplanId) {
+    default List<PlatzEntity> mapPlaetzeToPlatzEntities(TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze, @Context Integer saalplanId) {
         return plaetze.values().stream()
                 .flatMap(innerMap -> innerMap.values().stream())
                 .map(p -> platzToPlatzEntity(p, saalplanId))
@@ -45,11 +45,12 @@ public interface SaalplanMapper {
     @Mapping(target = "id.platz.nummer", source = "id.platz")
     Platz platzEntityToPlatz(PlatzEntity platzEntity);
 
+    @Mapping(target = "saalplan", ignore = true)
     @Mapping(target = "id.saalplanId", expression = "java(saalplanId)")
     @Mapping(target = "id.reihe", source = "platz.id.reihe.nummer")
     @Mapping(target = "id.platz", source = "platz.id.platz.nummer")
     @Mapping(target = "reservierung", source = "platz.reservierung.nummer")
-    PlatzEntity platzToPlatzEntity(Platz platz, @Context int saalplanId);
+    PlatzEntity platzToPlatzEntity(Platz platz, @Context Integer saalplanId);
 
     default Reservierungsnummer mapReservierungsnummer(@Nullable String reservierungsnummer) {
         return reservierungsnummer == null ? null : new Reservierungsnummer(reservierungsnummer);

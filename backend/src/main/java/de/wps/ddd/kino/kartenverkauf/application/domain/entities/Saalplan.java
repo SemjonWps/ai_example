@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 public class Saalplan {
 
     @Identity
-    @Association
+    @Association(aggregateType = Vorstellung.class)
     private final VorstellungId vorstellungId;
     private final TreeMap<ReiheNummer, TreeMap<PlatzNummer, Platz>> plaetze;
 
