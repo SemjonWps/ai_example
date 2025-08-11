@@ -47,9 +47,9 @@ public class KartenverkaufTest {
         // 1. Kinobesucher sucht Vorstellung in Wochenplan aus → Vorstellung ausgesucht
         var vorstellungId = new VorstellungId(UUID.fromString("090c173a-3636-4980-865a-1ec859eb4f90"));
         var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
-        assertThat(vorstellung.getFilm()).isEqualTo(new Filmname("Fast and the Curious"));
-        assertThat(vorstellung.getSaal()).isEqualTo(new Saal("großer Saal"));
-        assertThat(vorstellung.getBeginn()).isEqualTo(new Beginn(LocalDateTime.parse("2025-03-23T15:30")));
+        assertThat(vorstellung.getFilm()).isEqualTo(new Filmname("The Fast and the Curious"));
+        assertThat(vorstellung.getSaal()).isEqualTo(new Saal("kleiner Saal"));
+        assertThat(vorstellung.getBeginn()).isEqualTo(new Beginn(LocalDateTime.parse("2025-03-23T14:30")));
 
         // 2. Kinobesucher fragt nach Karten für Vorstellung → Platz-/Kartenanzahl angefragt
         var anzahlPlaetze = 4; // TODO value object?
@@ -70,8 +70,8 @@ public class KartenverkaufTest {
 
         // 6. Kinobesucher bezahlt Geldbetrag -> Zahlung erfolgt
         var gesamtbetrag = preisberechnung.ermittlePreis(vorstellung, gewaehltePlaetze);
-        assertThat(vorstellung.getEintrittspreis()).isEqualTo(Geldbetrag.euro(7, 50));
-        assertThat(gesamtbetrag).isEqualTo(Geldbetrag.euro(30, 0));
+        assertThat(vorstellung.getEintrittspreis()).isEqualTo(Geldbetrag.euro(9, 50));
+        assertThat(gesamtbetrag).isEqualTo(Geldbetrag.euro(38, 0));
 
         var auftragsnummer = zahlung.starteZahlungsvorgang(gesamtbetrag, vorstellungId, gewaehltePlaetze);
         assertThat(zahlung.status(auftragsnummer)).isEqualTo(Zahlungsstatus.Ausstehend);

@@ -23,7 +23,7 @@ class SaalplanStapelTest {
     @Autowired
     private SaalplanStapel saalplanStapel;
 
-    private final VorstellungId vorstellungId = new VorstellungId(UUID.fromString("f711a38d-e792-4016-9463-286c96ce824e"));
+    private final VorstellungId vorstellungId = new VorstellungId(UUID.fromString("f142de00-f3ec-4a42-9493-d406b3062b4a"));
 
     @Test
     public void holeSaalplan() {
@@ -44,7 +44,7 @@ class SaalplanStapelTest {
     public void legeZurueck_geaenderterSaalplan() {
         // arrange
         var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
-        var platzId = new PlatzId(new ReiheNummer(2), new PlatzNummer(4));
+        var platzId = new PlatzId(new ReiheNummer(2), new PlatzNummer(3));
         assertThat(saalplan.platz(platzId).istVerkauft()).isFalse();
 
         // act
