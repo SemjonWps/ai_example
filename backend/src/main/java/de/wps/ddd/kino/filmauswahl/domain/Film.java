@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.filmauswahl.model;
+package de.wps.ddd.kino.filmauswahl.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
@@ -11,14 +11,18 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jmolecules.ddd.annotation.AggregateRoot;
+import org.jmolecules.ddd.annotation.Identity;
 
 import java.util.List;
 
+@AggregateRoot
 @Entity
 @Table(name = "filme", schema = "programm")
 @Data
 @NoArgsConstructor
 public class Film {
+    @Identity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore

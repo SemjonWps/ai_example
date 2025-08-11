@@ -13,6 +13,7 @@ import java.util.List;
 public class KartenBlock {
     public List<Kinokarte> erstelleKarten(Vorstellung vorstellung, ZusammenhaengendePlaetze gewaehltePlaetze) {
         return gewaehltePlaetze.plaetze().stream().map(platzId -> new Kinokarte(
+                null,
                 vorstellung.getFilm(),
                 vorstellung.getBeginn(),
                 vorstellung.getSaal(),

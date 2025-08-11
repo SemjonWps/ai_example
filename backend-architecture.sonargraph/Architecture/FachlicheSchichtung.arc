@@ -12,4 +12,9 @@ artifact fachlicheschichtung
     {
         include "**/kartenverkauf/**"
     }
+    
+    public artifact common
+    {
+        include "**/common/**"
+    }
 }

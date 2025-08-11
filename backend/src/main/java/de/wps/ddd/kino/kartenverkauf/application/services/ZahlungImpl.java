@@ -26,6 +26,7 @@ public class ZahlungImpl implements Zahlung {
     public Auftragsnummer starteZahlungsvorgang(Geldbetrag gesamtpreis, VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         var zahlungsvorgang = Zahlungsvorgang.starteZahlung();
         zahlungsvorgaenge.speichere(zahlungsvorgang);
+        // TODO
         // Plätze im Saalplan blocken, damit sie nicht doppelt verkauft werden
         // Zahlvorgang bei externen Zahlungsdienstleister starten
         return zahlungsvorgang.getAuftragsnummer();

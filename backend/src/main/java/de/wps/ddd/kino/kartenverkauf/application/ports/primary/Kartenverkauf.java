@@ -1,5 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.application.ports.primary;
 
+import de.wps.ddd.kino.common.architecture.ApplicationService;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Kinokarte;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
@@ -10,6 +11,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zusammenhae
 
 import java.util.List;
 
+@ApplicationService
 public interface Kartenverkauf {
 
     Vorstellung holeVorstellung(VorstellungId vorstellungId);

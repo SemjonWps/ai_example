@@ -1,31 +1,17 @@
 
-
-artifact backend
+artifact mustersprache
 {
-    include "**/kartenverkauf/**"
-    
-    artifact fixtures
-    {
-        include "**/fixtures/**"
-        connect to repositories, jpaentities
-    }
-    
-    artifact applicationservices
-    {
-        include "**/application/services/**"
-        connect to services, factories, repositories, entities, events, valueobjects
-    }
     
     artifact controllers
     {
-        include "**/web/controllers/**"
-        connect to entities, events, valueobjects, dtos, dtomappers
+        include "JavaHasAnnotation: org.springframework.web.bind.annotation.RestController"
+        connect to applicationservices, aggregates, events, valueobjects, dtos, dtomappers
     }
     
     artifact dtomappers
     {
         include "**/web/mappers/**"
-        connect to entities, valueobjects, dtos
+        connect to aggregates, innerentities, valueobjects, dtos
     }
     
     artifact dtos
@@ -33,16 +19,30 @@ artifact backend
         include "**/web/model/**"
     }
     
+    artifact fixtures
+    {
+        include "**/fixtures/**"
+        connect to repositories, aggregates, innerentities, valueobjects
+    }
+    
+    artifact applicationservices
+    {
+        include "**/application/services/**" // implementation
+        include "JavaHasAnnotation: de.wps.ddd.kino.common.architecture.ApplicationService" // interface
+        connect to services, factories, repositories, aggregates, events, valueobjects
+    }
+    
     artifact repositories
     {
-        include "**/persistence/repositories/**"
-        connect to entities, valueobjects, jpaentities, entitymappers
+        include "**/persistence/repositories/**" // implementation
+        include "JavaHasAnnotation: org.jmolecules.ddd.annotation.Repository" // interface
+        connect to aggregates, valueobjects, jpaentities, entitymappers
     }
     
     artifact entitymappers
     {
         include "**/persistence/mappers/**"
-        connect to entities, valueobjects, jpaentities
+        connect to aggregates, innerentities, valueobjects, jpaentities
     }
     
     artifact jpaentities
@@ -52,33 +52,43 @@ artifact backend
     
     artifact factories
     {
-        include "**/factories/**"
-        connect to entities, valueobjects
+        include "JavaHasAnnotation: org.jmolecules.ddd.annotation.Factory"
+        connect to aggregates, valueobjects
     }
     
     artifact services
     {
-        include "**/services/**"
-        connect to entities, valueobjects
+        include "JavaHasAnnotation: org.jmolecules.ddd.annotation.Service"
+        connect to aggregates, valueobjects
     }
     
-    artifact entities
+    artifact aggregates
     {
-        include "**/entities/**"
+        
+        include "JavaHasAnnotation: org.jmolecules.ddd.annotation.AggregateRoot"
+        connect to innerentities, valueobjects
+    }
+    
+    artifact innerentities
+    {
+        include "JavaHasAnnotation: org.jmolecules.ddd.annotation.Entity"
         connect to valueobjects
     }
     
     artifact events
     {
-        include "**/events/**"
+        include "JavaHasAnnotation: org.jmolecules.event.annotation.DomainEvent"
         connect to valueobjects
     }
     
     artifact valueobjects
     {
-        include "**/valueobjects/**"
+        include "JavaHasAnnotation: org.jmolecules.ddd.annotation.ValueObject"
     }
     
-    
+    artifact configs
+    {
+        include "**/config/**"
+    }
 }
 

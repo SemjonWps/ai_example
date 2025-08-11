@@ -1,7 +1,7 @@
-package de.wps.ddd.kino.filmauswahl.controller;
+package de.wps.ddd.kino.filmauswahl.web;
 
-import de.wps.ddd.kino.filmauswahl.model.Programm;
-import de.wps.ddd.kino.filmauswahl.model.ProgrammRepository;
+import de.wps.ddd.kino.filmauswahl.application.ProgrammService;
+import de.wps.ddd.kino.filmauswahl.domain.Film;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/programm")
@@ -17,10 +18,10 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class ProgrammController {
 
-    private final ProgrammRepository programmRepository;
+    private final ProgrammService programmService;
 
     @GetMapping()
-    public Programm holeProgrammFuerTag(@RequestParam LocalDate datum) {
-        return programmRepository.holeProgrammFuerTag(datum);
+    public List<Film> holeProgrammFuerTag(@RequestParam LocalDate datum) {
+        return programmService.holeVorstellungenFuerTag(datum);
     }
 }
