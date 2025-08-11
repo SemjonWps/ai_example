@@ -1,4 +1,4 @@
-INSERT INTO programm.filme
+INSERT INTO filmauswahl.filme
 (titel, laufzeit, poster_url, fsk, beschreibung, genre, hauptdarsteller, regie, sprache)
 VALUES ('Star Boars', 125, 'assets/Star_Boars.webp', 12, 'In einer weit, weit entfernten Galaxie kämpfen mutige Wildschweine gegen das tyrannische Imperium.
 Angeführt von Luke Stywalker, müssen sie sich mit Lichttrüffeln und telepathischen Grunzkraftfähigkeiten gegen den dunklen Lord Swineous behaupten.
@@ -48,12 +48,12 @@ Ein rasanter Mix aus Action, Humor und katzenhafter Cleverness!',
         'Action, Adventure, Tierfilm', 'Cat Moss',
         'Rob Kitten', 'deutsch');
 
-INSERT INTO programm.saele
+INSERT INTO filmauswahl.saele
     (name)
 VALUES ('großer Saal'),
        ('kleiner Saal');
 
-INSERT INTO programm.vorstellungen
+INSERT INTO filmauswahl.vorstellungen
     (uuid, beginn, film_id, preis, saal_id)
 VALUES ('70f79a3c-eb2f-48e4-af59-cda7a353635f', '2025-03-17 15:30:00', 2, 1650, 2),
        ('f142de00-f3ec-4a42-9493-d406b3062b4a', '2025-03-18 14:30:00', 2, 1650, 1),

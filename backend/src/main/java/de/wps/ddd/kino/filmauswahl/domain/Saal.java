@@ -12,7 +12,7 @@ import org.jmolecules.ddd.annotation.Identity;
 
 @org.jmolecules.ddd.annotation.Entity
 @Entity
-@Table(name = "saele", schema = "programm")
+@Table(name = "saele", schema = "filmauswahl")
 @Data
 @NoArgsConstructor
 public class Saal {

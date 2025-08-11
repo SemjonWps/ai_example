@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @org.jmolecules.ddd.annotation.Entity
 @Entity
-@Table(name = "vorstellungen", schema = "programm")
+@Table(name = "vorstellungen", schema = "filmauswahl")
 @Data
 @NoArgsConstructor
 public class Vorstellung {

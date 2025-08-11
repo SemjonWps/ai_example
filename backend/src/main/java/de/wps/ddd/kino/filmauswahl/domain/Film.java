@@ -18,7 +18,7 @@ import java.util.List;
 
 @AggregateRoot
 @Entity
-@Table(name = "filme", schema = "programm")
+@Table(name = "filme", schema = "filmauswahl")
 @Data
 @NoArgsConstructor
 public class Film {

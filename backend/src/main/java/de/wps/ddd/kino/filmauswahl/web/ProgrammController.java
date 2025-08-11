@@ -21,7 +21,7 @@ public class ProgrammController {
     private final ProgrammService programmService;
 
     @GetMapping()
-    public List<Film> holeProgrammFuerTag(@RequestParam LocalDate datum) {
+    public List<Film> holeVorstellungenFuerTag(@RequestParam LocalDate datum) {
         return programmService.holeVorstellungenFuerTag(datum);
     }
 }
