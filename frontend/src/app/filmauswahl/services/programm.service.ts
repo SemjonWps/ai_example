@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Programm} from '../dtos/programm';
+import {Film} from '../dtos/programm';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class ProgrammService {
 
   }
 
-  public holeProgramm(datum: string): Observable<Programm> {
-    return this.http.get<Programm>(this.programmUrl, {params: {datum: datum}})
+  public holeProgramm(datum: string): Observable<Film[]> {
+    return this.http.get<Film[]>(this.programmUrl, {params: {datum: datum}})
   }
 
 }

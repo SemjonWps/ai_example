@@ -1,8 +1,3 @@
-export interface Programm {
-  von: Date
-  bis: Date
-  filmvorstellungen: Film[]
-}
 
 export interface Film {
   id: number

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ProgrammService} from '../../services/programm.service';
-import {Programm} from '../../dtos/programm';
+import {Film} from '../../dtos/programm';
 import {KalenderComponent} from '../kalender/kalender.component';
 import {ProgrammeintragComponent} from '../programmeintrag/programmeintrag.component';
 import {NgForOf} from '@angular/common';
@@ -21,7 +21,7 @@ import {NavbarComponent} from '../../../common/components/navbar/navbar.componen
 })
 export class ProgrammComponent {
 
-  programm?: Programm;
+  filme?: Film[];
 
   constructor(private programmService: ProgrammService) {
   }
@@ -29,7 +29,7 @@ export class ProgrammComponent {
   waehleDatum(datum: Date) {
     this.programmService.holeProgramm(format(datum, "yyyy-MM-dd")).subscribe(
       data => {
-        this.programm = data;
+        this.filme = data;
       }
     )
   }
