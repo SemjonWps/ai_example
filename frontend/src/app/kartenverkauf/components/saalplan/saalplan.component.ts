@@ -25,6 +25,7 @@ export class SaalplanComponent implements OnInit {
   saalplan: Saalplan | undefined;
   angebotenePlaetze: ZusammenhaengendePlaetze | undefined;
   gewaehltePlaetze: ZusammenhaengendePlaetze | undefined;
+  gehovertePlaetze: ZusammenhaengendePlaetze | undefined;
   fertig: boolean = false;
 
   radius = 20;
@@ -94,7 +95,11 @@ export class SaalplanComponent implements OnInit {
   }
 
   getFarbeFuerPlatzbelegung(platz: Platz): String {
-    if (this.angebotenePlaetze?.plaetze.some(angebotenerPlatz => angebotenerPlatz.platz === platz.platz && angebotenerPlatz.reihe === platz.reihe)) {
+    if (this.gehovertePlaetze?.plaetze.some(p => p.platz === platz.platz && p.reihe === platz.reihe)) {
+      return 'yellow';
+    }
+
+    if (this.gewaehltePlaetze?.plaetze.some(p => p.platz === platz.platz && p.reihe === platz.reihe)) {
       return 'lightgreen';
     }
 
@@ -111,5 +116,56 @@ export class SaalplanComponent implements OnInit {
     } else {
       return `Reihe ${this.gewaehltePlaetze?.plaetze?.[0].reihe} ⋅ Plätze ${this.gewaehltePlaetze?.plaetze?.[0].platz} - ${this.gewaehltePlaetze?.plaetze?.at(-1)?.platz}`;
     }
+  }
+
+  platzEnter(rowIndex: number, columnIndex: number) {
+    let block = this.ermittleFreienBlock(rowIndex, columnIndex);
+    if (block) {
+      this.gehovertePlaetze = block;
+    }
+  }
+
+  platzLeave() {
+    this.gehovertePlaetze = undefined;
+  }
+
+  platzClick(rowIndex: number, columnIndex: number) {
+    let block = this.ermittleFreienBlock(rowIndex, columnIndex);
+    if (block) {
+      this.gewaehltePlaetze = block;
+    }
+  }
+
+  private ermittleFreienBlock(rowIndex: number, columnIndex: number): ZusammenhaengendePlaetze | undefined {
+    let row = this.saalplan!.plaetze[rowIndex];
+
+    if (!row[columnIndex].istFrei) return undefined;
+
+    let li = columnIndex;
+    let ri = columnIndex;
+    let n = 1;
+    let steptaken = true;
+
+    while (steptaken) {
+      steptaken = false;
+      if (n == this.platzanzahl) break;
+      if (ri < row.length - 1 && row[ri + 1].istFrei) {
+        ri++;
+        n++;
+        steptaken = true;
+      }
+      if (n == this.platzanzahl) break;
+      if (li > 0 && row[li - 1].istFrei) {
+        li--;
+        n++;
+        steptaken = true;
+      }
+    }
+
+    if (n == this.platzanzahl) {
+      return {plaetze: row.slice(li, ri + 1)};
+    }
+
+    return undefined;
   }
 }

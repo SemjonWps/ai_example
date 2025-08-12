@@ -31,6 +31,9 @@
                 [attr.r]="radius"
                 [attr.fill]="getFarbeFuerPlatzbelegung(platz)"
                 stroke="black"
+                (mouseenter)="platzEnter(rowIndex, columnIndex)"
+                (mouseleave)="platzLeave()"
+                (click)="platzClick(rowIndex, columnIndex)"
               />
             </ng-container>
           </ng-container>
