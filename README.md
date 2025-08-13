@@ -1,93 +1,119 @@
-# DDD-Schulung Musterlösung
+# KinoSoft - Eine Fallstudie für Domain-Driven Design (DDD)
 
+KinoSoft ist eine Beispielanwendung, die für die [DDD-Schulung](https://www.wps.de/schulungen/isaqb/ddd)
+der [WPS - Workplace Solutions GmbH](https://www.wps.de) entwickelt wurde. Die Anwendung demonstriert die
+Umsetzung von DDD-Prinzipien in einer Full-Stack-Webanwendung.
 
+**Achtung**: Diese Implementierung ist nur eine von vielen möglichen. Unterschiedliche Annahmen, Randbedingungen, (
+Geschäfts-)Ziele, und Designentscheidungen werden zu unterschiedlichen Ergebnissen führen!
 
-## Getting started
+## Vorgehen
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+In der Fallstudie werden diverse **Szenarien** aus dem Betrieb eines kleinen Programmkinos betrachtet, u.a. der
+Kartenverkauf, dessen IST-Prozess in einer **Domain Story** mit [egon.io](https://egon.io) erfasst wurde:
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+![Kartenverkauf](docs/diagrams/Szenario-1-Kartenverkauf.egn.svg)
 
-## Add your files
+Aus diesen Szenarien wurde über das **Strategische Design** aus der Gesamtdomäne folgende **Subdomänen**
+ermittelt:
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+- Wochenplanerstellung
+- Filmauswahl
+- Kartenverkauf
+- Einlasskontrolle
+- Filmvorführung
+- Snackverkauf
 
+Für die Implementierung dieser Beispielanwendung konzentrieren wir uns auf folgende **Bounded Contexts**:
+
+- Filmauswahl
+- Kartenverkauf
+
+Diese Aufteilung ermöglicht uns pro Bounded Context ein spezifische Fachmodell (**Domain Model**) zu entwickeln.
+Die wichtigsten Begriffe der jeweiligen **Ubiquitous Language** sind in einem [Glossar](docs/Glossar.md) definiert.
+
+## Technologien
+
+Das Backend basiert u.a. auf folgenden Technologien:
+
+- Java
+- Spring Boot
+- JPA/Hibernate
+- Lombok
+- MapStruct
+- jMolecules
+
+Das Frontend basiert u.a. auf folgenden Technologien:
+
+- Angular
+- TypeScript
+- TailwindCSS
+- DaisyUI
+
+## Architektur
+
+Die Anwendung ist als modularer Monolith strukturiert, dessen oberste Module auf den Bounded Contexts basieren
+(fachliche Schnitte). Je Bounded Context kann ein eigener, auf die funktionalen und nicht-funktionalen Anforderungen
+zurechtgeschnittener, Architekturstil gewählt werden.
+
+- Filmauswahl: eine simple Schichtenarchitektur unter direkter Verwendung der Spring Boot Boardmittel: RestController,
+  Service, Repository, Entity (DTO, Domain-Entity, JPA-Entity in Einem).
+- Kartenverkauf: eine hexagonale / Ports-and-Adapters Architektur mit DDD-Bausteinen im fachlichen Kern und eigenen
+  Modellen in den Adaptern (DTOs, JPA-Entities, und entsprechende Mapper).
+
+Folgende Libraries und Tools helfen sicherzustellen, dass die Architekturregeln eingehalten werden:
+
+- [jMolecules](https://github.com/xmolecules/jmolecules): stellt **Annotationen** wie `@PrimaryAdapter` oder
+  `@AgregateRoot`, `@Entity`, und `@ValueObject` bereit, mit denen die entsprechenden Komponenten ausgezeichnet werden.
+- [ArchUnit](https://www.archunit.org/): Prüft diverse **Architekturregeln** bzgl. der hexagonalen
+  Architektur und der DDD-Mustersprache, z.B. dass ein `@AgregateRoot` zwar ein `@Entity` aber kein anderes
+  `@AgregateRoot` enthalten darf.
+- [Sonargraph](https://www.hello2morrow.com/products/sonargraph): Von uns regelmäßig in
+  unseren [Architektur-Reviews](https://www.wps.de/leistungen/architektur-review)  eingesetztes Tool zur explorativen
+  Betrachtung der Architektur nach den drei Aspekten **technische Schichtung**, **fachliche Schichtung**,
+  und **Mustersprache**.
+
+## Bauen und starten der Anwendung
+
+Das gesamte System inklusive der Docker Images kann über Maven gebaut werden:
+
+```bash
+./mvnw clean package
 ```
-cd existing_repo
-git remote add origin https://gitlab.wps.de/wps/ddd-schulung-musterloesung.git
-git branch -M main
-git push -uf origin main
+
+Dieser Befehl baut das Spring Boot Backend, das Angular Frontend (mit dem frontend-maven-plugin) und erstellt Docker
+Images für beide Komponenten (mit dem jib-maven-plugin und fabric8-docker-maven-plugin). Die Container können nun mit
+Docker Compose gestartet werden:
+
+```bash
+docker compose up -d
 ```
 
-## Integrate with your tools
+Die Anwendung ist dann verfügbar unter: http://localhost:8081
 
-- [ ] [Set up project integrations](https://gitlab.wps.de/wps/ddd-schulung-musterloesung/-/settings/integrations)
+Sollte die Anwendung über eine Entwicklungsumgebung gebaut und gestartet werden, ist die UI verfügbar
+unter: http://localhost:4200
 
-## Collaborate with your team
+## Features
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Es wird zunächst die Filmauswahl, a.k.a das Kinoprogramm, angezeigt. Diese umfasst folgende Funktionen:
 
-## Test and Deploy
+- Anzeige der aktuellen Woche als Kalenderleiste
+- Anzeige der Filmvorstellungen des ausgewählten Wochentages
 
-Use the built-in continuous integration in GitLab.
+Nicht wundern: das "heutige" Datum ist im Code fest auf den 19.03.2025 gesetzt, da die Beispieldaten statisch hinterlegt
+sind.
+Durch Klick auf eine Vorstellung gelangt man zum Kartenverkauf. Dieser umfasst folgende Funktionen:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+- Anzeige der gewählten Vorstellung
+- Angabe der gewünschten Anzahl von Kinokarten
+- Auswahl eines Blocks zusammenhängender Plätze im Saalplan, mit initialem Vorschlag durch das System
+- Zahlungsvorgang (angedeutet)
+- Ausstellen der Kinokarten
 
-***
+## Lizenz
 
-# Editing this README
+Dieses Projekt steht unter der [MIT Lizenz](LICENSE).
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Copyright (c) 2025 WPS - Workplace Solutions GmbH
 
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
