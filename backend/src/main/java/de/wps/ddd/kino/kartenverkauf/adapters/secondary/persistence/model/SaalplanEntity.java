@@ -8,10 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +19,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "saalplaene", schema = "kartenverkauf")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class SaalplanEntity {
 
@@ -33,12 +29,20 @@ public class SaalplanEntity {
     @Column(nullable = false, updatable = false, unique = true)
     private UUID vorstellungUUID;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER,
+            mappedBy = "saalplan"
+    )
     private List<PlatzEntity> plaetze = new ArrayList<>();
 
-    @PrePersist
-    @PreUpdate
-    private void syncChildFKs() {
-        plaetze.forEach(p -> p.setSaalplan(this));
+    public SaalplanEntity(Integer id, UUID vorstellungUUID) {
+        this.id = id;
+        this.vorstellungUUID = vorstellungUUID;
+    }
+
+    public void addPlatz(int reihe, int platz, boolean istVerkauft, String reservierung) {
+        plaetze.add(new PlatzEntity(this, reihe, platz, istVerkauft, reservierung));
     }
 }

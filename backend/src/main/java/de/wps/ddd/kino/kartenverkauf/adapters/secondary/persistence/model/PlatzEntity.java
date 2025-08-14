@@ -28,8 +28,9 @@ public class PlatzEntity {
     @MapsId("saalplanId") // <-- tells Hibernate to fill FK from parent
     private SaalplanEntity saalplan;
 
-    public PlatzEntity(int saalplanId, int reihe, int platz, boolean istVerkauft, String reservierung) {
-        this.id = new Id(saalplanId, reihe, platz);
+    public PlatzEntity(SaalplanEntity saalplan, int reihe, int platz, boolean istVerkauft, String reservierung) {
+        this.saalplan = saalplan;
+        this.id = new Id(saalplan.getId(), reihe, platz);
         this.istVerkauft = istVerkauft;
         this.reservierung = reservierung;
     }

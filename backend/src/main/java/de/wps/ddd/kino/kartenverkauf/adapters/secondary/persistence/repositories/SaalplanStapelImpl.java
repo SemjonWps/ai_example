@@ -17,12 +17,12 @@ public class SaalplanStapelImpl implements SaalplanStapel {
 
     public Saalplan holeSaalplan(VorstellungId vorstellungId) {
         SaalplanEntity saalplanEntity = saalplanRepository.findByVorstellungUUID(vorstellungId.uuid());
-        return saalplanMapper.saalplanEntityToSaalplan(saalplanEntity);
+        return saalplanMapper.toDomain(saalplanEntity);
     }
 
     public void legeZurueck(Saalplan saalplan) {
         Integer saalplanEntityId = saalplanRepository.findIdByVorstellungUUID(saalplan.getVorstellungId().uuid()).orElse(null);
-        SaalplanEntity saalplanEntity = saalplanMapper.saalplanToSaalplanEntity(saalplan, saalplanEntityId);
+        SaalplanEntity saalplanEntity = saalplanMapper.toEntity(saalplan, saalplanEntityId);
         saalplanRepository.save(saalplanEntity);
     }
 }
