@@ -60,8 +60,6 @@ class SaalplanStapelTest {
     public void legeZurueck_neuerSaalplan() {
         // arrange
         var vorstellungId = new VorstellungId(UUID.randomUUID());
-        assertThat(saalplanStapel.holeSaalplan(vorstellungId)).isNull();
-
         var platzId = new PlatzId(new ReiheNummer(1), new PlatzNummer(1));
         var saalplan = new Saalplan(vorstellungId, List.of(new Platz(platzId, true, null)));
 
@@ -72,6 +70,5 @@ class SaalplanStapelTest {
         var neuerSaalplan = saalplanStapel.holeSaalplan(vorstellungId);
         assertThat(neuerSaalplan).isNotNull();
         assertThat(neuerSaalplan.platz(platzId).istVerkauft()).isTrue();
-
     }
 }

@@ -7,6 +7,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Vorstellung
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 @Component
 @AllArgsConstructor
@@ -17,6 +18,7 @@ public class SaalplanStapelImpl implements SaalplanStapel {
 
     public Saalplan holeSaalplan(VorstellungId vorstellungId) {
         SaalplanEntity saalplanEntity = saalplanRepository.findByVorstellungUUID(vorstellungId.uuid());
+        Assert.notNull(saalplanEntity, "Saalplan zu Vorstellung " + vorstellungId + " existiert nicht");
         return saalplanMapper.toDomain(saalplanEntity);
     }
 
