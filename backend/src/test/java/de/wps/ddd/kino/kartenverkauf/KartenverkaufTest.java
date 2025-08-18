@@ -4,7 +4,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungEingegange
 import de.wps.ddd.kino.kartenverkauf.application.domain.factories.KartenBlock;
 import de.wps.ddd.kino.kartenverkauf.application.domain.services.Preisberechnung;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Beginn;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Filmname;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Film;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Saal;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
@@ -47,7 +47,7 @@ public class KartenverkaufTest {
         // 1. Kinobesucher sucht Vorstellung in Wochenplan aus → Vorstellung ausgesucht
         var vorstellungId = new VorstellungId(UUID.fromString("090c173a-3636-4980-865a-1ec859eb4f90"));
         var vorstellung = vorstellungen.holeVorstellung(vorstellungId);
-        assertThat(vorstellung.getFilm()).isEqualTo(new Filmname("The Fast and the Curious"));
+        assertThat(vorstellung.getFilm()).isEqualTo(new Film("The Fast and the Curious"));
         assertThat(vorstellung.getSaal()).isEqualTo(new Saal("kleiner Saal"));
         assertThat(vorstellung.getBeginn()).isEqualTo(new Beginn(LocalDateTime.parse("2025-03-23T14:30")));
 

@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.domain.entities;
 
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Beginn;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Filmname;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Film;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Saal;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
@@ -18,6 +18,6 @@ public class Vorstellung {
     private final VorstellungId id;
     private final Saal saal;
     private final Beginn beginn;
-    private final Filmname film;
+    private final Film film;
     private final Geldbetrag eintrittspreis;
 }
