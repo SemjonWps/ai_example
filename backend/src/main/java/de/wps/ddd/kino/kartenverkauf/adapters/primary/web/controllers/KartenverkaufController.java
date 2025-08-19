@@ -38,10 +38,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 class KartenverkaufController {
 
-    private final VorstellungDtoMapper vorstellungDtoMapper;
-    private final SaalplanDtoMapper saalplanDtoMapper;
-    private final ZahlungDtoMapper zahlungDtoMapper;
-    private final KartenDtoMapper kartenDtoMapper;
+    private final VorstellungDtoMapper vorstellungMapper;
+    private final SaalplanDtoMapper saalplanMapper;
+    private final ZahlungDtoMapper zahlungMapper;
+    private final KartenDtoMapper kartenMapper;
 
     private final Kartenverkauf kartenverkauf;
     private final Zahlung zahlung;
@@ -50,14 +50,14 @@ class KartenverkaufController {
     public VorstellungDto holeVorstellung(@PathVariable UUID id) {
         var vorstellungId = new VorstellungId(id);
         var vorstellung = kartenverkauf.holeVorstellung(vorstellungId);
-        return vorstellungDtoMapper.toDto(vorstellung);
+        return vorstellungMapper.toDto(vorstellung);
     }
 
     @GetMapping("/saalplaene/{id}")
     public SaalplanDto holeSaalplan(@PathVariable UUID id) {
         var vorstellungId = new VorstellungId(id);
         var saalplan = kartenverkauf.holeSaalplan(vorstellungId);
-        return saalplanDtoMapper.saalplantoSaalplanDto(saalplan);
+        return saalplanMapper.toDto(saalplan);
     }
 
     @GetMapping("/saalplaene/{id}/suche-zusammenhaengende-plaetze")
@@ -66,23 +66,23 @@ class KartenverkaufController {
 
         var plaetze = kartenverkauf.sucheZusammenhaengendePlaetze(vorstellungId, platzanzahl);
 
-        return saalplanDtoMapper.toDto(plaetze);
+        return saalplanMapper.toDto(plaetze);
     }
 
     @PostMapping("/preisanfrage")
     public GeldbetragDto preisanfrage(@RequestBody PreisanfrageDto preisanfrageDto) {
         var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
-        var gewaehltePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
+        var gewaehltePlaetze = saalplanMapper.toDomain(preisanfrageDto.plaetze());
 
         var gesamtpreis = kartenverkauf.berechneGesamtpreis(vorstellungId, gewaehltePlaetze);
 
-        return zahlungDtoMapper.toDto(gesamtpreis);
+        return zahlungMapper.toDto(gesamtpreis);
     }
 
     @PostMapping("/zahlung")
     public ZahlungsvorgangDto starteZahlungsvorgang(@RequestBody PreisanfrageDto preisanfrageDto) {
         var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
-        var gewaehltePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
+        var gewaehltePlaetze = saalplanMapper.toDomain(preisanfrageDto.plaetze());
 
         var gesamtpreis = kartenverkauf.berechneGesamtpreis(vorstellungId, gewaehltePlaetze);
         var auftragsnummer = zahlung.starteZahlungsvorgang(gesamtpreis, vorstellungId, gewaehltePlaetze);
@@ -91,14 +91,14 @@ class KartenverkaufController {
                 auftragsnummer.nummer().toString(),
                 preisanfrageDto.vorstellungId().toString(),
                 preisanfrageDto.plaetze(),
-                zahlungDtoMapper.toDto(gesamtpreis));
+                zahlungMapper.toDto(gesamtpreis));
     }
 
     @GetMapping("/zahlung/{id}/status")
     public ZahlungsstatusDto zahlungStatus(@PathVariable UUID id) {
         var auftragsnummer = new Auftragsnummer(id);
         var status = zahlung.status(auftragsnummer);
-        return zahlungDtoMapper.toDto(status);
+        return zahlungMapper.toDto(status);
     }
 
     // In Wirklichkeit würde diese Bestätigung vom externen Zahlungsdienstleister kommen, nicht von der UI
@@ -106,7 +106,7 @@ class KartenverkaufController {
     public ZahlungsstatusDto bestaetigeZahlungseingang(@PathVariable UUID id) {
         var auftragsnummer = new Auftragsnummer(id);
         zahlung.verarbeite(new ZahlungEingegangen(auftragsnummer));
-        return zahlungDtoMapper.toDto(zahlung.status(auftragsnummer));
+        return zahlungMapper.toDto(zahlung.status(auftragsnummer));
     }
 
     @PostMapping("/kinokarten/{id}")
@@ -114,10 +114,10 @@ class KartenverkaufController {
         var auftragsnummer = new Auftragsnummer(id);
         // TODO sollte aus Auftragsnummer hervorgehen. get statt post request
         var vorstellungId = new VorstellungId(preisanfrageDto.vorstellungId());
-        var gewaehltePlaetze = saalplanDtoMapper.toDomain(preisanfrageDto.plaetze());
+        var gewaehltePlaetze = saalplanMapper.toDomain(preisanfrageDto.plaetze());
 
         var kinokarten = kartenverkauf.erstelleKinokarten(auftragsnummer, vorstellungId, gewaehltePlaetze);
 
-        return kartenDtoMapper.toDto(kinokarten);
+        return kartenMapper.toDto(kinokarten);
     }
 }

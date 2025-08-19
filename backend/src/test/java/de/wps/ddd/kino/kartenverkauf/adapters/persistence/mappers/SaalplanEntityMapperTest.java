@@ -1,7 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.persistence.mappers;
 
-import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanMapper;
-import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanMapperImpl;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanEntityMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.SaalplanEntity;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
@@ -17,9 +16,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SaalplanMapperTest {
+class SaalplanEntityMapperTest {
 
-    private final SaalplanMapper mapper = new SaalplanMapperImpl();
+    private final SaalplanEntityMapper mapper = new SaalplanEntityMapper();
 
     private final int saalplanId = 2;
     private final PlatzNummer platzNr = new PlatzNummer(1);

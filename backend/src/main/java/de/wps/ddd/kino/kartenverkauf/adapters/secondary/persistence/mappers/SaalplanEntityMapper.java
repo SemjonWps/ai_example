@@ -8,13 +8,13 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import org.mapstruct.Mapper;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
-@Mapper
-public interface SaalplanMapper {
+@Component
+public class SaalplanEntityMapper {
 
-    default SaalplanEntity toEntity(Saalplan saalplan, @Nullable Integer saalplanId) {
+    public SaalplanEntity toEntity(Saalplan saalplan, @Nullable Integer saalplanId) {
         var saalplanEntity = new SaalplanEntity(saalplanId, saalplan.getVorstellungId().uuid());
         saalplan.getPlaetze().values().stream()
                 .flatMap(inner -> inner.values().stream())
@@ -27,7 +27,7 @@ public interface SaalplanMapper {
         return saalplanEntity;
     }
 
-    default Saalplan toDomain(SaalplanEntity saalplanEntity) {
+    public Saalplan toDomain(SaalplanEntity saalplanEntity) {
         return new Saalplan(
                 new VorstellungId(saalplanEntity.getVorstellungUUID()),
                 saalplanEntity.getPlaetze().stream().map(

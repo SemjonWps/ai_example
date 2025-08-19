@@ -19,7 +19,6 @@
         <maven.compiler.target>21</maven.compiler.target>
         <spring-boot.version>3.4.5</spring-boot.version>
         <lombok.version>1.18.36</lombok.version>
-        <mapstruct.version>1.6.3</mapstruct.version>
         <jmolecules.version>1.10.0</jmolecules.version>
         <jmolecules-archunit.version>0.28.0</jmolecules-archunit.version>
         <archunit.version>1.4.1</archunit.version>
@@ -73,12 +72,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.jmolecules</groupId>
             <artifactId>jmolecules-ddd</artifactId>
             <version>${jmolecules.version}</version>
@@ -129,17 +122,7 @@
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
                         </path>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
                     </annotationProcessorPaths>
-                    <compilerArgs>
-                        <arg>-Amapstruct.defaultComponentModel=spring</arg>
-                        <arg>-Amapstruct.defaultInjectionStrategy=constructor</arg>
-                        <arg>-Amapstruct.verbose=false</arg>
-                    </compilerArgs>
                 </configuration>
             </plugin>
 

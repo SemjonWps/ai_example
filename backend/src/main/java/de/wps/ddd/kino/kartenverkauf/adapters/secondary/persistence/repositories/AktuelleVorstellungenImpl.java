@@ -1,6 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories;
 
-import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.VorstellungMapper;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.VorstellungEntityMapper;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
@@ -15,7 +15,7 @@ public class AktuelleVorstellungenImpl implements AktuelleVorstellungen {
 
     private final VorstellungRepository vorstellungRepository;
 
-    private final VorstellungMapper vorstellungMapper;
+    private final VorstellungEntityMapper vorstellungMapper;
 
     @Override
     public List<Vorstellung> alleVorstellungen() {

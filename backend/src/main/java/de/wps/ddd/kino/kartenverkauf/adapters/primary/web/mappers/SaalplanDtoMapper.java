@@ -7,17 +7,17 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.Zusammenhaengend
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Mapper
-public interface SaalplanDtoMapper {
+@Component
+public class SaalplanDtoMapper {
 
-    default SaalplanDto saalplantoSaalplanDto(Saalplan saalplan) {
+    public SaalplanDto toDto(Saalplan saalplan) {
         var plaetze = saalplan.getPlaetze();
 
         var reihenzahl = plaetze.size();
@@ -32,25 +32,27 @@ public interface SaalplanDtoMapper {
         return new SaalplanDto(platzbelegungen);
     }
 
-    ZusammenhaengendePlaetzeDto toDto(ZusammenhaengendePlaetze plaetze);
-
-    ZusammenhaengendePlaetze toDomain(ZusammenhaengendePlaetzeDto plaetze);
-
-    @Mapping(target = "platz", source = "id.platz.nummer")
-    @Mapping(target = "reihe", source = "id.reihe.nummer")
-    @Mapping(target = "istFrei", source = "platz", qualifiedByName = "mapIstFrei")
-    PlatzDto toDto(Platz platz);
-
-    @Named("mapIstFrei")
-    static boolean mapIstFrei(Platz platz) {
-        return platz.istFrei();
+    public ZusammenhaengendePlaetzeDto toDto(ZusammenhaengendePlaetze plaetze) {
+        return new ZusammenhaengendePlaetzeDto(plaetze.plaetze().stream().map(this::toDto).toList());
     }
 
-    @Mapping(target = "reihe.nummer", source = "platzIdDto.reihe")
-    @Mapping(target = "platz.nummer", source = "platzIdDto.platz")
-    PlatzId toDomain(PlatzIdDto platzIdDto);
+    public ZusammenhaengendePlaetze toDomain(ZusammenhaengendePlaetzeDto plaetze) {
+        return new ZusammenhaengendePlaetze(plaetze.plaetze().stream().map(this::toDomain).toList());
+    }
 
-    @Mapping(target = "platz", source = "platz.nummer")
-    @Mapping(target = "reihe", source = "reihe.nummer")
-    PlatzIdDto toDto(PlatzId platzId);
+    private PlatzDto toDto(Platz platz) {
+        return new PlatzDto(
+                platz.getId().reihe().nummer(),
+                platz.getId().platz().nummer(),
+                platz.istFrei()
+        );
+    }
+
+    private PlatzIdDto toDto(PlatzId platzId) {
+        return new PlatzIdDto(platzId.reihe().nummer(), platzId.platz().nummer());
+    }
+
+    private PlatzId toDomain(PlatzIdDto platzId) {
+        return new PlatzId(new ReiheNummer(platzId.reihe()), new PlatzNummer(platzId.platz()));
+    }
 }

@@ -1,8 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.web.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers.SaalplanDtoMapper;
-import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers.SaalplanDtoMapperImpl;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PlatzDto;
+import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PlatzIdDto;
+import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZusammenhaengendePlaetzeDto;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
@@ -10,7 +11,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import org.assertj.core.api.AssertionsForClassTypes;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -20,14 +21,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SaalplanDtoMapperTest {
 
-    private final SaalplanDtoMapper mapper = new SaalplanDtoMapperImpl();
+    private final SaalplanDtoMapper mapper = new SaalplanDtoMapper();
 
     private final ReiheNummer reiheNr = new ReiheNummer(3);
     private final PlatzNummer platzNr = new PlatzNummer(2);
     private final PlatzId platzId = new PlatzId(reiheNr, platzNr);
 
     @Test
-    void saalplantoSaalplanDto() {
+    void saalplanToSaalplanDto() {
         // arrange
 
         var reiheNr1 = new ReiheNummer(1);
@@ -61,51 +62,34 @@ class SaalplanDtoMapperTest {
         };
 
         // act
-        var saalplanDto = mapper.saalplantoSaalplanDto(saalplan);
+        var saalplanDto = mapper.toDto(saalplan);
 
         // assert
         assertThat(saalplanDto.plaetze()).isEqualTo(expectedPlatzDtos);
     }
 
     @Test
-    void testPlatzToPlatzDto_nichtVerkauftNichtReserviert() {
-        // arrange
-        Platz platz = new Platz(platzId, false, null);
+    void zusammenhaengendePlaetzeToDto() {
+        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(List.of(platzId));
 
-        // act
-        PlatzDto platzDto = mapper.toDto(platz);
+        var dto = mapper.toDto(zusammenhaengendePlaetze);
 
-        // assert
-        AssertionsForClassTypes.assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
-        AssertionsForClassTypes.assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
-        AssertionsForClassTypes.assertThat(platzDto.istFrei()).isTrue();
+        assertThat(dto.plaetze()).hasSize(1);
+        var platzDto = dto.plaetze().getFirst();
+        assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
+        assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
     }
 
     @Test
-    void testPlatzToPlatzDto_verkauft() {
-        // arrange
-        Platz platz = new Platz(platzId, true, null);
+    void zusammenhaengendePlaetzeToDomain() {
+        var zusammenhaengendePlaetzeDto =
+                new ZusammenhaengendePlaetzeDto(List.of(new PlatzIdDto(reiheNr.nummer(), platzNr.nummer())));
 
-        // act
-        PlatzDto platzDto = mapper.toDto(platz);
+        var plaetze = mapper.toDomain(zusammenhaengendePlaetzeDto);
 
-        // assert
-        AssertionsForClassTypes.assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
-        AssertionsForClassTypes.assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
-        AssertionsForClassTypes.assertThat(platzDto.istFrei()).isFalse();
-    }
-
-    @Test
-    void testPlatzToPlatzDto_reserviertNichtVerkauft() {
-        // arrange
-        Platz platz = new Platz(platzId, false, new Reservierungsnummer("reservierungsnummer"));
-
-        // act
-        PlatzDto platzDto = mapper.toDto(platz);
-
-        // assert
-        AssertionsForClassTypes.assertThat(platzDto.reihe()).isEqualTo(reiheNr.nummer());
-        AssertionsForClassTypes.assertThat(platzDto.platz()).isEqualTo(platzNr.nummer());
-        AssertionsForClassTypes.assertThat(platzDto.istFrei()).isFalse();
+        assertThat(plaetze.plaetze()).hasSize(1);
+        var platz = plaetze.plaetze().getFirst();
+        assertThat(platz.reihe()).isEqualTo(reiheNr);
+        assertThat(platz.platz()).isEqualTo(platzNr);
     }
 }

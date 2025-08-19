@@ -1,6 +1,6 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories;
 
-import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanMapper;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanEntityMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.SaalplanEntity;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 public class SaalplanStapelImpl implements SaalplanStapel {
 
     private final SaalplanRepository saalplanRepository;
-    private final SaalplanMapper saalplanMapper;
+    private final SaalplanEntityMapper saalplanMapper;
 
     public Saalplan holeSaalplan(VorstellungId vorstellungId) {
         SaalplanEntity saalplanEntity = saalplanRepository.findByVorstellungUUID(vorstellungId.uuid());

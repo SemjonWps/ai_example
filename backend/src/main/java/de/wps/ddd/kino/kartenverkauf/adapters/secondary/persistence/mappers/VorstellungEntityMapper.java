@@ -7,10 +7,10 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Film;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Saal;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
-@Mapper
-public class VorstellungMapper {
+@Component
+public class VorstellungEntityMapper {
 
     public Vorstellung toDomain(VorstellungEntity entity) {
         return new Vorstellung(

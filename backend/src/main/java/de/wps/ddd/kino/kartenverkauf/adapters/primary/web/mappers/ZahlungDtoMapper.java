@@ -4,14 +4,16 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.GeldbetragDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZahlungsstatusDto;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.springframework.stereotype.Component;
 
-@Mapper(uses = {VorstellungDtoMapper.class, SaalplanDtoMapper.class})
-public interface ZahlungDtoMapper {
+@Component
+public class ZahlungDtoMapper {
 
-    GeldbetragDto toDto(Geldbetrag geldbetrag);
+    public GeldbetragDto toDto(Geldbetrag geldbetrag) {
+        return new GeldbetragDto(geldbetrag.getBetrag(), geldbetrag.getWaehrung().toString());
+    }
 
-    @Mapping(source = "status", target = "status")
-    ZahlungsstatusDto toDto(Zahlungsstatus status);
+    public ZahlungsstatusDto toDto(Zahlungsstatus status) {
+        return new ZahlungsstatusDto(status.toString());
+    }
 }

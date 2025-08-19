@@ -40,7 +40,6 @@ Das Backend basiert u.a. auf folgenden Technologien:
 - Spring Boot
 - JPA/Hibernate
 - Lombok
-- MapStruct
 - jMolecules
 
 Das Frontend basiert u.a. auf folgenden Technologien:
