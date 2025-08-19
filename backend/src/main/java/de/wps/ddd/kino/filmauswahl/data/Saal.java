@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.filmauswahl.domain;
+package de.wps.ddd.kino.filmauswahl.data;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.Entity;

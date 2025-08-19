@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.filmauswahl.domain;
+package de.wps.ddd.kino.filmauswahl.data;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;

@@ -1,8 +1,8 @@
-package de.wps.ddd.kino.filmauswahl.application;
+package de.wps.ddd.kino.filmauswahl.service;
 
 import de.wps.ddd.kino.common.architecture.ApplicationService;
-import de.wps.ddd.kino.filmauswahl.domain.AktuelleFilme;
-import de.wps.ddd.kino.filmauswahl.domain.Film;
+import de.wps.ddd.kino.filmauswahl.data.AktuelleFilme;
+import de.wps.ddd.kino.filmauswahl.data.Film;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -11,14 +11,14 @@ artifact technischeschichtung
             include "**/web/**"
         }
         
-        relaxed artifact application
+        relaxed artifact service
         {
-            include "**/application/**"
+            include "**/service/**"
         }
         
-        relaxed artifact domain
+        relaxed artifact data
         {
-            include "**/domain/**"
+            include "**/data/**"
         }
     }
     

@@ -1,6 +1,6 @@
-package de.wps.ddd.kino.filmauswahl.application.domain;
+package de.wps.ddd.kino.filmauswahl.service.domain;
 
-import de.wps.ddd.kino.filmauswahl.application.ProgrammService;
+import de.wps.ddd.kino.filmauswahl.service.ProgrammService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

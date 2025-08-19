@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.filmauswahl.web;
 
-import de.wps.ddd.kino.filmauswahl.application.ProgrammService;
-import de.wps.ddd.kino.filmauswahl.domain.Film;
+import de.wps.ddd.kino.filmauswahl.data.Film;
+import de.wps.ddd.kino.filmauswahl.service.ProgrammService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
