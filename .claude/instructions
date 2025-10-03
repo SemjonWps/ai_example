@@ -1,0 +1,16 @@
+The kartenverkauf bounded context is located at:
+backend/src/main/java/de/wps/ddd/kino/kartenverkauf/
+
+When working on Kartenverkauf features, stay within this bounded context.
+
+Structure:
+- application/domain/entities/ - Domain entities (Saalplan, Vorstellung, Zahlungsvorgang, Kinokarte, Platz)
+- application/domain/valueobjects/ - Value objects (VorstellungId, Geldbetrag, Film, Saal, etc.)
+- application/domain/services/ - Domain services (Preisberechnung)
+- application/domain/events/ - Domain events (ZahlungEingegangen, ZahlungAbgebrochen)
+- application/domain/factories/ - Factories (KartenBlock)
+- application/ports/primary/ - Inbound ports (Kartenverkauf, Zahlung)
+- application/ports/secondary/ - Outbound ports (SaalplanStapel, AktuelleVorstellungen, Zahlungsvorgaenge)
+- application/services/ - Application services (KartenverkaufImpl, ZahlungImpl)
+- adapters/primary/web/ - REST controllers, DTOs, and mappers
+- adapters/secondary/persistence/ - JPA repositories, entities, and mappers
