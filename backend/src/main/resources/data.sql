@@ -35,6 +35,12 @@ VALUES ('großer Saal'),
        ('kleiner Saal');
 
 
+INSERT INTO kartenverkauf.saele
+    (name, reihen, spalten)
+VALUES ('großer Saal', 6, 20),
+       ('kleiner Saal', 4, 8);
+
+
 INSERT INTO filmauswahl.vorstellungen
     (uuid, beginn, film_id, preis, saal_id)
 VALUES ('70f79a3c-eb2f-48e4-af59-cda7a353635f', '2025-03-17 14:30:00', 1, 1100, 1),

@@ -7,6 +7,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalKonfiguration;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ public class Saalplaene implements Fixture {
 
     private final AktuelleVorstellungen aktuelleVorstellungen;
     private final SaalplanStapel saalplanStapel;
+    private final SaalKonfiguration saalKonfiguration;
 
     @Transactional
     @Override
@@ -35,17 +37,11 @@ public class Saalplaene implements Fixture {
         for (var vorstellung : vorstellungen) {
             log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
 
-            var reihen = switch (vorstellung.getSaal().name()) {
-                case "kleiner Saal" -> 4;
-                case "großer Saal" -> 6;
-                default -> throw new IllegalStateException("Unexpected value: " + vorstellung.getSaal());
-            };
+            var abmessungen = saalKonfiguration.findeAbmessungen(vorstellung.getSaal())
+                    .orElseThrow(() -> new IllegalStateException("Keine Konfiguration gefunden für Saal: " + vorstellung.getSaal().name()));
 
-            var spalten = switch (vorstellung.getSaal().name()) {
-                case "kleiner Saal" -> 8;
-                case "großer Saal" -> 12;
-                default -> throw new IllegalStateException("Unexpected value: " + vorstellung.getSaal());
-            };
+            var reihen = abmessungen.reihen();
+            var spalten = abmessungen.spalten();
 
             var plaetze = new ArrayList<Platz>(reihen * spalten);
             for (int reihe = 1; reihe <= reihen; reihe++) {
