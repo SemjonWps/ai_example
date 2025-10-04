@@ -64,28 +64,3 @@ VALUES ('70f79a3c-eb2f-48e4-af59-cda7a353635f', '2025-03-17 14:30:00', 1, 1100, 
        ('f711a38d-e792-4016-9463-286c96ce824e', '2025-03-23 15:45:00', 2, 850, 1),
        ('c728df78-e6a6-4715-be16-0fb56698af08', '2025-03-23 19:30:00', 5, 950, 1),
        ('20ad7f5f-7167-46b9-ada6-e7e7c4bd65aa', '2025-03-23 22:30:00', 4, 1050, 2);
-
-
-INSERT INTO kartenverkauf.vorstellungen
-    (uuid, beginn, saal, film, eintrittspreis)
-VALUES ('70f79a3c-eb2f-48e4-af59-cda7a353635f', '2025-03-17 14:30:00', 'großer Saal', 'Star Boars', 1100),
-       ('f142de00-f3ec-4a42-9493-d406b3062b4a', '2025-03-18 15:30:00', 'kleiner Saal', 'Star Boars', 1100),
-       ('57d71cca-91c9-4876-a1b3-5628da00abd3', '2025-03-19 14:30:00', 'großer Saal', 'Guardians of the Lunacy', 850),
-       ('f00cd3c6-b059-4138-9f10-4ba2813fa162', '2025-03-19 15:00:00', 'kleiner Saal', 'The Fast and the Curious', 950),
-       ('0299be34-d6ea-4eba-b4e8-cdd41afc7da8', '2025-03-19 20:30:00', 'großer Saal', 'The Fast and the Curious', 950),
-       ('503f9e1f-4575-4cb5-8162-748bb8b8c26f', '2025-03-19 22:30:00', 'kleiner Saal', 'Clown Wars', 1050),
-       ('80b9d36c-374f-4569-9ff1-8a2ed2f02b3d', '2025-03-20 14:30:00', 'kleiner Saal', 'Guardians of the Lunacy', 850),
-       ('b167534a-8d9a-4219-ba92-69d9a2c1212b', '2025-03-20 15:30:00', 'großer Saal', 'Back to the Futura', 950),
-       ('bb98a2af-3d0a-4cb8-9418-61d58ecccf02', '2025-03-20 20:00:00', 'großer Saal', 'Guardians of the Lunacy', 850),
-       ('66640528-1d70-4564-bae9-a72de8a9a4de', '2025-03-21 15:00:00', 'großer Saal', 'The Fast and the Curious', 950),
-       ('fc5e4025-aee4-42fe-8e81-17628e9b478e', '2025-03-21 16:15:00', 'kleiner Saal', 'Back to the Futura', 950),
-       ('e7c0edd7-0904-470c-954e-cb9e0030ca12', '2025-03-21 20:30:00', 'großer Saal', 'Back to the Futura', 950),
-       ('15c935ac-dddc-4fc3-b47f-baa5a642075c', '2025-03-21 22:30:00', 'kleiner Saal', 'Clown Wars',1050),
-       ('75e542da-92c0-4559-bfbf-e707af724f7d', '2025-03-22 14:30:00', 'großer Saal', 'Back to the Futura', 950),
-       ('6e568065-1850-40fb-8930-2bd93f5ac242', '2025-03-22 15:30:00', 'kleiner Saal', 'Star Boars', 1100),
-       ('791df6e3-15c6-410d-9a77-548f4eb9db48', '2025-03-22 19:30:00', 'kleiner Saal', 'Guardians of the Lunacy', 850),
-       ('44884037-b0c8-422d-90b6-da107659981e', '2025-03-22 20:45:00', 'großer Saal', 'Star Boars', 1100),
-       ('090c173a-3636-4980-865a-1ec859eb4f90', '2025-03-23 14:30:00', 'kleiner Saal', 'The Fast and the Curious', 950),
-       ('f711a38d-e792-4016-9463-286c96ce824e', '2025-03-23 15:45:00', 'großer Saal', 'Guardians of the Lunacy', 850),
-       ('c728df78-e6a6-4715-be16-0fb56698af08', '2025-03-23 19:30:00', 'großer Saal', 'The Fast and the Curious', 950),
-       ('20ad7f5f-7167-46b9-ada6-e7e7c4bd65aa', '2025-03-23 22:30:00', 'kleiner Saal', 'Clown Wars', 1050);

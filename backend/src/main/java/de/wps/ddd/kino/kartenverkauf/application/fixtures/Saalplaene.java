@@ -1,6 +1,10 @@
 package de.wps.ddd.kino.kartenverkauf.application.fixtures;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.wps.ddd.kino.common.fixtures.Fixture;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.VorstellungEntity;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.VorstellungRepository;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
@@ -11,10 +15,13 @@ import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalKonfigurati
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Slf4j
@@ -25,10 +32,27 @@ public class Saalplaene implements Fixture {
     private final AktuelleVorstellungen aktuelleVorstellungen;
     private final SaalplanStapel saalplanStapel;
     private final SaalKonfiguration saalKonfiguration;
+    private final VorstellungRepository vorstellungRepository;
+    private final ObjectMapper objectMapper;
 
     @Transactional
     @Override
     public void install() {
+        log.info("Lade Vorstellungen aus JSON...");
+
+        try {
+            final var resource = new ClassPathResource("kartenverkauf/vorstellungen.json");
+            final var vorstellungen = objectMapper.readValue(
+                resource.getInputStream(),
+                new TypeReference<List<VorstellungEntity>>() {}
+            );
+
+            vorstellungRepository.saveAll(vorstellungen);
+            log.info("Vorstellungen geladen: {}", vorstellungen.size());
+        } catch (IOException e) {
+            throw new RuntimeException("Fehler beim Laden der Vorstellungen aus JSON", e);
+        }
+
         log.info("Erzeuge Saalpläne...");
 
         var random = new Random(42);
