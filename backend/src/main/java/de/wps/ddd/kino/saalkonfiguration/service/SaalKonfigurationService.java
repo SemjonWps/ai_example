@@ -2,7 +2,7 @@ package de.wps.ddd.kino.saalkonfiguration.service;
 
 import de.wps.ddd.kino.common.architecture.ApplicationService;
 import de.wps.ddd.kino.common.fixtures.FixtureInstaller;
-import de.wps.ddd.kino.saalkonfiguration.data.SaalConfiguration;
+import de.wps.ddd.kino.saalkonfiguration.data.SaalKonfiguration;
 import de.wps.ddd.kino.saalkonfiguration.data.SaeleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,18 +13,18 @@ import java.util.List;
 @ApplicationService
 @Service
 @RequiredArgsConstructor
-public class SaalkonfigurationService {
+public class SaalKonfigurationService {
 
     private final SaeleRepository saeleRepository;
     private final FixtureInstaller fixtureInstaller;
 
-    public List<SaalConfiguration> alleSaele() {
+    public List<SaalKonfiguration> alleSaele() {
         return saeleRepository.findAll();
     }
 
     @Transactional
-    public SaalConfiguration saveSaal(SaalConfiguration saal) {
-        SaalConfiguration savedSaal = saeleRepository.save(saal);
+    public SaalKonfiguration saveSaal(SaalKonfiguration saal) {
+        SaalKonfiguration savedSaal = saeleRepository.save(saal);
         fixtureInstaller.run(null);
         return savedSaal;
     }

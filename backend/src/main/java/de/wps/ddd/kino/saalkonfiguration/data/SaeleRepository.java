@@ -7,8 +7,8 @@ import java.util.Optional;
 
 @org.jmolecules.ddd.annotation.Repository
 @org.springframework.stereotype.Repository
-public interface SaeleRepository extends CrudRepository<SaalConfiguration, String> {
-    List<SaalConfiguration> findAll();
-    Optional<SaalConfiguration> findByName(String name);
+public interface SaeleRepository extends CrudRepository<SaalKonfiguration, String> {
+    List<SaalKonfiguration> findAll();
+    Optional<SaalKonfiguration> findByName(String name);
     void deleteByName(String name);
 }

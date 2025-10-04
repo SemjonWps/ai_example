@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.saalkonfiguration.web;
 
-import de.wps.ddd.kino.saalkonfiguration.data.SaalConfiguration;
-import de.wps.ddd.kino.saalkonfiguration.service.SaalkonfigurationService;
+import de.wps.ddd.kino.saalkonfiguration.data.SaalKonfiguration;
+import de.wps.ddd.kino.saalkonfiguration.service.SaalKonfigurationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,22 +19,22 @@ import java.util.List;
 @RequestMapping("/api/saalkonfiguration")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-public class SaalkonfigurationController {
+public class SaalKonfigurationController {
 
-    private final SaalkonfigurationService saalkonfigurationService;
+    private final SaalKonfigurationService saalkonfigurationService;
 
     @GetMapping()
-    public List<SaalConfiguration> alleSaele() {
+    public List<SaalKonfiguration> alleSaele() {
         return saalkonfigurationService.alleSaele();
     }
 
     @PostMapping()
-    public SaalConfiguration createSaal(@RequestBody SaalConfiguration saal) {
+    public SaalKonfiguration createSaal(@RequestBody SaalKonfiguration saal) {
         return saalkonfigurationService.saveSaal(saal);
     }
 
     @PutMapping()
-    public SaalConfiguration updateSaal(@RequestBody SaalConfiguration saal) {
+    public SaalKonfiguration updateSaal(@RequestBody SaalKonfiguration saal) {
         return saalkonfigurationService.saveSaal(saal);
     }
 

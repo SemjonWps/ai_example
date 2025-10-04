@@ -14,7 +14,7 @@ import org.jmolecules.ddd.annotation.Identity;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaalConfiguration {
+public class SaalKonfiguration {
     @Identity
     @Id
     private String name;
