@@ -48,6 +48,8 @@ public class FilmauswahlVorstellungen implements Fixture {
 
             vorstellungRepository.saveAll(vorstellungen);
             log.info("Filmauswahl-Vorstellungen geladen: {}", vorstellungen.size());
+
+
         } catch (IOException e) {
             throw new RuntimeException("Fehler beim Laden der Filmauswahl-Vorstellungen aus JSON", e);
         }
