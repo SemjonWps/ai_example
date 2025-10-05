@@ -9,6 +9,5 @@ import java.util.Optional;
 @org.springframework.stereotype.Repository
 public interface SaeleRepository extends CrudRepository<SaalKonfiguration, String> {
     List<SaalKonfiguration> findAll();
-    Optional<SaalKonfiguration> findByName(String name);
     void deleteByName(String name);
 }

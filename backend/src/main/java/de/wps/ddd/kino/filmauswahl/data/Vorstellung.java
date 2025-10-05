@@ -1,6 +1,8 @@
 package de.wps.ddd.kino.filmauswahl.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,9 +31,17 @@ public class Vorstellung {
     private UUID uuid;
     @JsonIgnore
     private Long filmId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime beginn;
     private Integer preis;
     @ManyToOne
     @JoinColumn(name = "saal_id", nullable = false)
+    @JsonIgnore
     private Saal saal;
+
+    @JsonProperty("saalId")
+    public void setSaalId(Long saalId) {
+        this.saal = new Saal();
+        this.saal.setId(saalId);
+    }
 }

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 @org.springframework.stereotype.Repository
-public interface VorstellungRepository extends JpaRepository<VorstellungEntity, UUID> {
+public interface KartenverkaufVorstellungRepository extends JpaRepository<VorstellungEntity, UUID> {
 
 }

@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AktuelleVorstellungenImpl implements AktuelleVorstellungen {
 
-    private final VorstellungRepository vorstellungRepository;
+    private final KartenverkaufVorstellungRepository vorstellungRepository;
 
     private final VorstellungEntityMapper vorstellungMapper;
 

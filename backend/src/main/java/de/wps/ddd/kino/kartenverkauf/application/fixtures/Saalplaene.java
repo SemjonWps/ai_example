@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.wps.ddd.kino.common.fixtures.Fixture;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.VorstellungEntity;
-import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.VorstellungRepository;
+import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.KartenverkaufVorstellungRepository;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
@@ -32,7 +32,7 @@ public class Saalplaene implements Fixture {
     private final AktuelleVorstellungen aktuelleVorstellungen;
     private final SaalplanStapel saalplanStapel;
     private final SaalKonfiguration saalKonfiguration;
-    private final VorstellungRepository vorstellungRepository;
+    private final KartenverkaufVorstellungRepository vorstellungRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
