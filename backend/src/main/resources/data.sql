@@ -42,11 +42,3 @@ Während atemberaubender Verfolgungsjagden, waghalsiger Stunts und cleverer Plä
 Ein rasanter Mix aus Action, Humor und katzenhafter Cleverness!',
         'Action, Adventure, Tierfilm', 'Cat Moss',
         'Rob Kitten', 'deutsch');
-
-
-INSERT INTO kartenverkauf.saele
-    (name, reihen, spalten)
-VALUES ('großer Saal', 6, 20),
-       ('kleiner Saal', 4, 8);
-
-
