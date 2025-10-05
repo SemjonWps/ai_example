@@ -1,17 +1,17 @@
 package de.wps.ddd.kino.filmauswahl.fixtures;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.wps.ddd.kino.common.fixtures.Fixture;
+import com.fasterxml.jackson.core.type.*;
+import com.fasterxml.jackson.databind.*;
+import de.wps.ddd.kino.common.fixtures.*;
 import de.wps.ddd.kino.filmauswahl.data.*;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.util.List;
+import de.wps.ddd.kino.filmauswahl.events.*;
+import java.io.*;
+import java.util.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
+import org.springframework.core.io.*;
+import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 @Slf4j
 @Component
@@ -20,6 +20,8 @@ public class FilmauswahlVorstellungen implements Fixture {
     private final FilmauswahlVorstellungRepository vorstellungRepository;
     private final FilmauswahlSaalRepository saalRepository;
     private final ObjectMapper objectMapper;
+    private final DomainEventPublisher domainEventPublisher;
+    private final FilmRepository filmRepository;
 
     @Transactional
     @Override
@@ -42,8 +44,9 @@ public class FilmauswahlVorstellungen implements Fixture {
         try {
             final var resource = new ClassPathResource("filmauswahl/vorstellungen.json");
             final var vorstellungen = objectMapper.readValue(
-                resource.getInputStream(),
-                new TypeReference<List<Vorstellung>>() {}
+                    resource.getInputStream(),
+                    new TypeReference<List<Vorstellung>>() {
+                    }
             );
 
             vorstellungRepository.saveAll(vorstellungen);
@@ -53,5 +56,21 @@ public class FilmauswahlVorstellungen implements Fixture {
         } catch (IOException e) {
             throw new RuntimeException("Fehler beim Laden der Filmauswahl-Vorstellungen aus JSON", e);
         }
+
+        final var vorstellungen = vorstellungRepository.findAll();
+        for (var vorstellung : vorstellungen) {
+            Long filmId = vorstellung.getFilmId();
+            final var filmTitel = filmRepository.findTitleById(filmId);
+
+            var event = new FilmHinzugefuegtEvent(
+                    vorstellung.getId(),
+                    filmTitel,
+                    vorstellung.getPreis(),
+                    vorstellung.getSaal().getName(),
+                    vorstellung.getBeginn());
+
+            domainEventPublisher.publish(event);
+        }
+
     }
 }
