@@ -29,7 +29,6 @@ public class Vorstellung {
     @JsonIgnore
     private Long id;
     private UUID uuid;
-    @JsonIgnore
     private Long filmId;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime beginn;

@@ -3,8 +3,7 @@ package de.wps.ddd.kino.filmauswahl.fixtures;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.wps.ddd.kino.common.fixtures.Fixture;
-import de.wps.ddd.kino.filmauswahl.data.Vorstellung;
-import de.wps.ddd.kino.filmauswahl.data.FilmauswahlVorstellungRepository;
+import de.wps.ddd.kino.filmauswahl.data.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -19,11 +18,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FilmauswahlVorstellungen implements Fixture {
     private final FilmauswahlVorstellungRepository vorstellungRepository;
+    private final FilmauswahlSaalRepository saalRepository;
     private final ObjectMapper objectMapper;
 
     @Transactional
     @Override
     public void install() {
+        log.info("Lade Filmauswahl-Säle...");
+
+        var grosserSaal = new Saal();
+        grosserSaal.setName("großer Saal");
+
+        var kleinerSaal = new Saal();
+        kleinerSaal.setName("kleiner Saal");
+
+        saalRepository.save(grosserSaal);
+        saalRepository.save(kleinerSaal);
+
+        log.info("Filmauswahl-Säle geladen: 2");
+
         log.info("Lade Filmauswahl-Vorstellungen aus JSON...");
 
         try {
