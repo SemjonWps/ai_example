@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.wps.ddd.kino.common.fixtures.Fixture;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.*;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
+import de.wps.ddd.kino.kartenverkauf.application.domain.entities.*;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
@@ -68,28 +67,32 @@ public class Saalplaene implements Fixture {
 
         var vorstellungen = aktuelleVorstellungen.alleVorstellungen();
         for (var vorstellung : vorstellungen) {
-            log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
-
-            var abmessungen = saalKonfiguration.findeAbmessungen(vorstellung.getSaal())
-                    .orElseThrow(() -> new IllegalStateException("Keine Konfiguration gefunden für Saal: " + vorstellung.getSaal().name()));
-
-            var reihen = abmessungen.reihen();
-            var spalten = abmessungen.spalten();
-
-            var plaetze = new ArrayList<Platz>(reihen * spalten);
-            for (int reihe = 1; reihe <= reihen; reihe++) {
-                for (int spalte = 1; spalte <= spalten; spalte++) {
-                    var istVerkauft = random.nextInt(4) == 0;
-                    var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft, null);
-                    plaetze.add(platz);
-                }
-            }
-
-            var saalplan = new Saalplan(vorstellung.getId(), plaetze);
-
-            saalplanStapel.legeZurueck(saalplan);
+            initialisiereVorstellung(vorstellung, random);
         }
 
         log.info("Saalpläne erzeugt: {}", vorstellungen.size());
+    }
+
+    private void initialisiereVorstellung(Vorstellung vorstellung, Random random) {
+        log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
+
+        var abmessungen = saalKonfiguration.findeAbmessungen(vorstellung.getSaal())
+                .orElseThrow(() -> new IllegalStateException("Keine Konfiguration gefunden für Saal: " + vorstellung.getSaal().name()));
+
+        var reihen = abmessungen.reihen();
+        var spalten = abmessungen.spalten();
+
+        var plaetze = new ArrayList<Platz>(reihen * spalten);
+        for (int reihe = 1; reihe <= reihen; reihe++) {
+            for (int spalte = 1; spalte <= spalten; spalte++) {
+                var istVerkauft = random.nextInt(4) == 0;
+                var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft, null);
+                plaetze.add(platz);
+            }
+        }
+
+        var saalplan = new Saalplan(vorstellung.getId(), plaetze);
+
+        saalplanStapel.legeZurueck(saalplan);
     }
 }
