@@ -1,3 +1,18 @@
+-- Clear all tables in filmauswahl and kartenverkauf schemas
+-- H2 does not support TRUNCATE ... CASCADE, so use DELETE in dependency order
+DELETE FROM kartenverkauf.plaetze;
+DELETE FROM kartenverkauf.saalplaene;
+DELETE FROM kartenverkauf.saele;
+DELETE FROM kartenverkauf.vorstellungen;
+DELETE FROM kartenverkauf.zahlungsvorgaenge;
+DELETE FROM filmauswahl.vorstellungen;
+DELETE FROM filmauswahl.filme;
+DELETE FROM filmauswahl.saele;
+
+-- Reset identity/auto-increment counters so IDs are deterministic for seed data
+ALTER TABLE filmauswahl.saele ALTER COLUMN id RESTART WITH 1;
+ALTER TABLE filmauswahl.filme ALTER COLUMN id RESTART WITH 1;
+
 INSERT INTO filmauswahl.filme
 (titel, laufzeit, poster_url, fsk, beschreibung, genre, hauptdarsteller, regie, sprache)
 VALUES ('Star Boars', 125, 'assets/Star_Boars.jpeg', 12, 'In einer weit, weit entfernten Galaxie kämpfen mutige Wildschweine gegen das tyrannische Imperium.
@@ -12,8 +27,8 @@ dummer Sprüche und unerwarteter Heldentaten. Werden sie das Universum retten? W
         'James Gunner', 'englisch'),
        ('Back to the Futura', 116, 'assets/Back_To_The_Futura.jpeg', 12,
         'Als die junge Marty McGigawatts mit einer experimentellen Zeitmaschine in die Zukunft reist, findet sie sich in einer dystopischen Megacity wieder,
-in der Roboter die Welt regieren. Mit der Hilfe eines exzentrischen Erfinders und einem Hoverboard muss sie den Lauf der Geschichte ändern,
-bevor sie in einer Endlosschleife der Zeit gefangen bleibt.', 'Sci-Fi, Adventure', 'Marty McGigawatts',
+        in der Roboter die Welt regieren. Mit der Hilfe eines exzentrischen Erfinders und einem Hoverboard muss sie den Lauf der Geschichte ändern,
+        bevor sie in einer Endlosschleife der Zeit gefangen bleibt.', 'Sci-Fi, Adventure', 'Marty McGigawatts',
         'Robert Zoomekis', 'deutsch'),
        ('Clown Wars', 105, 'assets/Clown_Wars.jpeg', 18,
         'Die Erde wird von einer Horde außerirdischer Clowns angegriffen, die nichts anderes wollen, als die Menschheit mit tödlichen Gags zu unterwerfen.
@@ -27,12 +42,6 @@ Während atemberaubender Verfolgungsjagden, waghalsiger Stunts und cleverer Plä
 Ein rasanter Mix aus Action, Humor und katzenhafter Cleverness!',
         'Action, Adventure, Tierfilm', 'Cat Moss',
         'Rob Kitten', 'deutsch');
-
-
-INSERT INTO filmauswahl.saele
-    (name)
-VALUES ('großer Saal'),
-       ('kleiner Saal');
 
 
 INSERT INTO kartenverkauf.saele

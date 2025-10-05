@@ -230,3 +230,5 @@ replay_pid*
 
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,intellij,angular,windows
+/data/testdb.mv.db
+/data/testdb.trace.db
