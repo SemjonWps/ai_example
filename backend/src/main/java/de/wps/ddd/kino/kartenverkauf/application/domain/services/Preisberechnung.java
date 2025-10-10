@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class Preisberechnung {
     public Geldbetrag ermittlePreis(Vorstellung vorstellung, ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         // TODO: Platzkategorie, Überlänge, 3D, usw.
-        return vorstellung.getEintrittspreis().mal(zusammenhaengendePlaetze.anzahl());
+        return vorstellung.getEintrittspreis().mal(zusammenhaengendePlaetze.anzahl().value());
     }
 
 }

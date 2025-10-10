@@ -4,6 +4,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
@@ -67,7 +68,7 @@ public class SaalplanTest {
         belegtFeld.set(plaetze.get(22), false);
 
         // act
-        var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
+        var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(new Platzanzahl(anzahlGewuenschtePlaetze));
 
         // assert
         assertThat(zusammenhaengendePlaetze.plaetze()).hasSize(anzahlGewuenschtePlaetze);
@@ -87,7 +88,7 @@ public class SaalplanTest {
         belegtFeld.set(plaetze.get(9), false);
 
         // act
-        var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlGewuenschtePlaetze);
+        var zusammenhaengendePlaetze = saalplan.sucheZusammenhaengendePlaetze(new Platzanzahl(anzahlGewuenschtePlaetze));
 
         // assert
         assertThat(zusammenhaengendePlaetze.plaetze()).hasSize(0);

@@ -4,7 +4,7 @@
       <p class="italic">Sie haben folgende Platzanzahl gewählt:</p>
       <p class="card-title">{{ platzanzahlControl.value }}</p>
     } @else {
-    <p class="italic">Wie viele Karten benötigen Sie?</p>
+    <p class="italic">Wie viele Plätze benötigen Sie?</p>
     <select class="select w-40" [formControl]="platzanzahlControl">
       <option disabled selected [value]="null">bitte wählen</option>
       <option *ngFor="let anzahl of anzahlOptions" [value]="anzahl">{{ anzahl }}</option>

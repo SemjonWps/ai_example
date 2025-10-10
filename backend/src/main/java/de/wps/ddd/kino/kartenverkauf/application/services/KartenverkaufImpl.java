@@ -7,6 +7,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.factories.KartenBlock;
 import de.wps.ddd.kino.kartenverkauf.application.domain.services.Preisberechnung;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
@@ -47,7 +48,7 @@ class KartenverkaufImpl implements Kartenverkauf {
     }
 
     @Override
-    public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(VorstellungId vorstellungId, int platzanzahl) {
+    public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(VorstellungId vorstellungId, Platzanzahl platzanzahl) {
         var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
         return saalplan.sucheZusammenhaengendePlaetze(platzanzahl);
     }

@@ -6,6 +6,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
 
@@ -18,7 +19,7 @@ public interface Kartenverkauf {
 
     Saalplan holeSaalplan(VorstellungId vorstellungId);
 
-    ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(VorstellungId vorstellungId, int platzanzahl);
+    ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(VorstellungId vorstellungId, Platzanzahl platzanzahl);
 
     Geldbetrag berechneGesamtpreis(VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze);
 

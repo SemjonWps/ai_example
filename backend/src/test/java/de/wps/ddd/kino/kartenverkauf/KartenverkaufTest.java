@@ -6,6 +6,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.services.Preisberechnung
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Beginn;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Film;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Saal;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
@@ -52,7 +53,7 @@ public class KartenverkaufTest {
         assertThat(vorstellung.getBeginn()).isEqualTo(new Beginn(LocalDateTime.parse("2025-03-23T14:30")));
 
         // 2. Kinobesucher fragt nach Karten für Vorstellung → Platz-/Kartenanzahl angefragt
-        var anzahlPlaetze = 4; // TODO value object?
+        var platzanzahl = new Platzanzahl(4);
 
         // 3. Kassenmitarbeiter holt Saalplan zu Vorstellung aus Saalplanstapel --> Saalplan geholt
         var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
@@ -60,13 +61,13 @@ public class KartenverkaufTest {
 
         // 4. Kassenmitarbeiter sucht gewünschte Anzahl Plätze im Saalplan → Zusammenhängende Plätze gefunden
         // 5a. Kassenmitarbeiter bietet gefundene Plätze an → Plätze angeboten
-        var vorgeschlagenePlaetze = saalplan.sucheZusammenhaengendePlaetze(anzahlPlaetze);
-        assertThat(vorgeschlagenePlaetze.anzahl()).isEqualTo(anzahlPlaetze);
+        var vorgeschlagenePlaetze = saalplan.sucheZusammenhaengendePlaetze(platzanzahl);
+        assertThat(vorgeschlagenePlaetze.anzahl()).isEqualTo(platzanzahl);
         // TODO Plätze prüfen
 
         // 5b. Kinobesucher stimmt den Plätzen zu → Plätze gewählt
         var gewaehltePlaetze = new ZusammenhaengendePlaetze(vorgeschlagenePlaetze.plaetze().stream().toList());
-        assertThat(gewaehltePlaetze.anzahl()).isEqualTo(anzahlPlaetze);
+        assertThat(gewaehltePlaetze.anzahl()).isEqualTo(platzanzahl);
 
         // 6. Kinobesucher bezahlt Geldbetrag -> Zahlung erfolgt
         var gesamtbetrag = preisberechnung.ermittlePreis(vorstellung, gewaehltePlaetze);
@@ -87,7 +88,7 @@ public class KartenverkaufTest {
 
         // 9. Kassenmitarbeiter beschriftet Kinokarten → Kinokarten beschriftet/erstellt/ausgestellt
         var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
-        assertThat(kinokarten).hasSize(anzahlPlaetze);
+        assertThat(kinokarten).hasSize(platzanzahl.value());
         assertThat(kinokarten).allSatisfy(kinokarte -> {
             assertThat(kinokarte.getFilm()).isEqualTo(vorstellung.getFilm());
             assertThat(kinokarte.getBeginn()).isEqualTo(vorstellung.getBeginn());

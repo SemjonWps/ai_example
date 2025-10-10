@@ -6,7 +6,7 @@ import java.util.List;
 
 @ValueObject
 public record ZusammenhaengendePlaetze(List<PlatzId> plaetze) {
-    public int anzahl() {
-        return plaetze.size();
+    public Platzanzahl anzahl() {
+        return new Platzanzahl(plaetze.size());
     }
 }

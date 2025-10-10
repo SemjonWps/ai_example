@@ -14,6 +14,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZahlungsvorgangD
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZusammenhaengendePlaetzeDto;
 import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungEingegangen;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.ports.primary.Kartenverkauf;
 import de.wps.ddd.kino.kartenverkauf.application.ports.primary.Zahlung;
@@ -63,8 +64,9 @@ class KartenverkaufController {
     @GetMapping("/saalplaene/{id}/suche-zusammenhaengende-plaetze")
     public ZusammenhaengendePlaetzeDto sucheZusammenhaengendePlatze(@PathVariable UUID id, @RequestParam int platzanzahl) {
         var vorstellungId = new VorstellungId(id);
+        var anzahl = new Platzanzahl(platzanzahl);
 
-        var plaetze = kartenverkauf.sucheZusammenhaengendePlaetze(vorstellungId, platzanzahl);
+        var plaetze = kartenverkauf.sucheZusammenhaengendePlaetze(vorstellungId, anzahl);
 
         return saalplanMapper.toDto(plaetze);
     }

@@ -2,6 +2,7 @@ package de.wps.ddd.kino.kartenverkauf.application.domain.entities;
 
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
@@ -49,13 +50,13 @@ public class Saalplan {
      * @param anzahlPlaetze die Anzahl der gewünschten freien zusammenhängenden Plätze
      * @return die ersten freien zusammenhängenden Plätze startend von der hintersten Reihe oder eine leere Liste, wenn es keine anzahlPlaetze zusammenhängenden Plätze gibt
      */
-    public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(int anzahlPlaetze) {
+    public ZusammenhaengendePlaetze sucheZusammenhaengendePlaetze(Platzanzahl anzahlPlaetze) {
         var result = new ArrayList<PlatzId>();
         for (var reihe : plaetze.descendingMap().values()) {
             for (Platz platz : reihe.values()) {
                 if (platz.istFrei()) {
                     result.add(platz.getId());
-                    if (result.size() == anzahlPlaetze) {
+                    if (result.size() == anzahlPlaetze.value()) {
                         return new ZusammenhaengendePlaetze(result);
                     }
                 } else {
