@@ -63,7 +63,9 @@ public class KartenverkaufTest {
         // 5a. Kassenmitarbeiter bietet gefundene Plätze an → Plätze angeboten
         var vorgeschlagenePlaetze = saalplan.sucheZusammenhaengendePlaetze(platzanzahl);
         assertThat(vorgeschlagenePlaetze.anzahl()).isEqualTo(platzanzahl);
-        // TODO Plätze prüfen
+        assertThat(vorgeschlagenePlaetze.plaetze()).allMatch(platzId -> saalplan.platz(platzId).istFrei());
+        assertThat(vorgeschlagenePlaetze.plaetze()).extracting(platzId -> platzId.reihe().nummer()).containsExactly(4, 4, 4, 4);
+        assertThat(vorgeschlagenePlaetze.plaetze()).extracting(platzId -> platzId.platz().nummer()).containsExactly(1, 2, 3, 4);
 
         // 5b. Kinobesucher stimmt den Plätzen zu → Plätze gewählt
         var gewaehltePlaetze = new ZusammenhaengendePlaetze(vorgeschlagenePlaetze.plaetze().stream().toList());
@@ -93,11 +95,12 @@ public class KartenverkaufTest {
             assertThat(kinokarte.getFilm()).isEqualTo(vorstellung.getFilm());
             assertThat(kinokarte.getBeginn()).isEqualTo(vorstellung.getBeginn());
             assertThat(kinokarte.getSaal()).isEqualTo(vorstellung.getSaal());
-            // TODO Platz prüfen
+            assertThat(kinokarte.getReihe().nummer()).isEqualTo(4);
         });
+        assertThat(kinokarten).extracting(k -> k.getPlatz().nummer()).containsExactly(1, 2, 3, 4);
 
         // 10. Kassenmitarbeiter übergibt fertige Kinokarten → Kinokarten übergeben/verkauft
-        // TODO assertThat(KinokartenVerkauftEvent.feuert)
+        // TODO KinokartenVerkauftEvent, Kinokarten persistieren
     }
 
 }
