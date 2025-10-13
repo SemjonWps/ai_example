@@ -6,7 +6,6 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -21,8 +20,7 @@ public class SaalplanEntityMapper {
                 .forEach(platz -> saalplanEntity.addPlatz(
                         platz.getId().reihe().nummer(),
                         platz.getId().platz().nummer(),
-                        platz.isIstVerkauft(),
-                        platz.getReservierung() != null ? platz.getReservierung().nummer() : null
+                        platz.isIstVerkauft()
                 ));
         return saalplanEntity;
     }
@@ -35,8 +33,7 @@ public class SaalplanEntityMapper {
                                 new PlatzId(
                                         new ReiheNummer(p.getId().getReihe()),
                                         new PlatzNummer(p.getId().getPlatz())),
-                                p.isIstVerkauft(),
-                                p.getReservierung() != null ? new Reservierungsnummer(p.getReservierung()) : null
+                                p.isIstVerkauft()
                         )
                 ).toList());
     }

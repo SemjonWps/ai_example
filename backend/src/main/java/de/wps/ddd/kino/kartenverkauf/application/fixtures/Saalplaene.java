@@ -51,7 +51,7 @@ public class Saalplaene implements Fixture {
             for (int reihe = 1; reihe <= reihen; reihe++) {
                 for (int spalte = 1; spalte <= spalten; spalte++) {
                     var istVerkauft = random.nextInt(4) == 0;
-                    var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft, null);
+                    var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft);
                     plaetze.add(platz);
                 }
             }

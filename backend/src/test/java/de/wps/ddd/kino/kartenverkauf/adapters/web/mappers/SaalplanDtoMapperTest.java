@@ -9,7 +9,6 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.Test;
@@ -42,17 +41,17 @@ class SaalplanDtoMapperTest {
         var platzId3 = new PlatzId(reiheNr2, platzNr1);
         var platzId4 = new PlatzId(reiheNr2, platzNr2);
 
-        var reihe1_platz1 = new Platz(platzId1, false, null);
-        var reihe1_platz2 = new Platz(platzId2, true, null);
-        var reihe2_platz1 = new Platz(platzId3, true, null);
-        var reihe2_platz2 = new Platz(platzId4, false, new Reservierungsnummer("R-4711"));
+        var reihe1_platz1 = new Platz(platzId1, false);
+        var reihe1_platz2 = new Platz(platzId2, true);
+        var reihe2_platz1 = new Platz(platzId3, true);
+        var reihe2_platz2 = new Platz(platzId4, false);
 
         var plaetze = List.of(reihe1_platz1, reihe1_platz2, reihe2_platz1, reihe2_platz2);
 
         var reihe1_platz1_dto = new PlatzDto(1, 1, true);
         var reihe1_platz2_dto = new PlatzDto(1, 2, false);
         var reihe2_platz1_dto = new PlatzDto(2, 1, false);
-        var reihe2_platz2_dto = new PlatzDto(2, 2, false);
+        var reihe2_platz2_dto = new PlatzDto(2, 2, true);
 
         var vorstellungId = new VorstellungId(UUID.randomUUID());
         var saalplan = new Saalplan(vorstellungId, plaetze);

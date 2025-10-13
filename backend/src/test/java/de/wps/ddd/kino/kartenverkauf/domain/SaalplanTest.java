@@ -6,7 +6,6 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ public class SaalplanTest {
                 var reiheNr = new ReiheNummer(r);
                 var platzNr = new PlatzNummer(p);
                 var platzId = new PlatzId(reiheNr, platzNr);
-                plaetze.add(new Platz(platzId, true, null));
+                plaetze.add(new Platz(platzId, true));
             }
         }
 
@@ -118,86 +117,4 @@ public class SaalplanTest {
         assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).isIstVerkauft()).isTrue();
     }
 
-    @Test
-    public void markiereAlsReserviert() {
-        // arrange
-        var reiheNr1 = new ReiheNummer(1);
-        var platzNr1 = new PlatzNummer(1);
-        var platzNr2 = new PlatzNummer(2);
-        var platzNr3 = new PlatzNummer(3);
-        var platzId1 = new PlatzId(reiheNr1, platzNr1);
-        var platzId2 = new PlatzId(reiheNr1, platzNr2);
-        var platzId3 = new PlatzId(reiheNr1, platzNr3);
-
-        var plaetze = List.of(platzId1, platzId2, platzId3);
-
-        var zusammenhaengendePlaetze = new ZusammenhaengendePlaetze(plaetze);
-
-        var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-
-        // act
-        saalplan.markiereAlsReserviert(zusammenhaengendePlaetze, reservierungsnummer);
-
-        // assert
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).istFrei()).isFalse();
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr1).getReservierung()).isEqualTo(reservierungsnummer);
-
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).istFrei()).isFalse();
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr2).getReservierung()).isEqualTo(reservierungsnummer);
-
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).istFrei()).isFalse();
-        assertThat(saalplan.getPlaetze().get(reiheNr1).get(platzNr3).getReservierung()).isEqualTo(reservierungsnummer);
-    }
-
-    @Test
-    public void markiereAlsVerkauft_MitReservierungsnummer() {
-        // arrange
-        var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-        var platz1 = new Platz(new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), false, reservierungsnummer);
-        var platz3 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
-        var platz2 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), false, reservierungsnummer);
-        var platz4 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
-        var platz5 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, new Reservierungsnummer("andereReservierungsnummer"));
-
-        var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5);
-
-        saalplan = new Saalplan(vorstellungId, lokalePlatzliste);
-
-        // act
-        saalplan.markiereAlsVerkauft(reservierungsnummer);
-
-        // assert
-        assertThat(platz1.isIstVerkauft()).isTrue();
-        assertThat(platz2.isIstVerkauft()).isTrue();
-        assertThat(platz3.isIstVerkauft()).isFalse();
-        assertThat(platz4.isIstVerkauft()).isFalse();
-        assertThat(platz5.isIstVerkauft()).isFalse();
-    }
-
-    @Test
-    public void gebeNichtAbgeholteReservierungenFrei() {
-        // arrange
-        var reservierungsnummer = new Reservierungsnummer("reservierungsnummer");
-        var platz1 = new Platz(new PlatzId(new ReiheNummer(1), new PlatzNummer(1)), true, reservierungsnummer);
-        var platz2 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(2)), true, reservierungsnummer);
-        var platz3 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(3)), false, null);
-        var platz4 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(4)), false, null);
-        var platz5 = new Platz(new PlatzId(new ReiheNummer(2), new PlatzNummer(5)), false, reservierungsnummer);
-        var platz6 = new Platz(new PlatzId(new ReiheNummer(3), new PlatzNummer(6)), true, null);
-
-        var lokalePlatzliste = List.of(platz1, platz2, platz3, platz4, platz5, platz6);
-
-        saalplan = new Saalplan(vorstellungId, lokalePlatzliste);
-
-        // act
-        saalplan.gebeNichtAbgeholteReservierungenFrei();
-
-        // assert
-        assertThat(platz1.getReservierung()).isEqualTo(reservierungsnummer);
-        assertThat(platz2.getReservierung()).isEqualTo(reservierungsnummer);
-        assertThat(platz3.getReservierung()).isEqualTo(null);
-        assertThat(platz4.getReservierung()).isEqualTo(null);
-        assertThat(platz5.getReservierung()).isEqualTo(null);
-        assertThat(platz6.getReservierung()).isEqualTo(null);
-    }
 }

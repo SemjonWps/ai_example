@@ -21,18 +21,16 @@ public class PlatzEntity {
     @EmbeddedId
     private Id id;
     private boolean istVerkauft;
-    private String reservierung;
 
     @Getter(AccessLevel.NONE)
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("saalplanId") // <-- tells Hibernate to fill FK from parent
     private SaalplanEntity saalplan;
 
-    public PlatzEntity(SaalplanEntity saalplan, int reihe, int platz, boolean istVerkauft, String reservierung) {
+    public PlatzEntity(SaalplanEntity saalplan, int reihe, int platz, boolean istVerkauft) {
         this.saalplan = saalplan;
         this.id = new Id(saalplan.getId(), reihe, platz);
         this.istVerkauft = istVerkauft;
-        this.reservierung = reservierung;
     }
 
     @Embeddable

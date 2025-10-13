@@ -61,7 +61,7 @@ class SaalplanStapelTest {
         // arrange
         var vorstellungId = new VorstellungId(UUID.randomUUID());
         var platzId = new PlatzId(new ReiheNummer(1), new PlatzNummer(1));
-        var saalplan = new Saalplan(vorstellungId, List.of(new Platz(platzId, true, null)));
+        var saalplan = new Saalplan(vorstellungId, List.of(new Platz(platzId, true)));
 
         // act
         saalplanStapel.legeZurueck(saalplan);

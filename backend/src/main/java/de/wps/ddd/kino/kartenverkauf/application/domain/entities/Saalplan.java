@@ -4,7 +4,6 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Reservierungsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
 import lombok.Getter;
@@ -15,11 +14,9 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Getter
 @AggregateRoot
@@ -74,29 +71,8 @@ public class Saalplan {
         }
     }
 
-    public void markiereAlsReserviert(ZusammenhaengendePlaetze zusammenhaengendePlaetze, Reservierungsnummer reservierungsnummer) {
-        for (PlatzId p : zusammenhaengendePlaetze.plaetze()) {
-            platz(p).markiereAlsReserviert(reservierungsnummer);
-        }
-    }
-
-    public void markiereAlsVerkauft(Reservierungsnummer reservierungsnummer) {
-        allePlaetze()
-                .filter(platz -> Objects.equals(platz.getReservierung(), reservierungsnummer))
-                .forEach(Platz::markiereAlsVerkauft);
-    }
-
-    public void gebeNichtAbgeholteReservierungenFrei() {
-        allePlaetze()
-                .filter(platz -> !platz.isIstVerkauft()) // TODO
-                .forEach(Platz::gebeReservierungFrei);
-    }
-
     public Platz platz(PlatzId id) {
         return this.plaetze.get(id.reihe()).get(id.platz());
     }
 
-    private Stream<Platz> allePlaetze() {
-        return plaetze.values().stream().flatMap(innerMap -> innerMap.values().stream());
-    }
 }
