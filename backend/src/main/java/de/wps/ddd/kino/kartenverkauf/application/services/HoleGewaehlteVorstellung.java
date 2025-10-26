@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.services;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

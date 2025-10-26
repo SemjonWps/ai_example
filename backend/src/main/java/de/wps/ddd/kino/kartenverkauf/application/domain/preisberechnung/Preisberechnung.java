@@ -1,8 +1,8 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.services;
+package de.wps.ddd.kino.kartenverkauf.application.domain.preisberechnung;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
 import org.jmolecules.ddd.annotation.Service;
 import org.springframework.stereotype.Component;
 

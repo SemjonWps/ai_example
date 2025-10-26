@@ -1,7 +1,5 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.entities;
+package de.wps.ddd.kino.kartenverkauf.application.domain.zahlung;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jmolecules.ddd.annotation.AggregateRoot;

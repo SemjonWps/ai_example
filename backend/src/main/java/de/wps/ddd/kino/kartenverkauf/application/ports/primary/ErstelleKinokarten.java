@@ -1,9 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.application.ports.primary;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Kinokarte;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.Kinokarte;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
 
 import java.util.List;
 

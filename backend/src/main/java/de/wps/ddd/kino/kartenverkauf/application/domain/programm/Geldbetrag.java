@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects;
+package de.wps.ddd.kino.kartenverkauf.application.domain.programm;
 
 import lombok.Value;
 import org.jmolecules.ddd.annotation.ValueObject;

@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.ports.secondary;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import org.jmolecules.ddd.annotation.Repository;
 
 import java.util.List;

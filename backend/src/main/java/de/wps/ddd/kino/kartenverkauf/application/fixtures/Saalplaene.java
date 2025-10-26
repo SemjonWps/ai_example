@@ -1,11 +1,11 @@
 package de.wps.ddd.kino.kartenverkauf.application.fixtures;
 
 import de.wps.ddd.kino.common.fixtures.Fixture;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import lombok.RequiredArgsConstructor;

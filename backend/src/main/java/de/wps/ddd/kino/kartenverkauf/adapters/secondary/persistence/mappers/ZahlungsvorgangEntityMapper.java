@@ -1,9 +1,9 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.ZahlungsvorgangEntity;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Zahlungsvorgang;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsstatus;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsvorgang;
 import org.springframework.stereotype.Component;
 
 @Component

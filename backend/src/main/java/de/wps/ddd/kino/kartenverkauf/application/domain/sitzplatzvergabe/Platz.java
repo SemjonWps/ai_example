@@ -1,6 +1,5 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.entities;
+package de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.jmolecules.ddd.annotation.Entity;

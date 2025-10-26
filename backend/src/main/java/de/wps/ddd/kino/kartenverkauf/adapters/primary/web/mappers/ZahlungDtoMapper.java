@@ -2,8 +2,8 @@ package de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.GeldbetragDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZahlungsstatusDto;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsstatus;
 import org.springframework.stereotype.Component;
 
 @Component

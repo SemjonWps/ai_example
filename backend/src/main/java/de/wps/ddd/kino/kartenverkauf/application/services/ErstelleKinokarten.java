@@ -1,11 +1,11 @@
 package de.wps.ddd.kino.kartenverkauf.application.services;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Kinokarte;
-import de.wps.ddd.kino.kartenverkauf.application.domain.factories.KartenBlock;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.KartenBlock;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.Kinokarte;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsstatus;
 import de.wps.ddd.kino.kartenverkauf.application.ports.primary.Zahlung;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;

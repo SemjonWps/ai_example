@@ -1,13 +1,13 @@
 package de.wps.ddd.kino.kartenverkauf.application.ports.primary;
 
 import de.wps.ddd.kino.common.architecture.ApplicationService;
-import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungAbgebrochen;
-import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungEingegangen;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.ZahlungAbgebrochen;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.ZahlungEingegangen;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsstatus;
 
 @ApplicationService
 public interface Zahlung {

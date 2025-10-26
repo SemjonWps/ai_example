@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.ports.secondary;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Zahlungsvorgang;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsvorgang;
 import org.jmolecules.ddd.annotation.Repository;
 
 @Repository

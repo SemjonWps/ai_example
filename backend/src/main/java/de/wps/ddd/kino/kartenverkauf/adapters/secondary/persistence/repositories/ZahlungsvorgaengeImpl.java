@@ -1,8 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.ZahlungsvorgangEntityMapper;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Zahlungsvorgang;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsvorgang;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.Zahlungsvorgaenge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

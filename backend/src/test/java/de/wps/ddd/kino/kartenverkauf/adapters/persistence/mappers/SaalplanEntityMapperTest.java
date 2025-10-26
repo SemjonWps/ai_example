@@ -2,12 +2,12 @@ package de.wps.ddd.kino.kartenverkauf.adapters.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers.SaalplanEntityMapper;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.SaalplanEntity;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Platz;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Saalplan;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -61,5 +61,5 @@ class SaalplanEntityMapperTest {
         assertThat(platz.getId().platz()).isEqualTo(platzNr);
         assertThat(platz.isIstVerkauft()).isFalse();
     }
-    
+
 }

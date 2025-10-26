@@ -1,16 +1,16 @@
 package de.wps.ddd.kino.kartenverkauf;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.events.ZahlungEingegangen;
-import de.wps.ddd.kino.kartenverkauf.application.domain.factories.KartenBlock;
-import de.wps.ddd.kino.kartenverkauf.application.domain.services.Preisberechnung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Beginn;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Film;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Saal;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Zahlungsstatus;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.KartenBlock;
+import de.wps.ddd.kino.kartenverkauf.application.domain.preisberechnung.Preisberechnung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Beginn;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Film;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Saal;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platzanzahl;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.ZahlungEingegangen;
+import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Zahlungsstatus;
 import de.wps.ddd.kino.kartenverkauf.application.ports.primary.Zahlung;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
@@ -88,7 +88,7 @@ public class KartenverkaufTest {
         // 8. Kassenmitarbeiter legt Saalplan zurück auf Saalplanstapel → Saalplan zurückgelegt
         saalplanStapel.legeZurueck(saalplan);
 
-        // 9. Kassenmitarbeiter beschriftet Kinokarten → Kinokarten beschriftet/erstellt/ausgestellt
+        // 9. Kassenmitarbeiter beschriftet Kinokarten → Kinokarten ausgestellt
         var kinokarten = kinokartenblock.erstelleKarten(vorstellung, gewaehltePlaetze);
         assertThat(kinokarten).hasSize(platzanzahl.value());
         assertThat(kinokarten).allSatisfy(kinokarte -> {

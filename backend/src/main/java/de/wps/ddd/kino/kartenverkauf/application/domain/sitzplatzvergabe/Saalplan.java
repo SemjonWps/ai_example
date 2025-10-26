@@ -1,11 +1,7 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.entities;
+package de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Platzanzahl;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import lombok.Getter;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.Association;

@@ -1,8 +1,7 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.factories;
+package de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Kinokarte;
-import de.wps.ddd.kino.kartenverkauf.application.domain.entities.Vorstellung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
 import org.jmolecules.ddd.annotation.Factory;
 import org.springframework.stereotype.Component;
 
