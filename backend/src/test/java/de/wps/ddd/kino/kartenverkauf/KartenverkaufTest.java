@@ -72,9 +72,9 @@ public class KartenverkaufTest {
         assertThat(gewaehltePlaetze.anzahl()).isEqualTo(platzanzahl);
 
         // 6. Kinobesucher bezahlt Geldbetrag -> Zahlung erfolgt
-        var gesamtbetrag = preisberechnung.ermittlePreis(vorstellung, gewaehltePlaetze);
+        var gesamtbetrag = preisberechnung.ermittlePreis(vorstellung, saalplan, gewaehltePlaetze);
         assertThat(vorstellung.getEintrittspreis()).isEqualTo(Geldbetrag.euro(9, 50));
-        assertThat(gesamtbetrag).isEqualTo(Geldbetrag.euro(38, 0));
+        assertThat(gesamtbetrag).isEqualTo(Geldbetrag.euro(46, 0)); // plus Zuschlag Loge
 
         var auftragsnummer = zahlung.starteZahlungsvorgang(gesamtbetrag, vorstellungId, gewaehltePlaetze);
         assertThat(zahlung.status(auftragsnummer)).isEqualTo(Zahlungsstatus.Ausstehend);

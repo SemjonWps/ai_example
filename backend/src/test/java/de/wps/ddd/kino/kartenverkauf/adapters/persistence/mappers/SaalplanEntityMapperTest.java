@@ -5,6 +5,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.Saalpl
 import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
@@ -27,7 +28,7 @@ class SaalplanEntityMapperTest {
     @Test
     public void toEntity() {
         // arrange
-        var plaetze = List.of(new Platz(new PlatzId(reiheNr, platzNr), false));
+        var plaetze = List.of(new Platz(new PlatzId(reiheNr, platzNr), PlatzKategorie.Loge, false));
         var saalplan = new Saalplan(vorstellungId, plaetze);
 
         // act
@@ -42,6 +43,7 @@ class SaalplanEntityMapperTest {
         assertThat(platzEntity.getId().getSaalplanId()).isEqualTo(saalplanId);
         assertThat(platzEntity.getId().getReihe()).isEqualTo(reiheNr.nummer());
         assertThat(platzEntity.getId().getPlatz()).isEqualTo(platzNr.nummer());
+        assertThat(platzEntity.getKategorie()).isEqualTo("Loge");
         assertThat(platzEntity.isIstVerkauft()).isFalse();
     }
 
@@ -49,7 +51,7 @@ class SaalplanEntityMapperTest {
     public void toDomain() {
         // arrange
         var saalplanEntity = new SaalplanEntity(saalplanId, vorstellungId.uuid());
-        saalplanEntity.addPlatz(reiheNr.nummer(), platzNr.nummer(), false);
+        saalplanEntity.addPlatz(reiheNr.nummer(), platzNr.nummer(), "Loge", false);
 
         // act
         var saalplan = mapper.toDomain(saalplanEntity);
@@ -59,6 +61,7 @@ class SaalplanEntityMapperTest {
         var platz = saalplan.platz(new PlatzId(reiheNr, platzNr));
         assertThat(platz.getId().reihe()).isEqualTo(reiheNr);
         assertThat(platz.getId().platz()).isEqualTo(platzNr);
+        assertThat(platz.getKategorie()).isEqualTo(PlatzKategorie.Loge);
         assertThat(platz.isIstVerkauft()).isFalse();
     }
 

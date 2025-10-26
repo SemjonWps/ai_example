@@ -5,6 +5,7 @@ import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
 import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +17,14 @@ class BerechneGesamtpreis implements de.wps.ddd.kino.kartenverkauf.application.p
 
     private final AktuelleVorstellungen aktuelleVorstellungen;
 
+    private final SaalplanStapel saalplanStapel;
+
     private final Preisberechnung preisberechnung;
 
     @Override
     public Geldbetrag fuer(VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
         var vorstellung = aktuelleVorstellungen.holeVorstellung(vorstellungId);
-        return preisberechnung.ermittlePreis(vorstellung, zusammenhaengendePlaetze);
+        var saalplan = saalplanStapel.holeSaalplan(vorstellungId);
+        return preisberechnung.ermittlePreis(vorstellung, saalplan, zusammenhaengendePlaetze);
     }
 }

@@ -12,6 +12,7 @@ public class Platz {
 
     @Identity
     private final PlatzId id;
+    private final PlatzKategorie kategorie;
     private boolean istVerkauft;
 
     public void markiereAlsVerkauft() {

@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class PlatzEntity {
     @EmbeddedId
     private Id id;
+    private String kategorie;
     private boolean istVerkauft;
 
     @Getter(AccessLevel.NONE)
@@ -27,9 +28,10 @@ public class PlatzEntity {
     @MapsId("saalplanId") // <-- tells Hibernate to fill FK from parent
     private SaalplanEntity saalplan;
 
-    public PlatzEntity(SaalplanEntity saalplan, int reihe, int platz, boolean istVerkauft) {
+    public PlatzEntity(SaalplanEntity saalplan, int reihe, int platz, String kategorie, boolean istVerkauft) {
         this.saalplan = saalplan;
         this.id = new Id(saalplan.getId(), reihe, platz);
+        this.kategorie = kategorie;
         this.istVerkauft = istVerkauft;
     }
 

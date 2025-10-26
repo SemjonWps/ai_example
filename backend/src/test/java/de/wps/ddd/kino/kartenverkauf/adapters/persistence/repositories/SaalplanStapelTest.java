@@ -4,6 +4,7 @@ package de.wps.ddd.kino.kartenverkauf.adapters.persistence.repositories;
 import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
@@ -61,7 +62,9 @@ class SaalplanStapelTest {
         // arrange
         var vorstellungId = new VorstellungId(UUID.randomUUID());
         var platzId = new PlatzId(new ReiheNummer(1), new PlatzNummer(1));
-        var saalplan = new Saalplan(vorstellungId, List.of(new Platz(platzId, true)));
+        var platzKategorie = PlatzKategorie.Loge;
+        var saalplan = new Saalplan(vorstellungId, List.of(
+                new Platz(platzId, platzKategorie, true)));
 
         // act
         saalplanStapel.legeZurueck(saalplan);
@@ -69,6 +72,7 @@ class SaalplanStapelTest {
         // assert
         var neuerSaalplan = saalplanStapel.holeSaalplan(vorstellungId);
         assertThat(neuerSaalplan).isNotNull();
+        assertThat(neuerSaalplan.platz(platzId).getKategorie()).isEqualTo(PlatzKategorie.Loge);
         assertThat(neuerSaalplan.platz(platzId).istVerkauft()).isTrue();
     }
 }

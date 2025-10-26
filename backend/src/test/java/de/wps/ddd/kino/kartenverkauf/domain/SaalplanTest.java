@@ -3,6 +3,7 @@ package de.wps.ddd.kino.kartenverkauf.domain;
 import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
@@ -35,7 +36,7 @@ public class SaalplanTest {
                 var reiheNr = new ReiheNummer(r);
                 var platzNr = new PlatzNummer(p);
                 var platzId = new PlatzId(reiheNr, platzNr);
-                plaetze.add(new Platz(platzId, true));
+                plaetze.add(new Platz(platzId, PlatzKategorie.Loge, true));
             }
         }
 

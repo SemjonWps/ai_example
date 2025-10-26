@@ -3,6 +3,7 @@ package de.wps.ddd.kino.kartenverkauf.application.fixtures;
 import de.wps.ddd.kino.common.fixtures.Fixture;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
@@ -49,9 +50,10 @@ public class Saalplaene implements Fixture {
 
             var plaetze = new ArrayList<Platz>(reihen * spalten);
             for (int reihe = 1; reihe <= reihen; reihe++) {
+                var kategorie = reihe <= reihen / 2 ? PlatzKategorie.Parkett : PlatzKategorie.Loge;
                 for (int spalte = 1; spalte <= spalten; spalte++) {
                     var istVerkauft = random.nextInt(4) == 0;
-                    var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft);
+                    var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), kategorie, istVerkauft);
                     plaetze.add(platz);
                 }
             }

@@ -4,6 +4,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.Saalpl
 import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
@@ -20,6 +21,7 @@ public class SaalplanEntityMapper {
                 .forEach(platz -> saalplanEntity.addPlatz(
                         platz.getId().reihe().nummer(),
                         platz.getId().platz().nummer(),
+                        platz.getKategorie().name(),
                         platz.isIstVerkauft()
                 ));
         return saalplanEntity;
@@ -33,6 +35,7 @@ public class SaalplanEntityMapper {
                                 new PlatzId(
                                         new ReiheNummer(p.getId().getReihe()),
                                         new PlatzNummer(p.getId().getPlatz())),
+                                PlatzKategorie.valueOf(p.getKategorie()),
                                 p.isIstVerkauft()
                         )
                 ).toList());

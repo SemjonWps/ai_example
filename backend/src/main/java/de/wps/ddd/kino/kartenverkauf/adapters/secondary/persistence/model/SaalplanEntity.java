@@ -42,7 +42,7 @@ public class SaalplanEntity {
         this.vorstellungUUID = vorstellungUUID;
     }
 
-    public void addPlatz(int reihe, int platz, boolean istVerkauft) {
-        plaetze.add(new PlatzEntity(this, reihe, platz, istVerkauft));
+    public void addPlatz(int reihe, int platz, String kategorie, boolean istVerkauft) {
+        plaetze.add(new PlatzEntity(this, reihe, platz, kategorie, istVerkauft));
     }
 }

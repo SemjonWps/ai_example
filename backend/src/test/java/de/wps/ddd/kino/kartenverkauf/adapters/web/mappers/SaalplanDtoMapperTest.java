@@ -7,6 +7,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.Zusammenhaengend
 import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
@@ -41,10 +42,12 @@ class SaalplanDtoMapperTest {
         var platzId3 = new PlatzId(reiheNr2, platzNr1);
         var platzId4 = new PlatzId(reiheNr2, platzNr2);
 
-        var reihe1_platz1 = new Platz(platzId1, false);
-        var reihe1_platz2 = new Platz(platzId2, true);
-        var reihe2_platz1 = new Platz(platzId3, true);
-        var reihe2_platz2 = new Platz(platzId4, false);
+        var kategorie = PlatzKategorie.Loge;
+
+        var reihe1_platz1 = new Platz(platzId1, kategorie, false);
+        var reihe1_platz2 = new Platz(platzId2, kategorie, true);
+        var reihe2_platz1 = new Platz(platzId3, kategorie, true);
+        var reihe2_platz2 = new Platz(platzId4, kategorie, false);
 
         var plaetze = List.of(reihe1_platz1, reihe1_platz2, reihe2_platz1, reihe2_platz2);
 
