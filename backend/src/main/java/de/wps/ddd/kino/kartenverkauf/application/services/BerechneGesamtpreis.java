@@ -1,0 +1,26 @@
+package de.wps.ddd.kino.kartenverkauf.application.services;
+
+import de.wps.ddd.kino.kartenverkauf.application.domain.services.Preisberechnung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ZusammenhaengendePlaetze;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+class BerechneGesamtpreis implements de.wps.ddd.kino.kartenverkauf.application.ports.primary.BerechneGesamtpreis {
+
+    private final AktuelleVorstellungen aktuelleVorstellungen;
+
+    private final Preisberechnung preisberechnung;
+
+    @Override
+    public Geldbetrag fuer(VorstellungId vorstellungId, ZusammenhaengendePlaetze zusammenhaengendePlaetze) {
+        var vorstellung = aktuelleVorstellungen.holeVorstellung(vorstellungId);
+        return preisberechnung.ermittlePreis(vorstellung, zusammenhaengendePlaetze);
+    }
+}

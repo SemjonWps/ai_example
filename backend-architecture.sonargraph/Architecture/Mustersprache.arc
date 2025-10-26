@@ -28,6 +28,7 @@ artifact mustersprache
     artifact applicationservices
     {
         include "**/application/services/**" // implementation
+        include "**/application/ports/primary/**" // interface
         include "JavaHasAnnotation: de.wps.ddd.kino.common.architecture.ApplicationService" // interface
         connect to services, factories, repositories, aggregates, events, valueobjects
     }
