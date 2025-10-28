@@ -5,12 +5,12 @@ artifact fachlicheschichtung
     
     artifact filmauswahl
     {
-        include "**/filmauswahl/**"
+        include "**/kino/filmauswahl/**"
     }
     
     artifact kartenverkauf
     {
-        include "**/kartenverkauf/**"
+        include "**/kino/kartenverkauf/**"
         
         relaxed artifact common
         {
@@ -18,27 +18,27 @@ artifact fachlicheschichtung
             include "**"
         }
         
-        artifact kartenausstellung
+        artifact kartenerstellung
         {
-            include "**/kartenausstellung/**"
-            connect to sitzplatzvergabe, programm
+            include "**/kartenerstellung/**"
+            connect to sitzplatzvergabe, filmauswahl
         }
         
         artifact preisberechnung
         {
             include "**/preisberechnung/**"
-            connect to sitzplatzvergabe, programm
+            connect to sitzplatzvergabe, filmauswahl
         }
         
         artifact sitzplatzvergabe
         {
             include "**/sitzplatzvergabe/**"
-            connect to programm
+            connect to filmauswahl
         }
         
-        artifact programm
+        artifact filmauswahl
         {
-            include "**/programm/**"
+            include "**/filmauswahl/**"
         }
         
         artifact zahlung
@@ -49,6 +49,6 @@ artifact fachlicheschichtung
     
     public artifact common
     {
-        include "**/common/**"
+        include "**/kino/common/**"
     }
 }

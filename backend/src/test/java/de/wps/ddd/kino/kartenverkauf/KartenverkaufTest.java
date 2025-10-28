@@ -1,12 +1,12 @@
 package de.wps.ddd.kino.kartenverkauf;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.KartenBlock;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Beginn;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Film;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Saal;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenerstellung.KartenBlock;
 import de.wps.ddd.kino.kartenverkauf.application.domain.preisberechnung.Preisberechnung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Beginn;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Film;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Saal;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.ZahlungEingegangen;

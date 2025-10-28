@@ -5,7 +5,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers.ZahlungDtoMapp
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PreisanfrageDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZahlungsstatusDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZahlungsvorgangDto;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.ZahlungEingegangen;
 import de.wps.ddd.kino.kartenverkauf.application.ports.primary.BerechneGesamtpreis;

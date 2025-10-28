@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.ports.primary;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.Kinokarte;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenerstellung.Kinokarte;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
 

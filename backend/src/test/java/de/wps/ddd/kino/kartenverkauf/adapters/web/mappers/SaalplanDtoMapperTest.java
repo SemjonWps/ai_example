@@ -4,7 +4,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers.SaalplanDtoMap
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PlatzDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PlatzIdDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZusammenhaengendePlaetzeDto;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzKategorie;

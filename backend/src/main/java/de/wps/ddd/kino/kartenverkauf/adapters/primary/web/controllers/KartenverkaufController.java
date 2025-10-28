@@ -10,7 +10,7 @@ import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.PreisanfrageDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.SaalplanDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.VorstellungDto;
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.ZusammenhaengendePlaetzeDto;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platzanzahl;
 import de.wps.ddd.kino.kartenverkauf.application.domain.zahlung.Auftragsnummer;
 import de.wps.ddd.kino.kartenverkauf.application.ports.primary.BerechneGesamtpreis;

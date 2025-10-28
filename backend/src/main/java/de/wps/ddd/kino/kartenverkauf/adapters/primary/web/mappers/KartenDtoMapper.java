@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.primary.web.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.primary.web.model.KinokarteDto;
-import de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung.Kinokarte;
+import de.wps.ddd.kino.kartenverkauf.application.domain.kartenerstellung.Kinokarte;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

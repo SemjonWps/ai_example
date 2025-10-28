@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
 import lombok.Getter;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.annotation.Association;

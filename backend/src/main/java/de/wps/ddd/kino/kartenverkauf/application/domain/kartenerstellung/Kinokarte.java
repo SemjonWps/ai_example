@@ -1,8 +1,8 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.kartenausstellung;
+package de.wps.ddd.kino.kartenverkauf.application.domain.kartenerstellung;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Beginn;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Film;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Saal;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Beginn;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Film;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Saal;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.PlatzNummer;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ReiheNummer;
 import lombok.AllArgsConstructor;

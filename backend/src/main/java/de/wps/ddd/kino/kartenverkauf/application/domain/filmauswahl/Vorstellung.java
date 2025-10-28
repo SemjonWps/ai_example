@@ -1,4 +1,4 @@
-package de.wps.ddd.kino.kartenverkauf.application.domain.programm;
+package de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

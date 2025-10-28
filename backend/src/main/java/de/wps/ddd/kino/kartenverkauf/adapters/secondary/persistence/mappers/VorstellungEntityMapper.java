@@ -1,12 +1,12 @@
 package de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.mappers;
 
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.VorstellungEntity;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Beginn;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Film;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Saal;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Beginn;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Film;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Saal;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,7 @@
 package de.wps.ddd.kino.kartenverkauf.application.domain.preisberechnung;
 
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Vorstellung;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Vorstellung;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Platz;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.Saalplan;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;

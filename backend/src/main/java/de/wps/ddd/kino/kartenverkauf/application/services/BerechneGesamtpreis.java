@@ -1,8 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.application.services;
 
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.Geldbetrag;
+import de.wps.ddd.kino.kartenverkauf.application.domain.filmauswahl.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.preisberechnung.Preisberechnung;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.Geldbetrag;
-import de.wps.ddd.kino.kartenverkauf.application.domain.programm.VorstellungId;
 import de.wps.ddd.kino.kartenverkauf.application.domain.sitzplatzvergabe.ZusammenhaengendePlaetze;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
