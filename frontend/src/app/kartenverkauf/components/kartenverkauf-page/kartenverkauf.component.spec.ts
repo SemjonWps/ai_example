@@ -1,6 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KartenverkaufComponent } from './kartenverkauf.component';
+import {KartenverkaufComponent} from './kartenverkauf.component';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {KartenverkaufService} from '../../services/kartenverkauf.service';
+import {provideRouter} from '@angular/router';
 
 describe('KartenverkaufComponent', () => {
   let component: KartenverkaufComponent;
@@ -8,7 +12,12 @@ describe('KartenverkaufComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KartenverkaufComponent]
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        KartenverkaufService
+      ]
     })
     .compileComponents();
 

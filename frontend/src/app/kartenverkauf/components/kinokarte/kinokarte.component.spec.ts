@@ -1,7 +1,9 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {KinokarteComponent} from './kinokarte.component';
-import {Angebot} from '../../dtos/kartenverkauf';
+import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {Waehrung} from '../../dtos/kartenverkauf';
 
 describe('KinokarteComponent', () => {
   let component: KinokarteComponent;
@@ -9,44 +11,28 @@ describe('KinokarteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [KinokarteComponent]
-    })
-      .compileComponents();
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        KinokarteComponent
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(KinokarteComponent);
     component = fixture.componentInstance;
-
-    component.angebot = {
-      gesamtpreis: {betrag: 20, waehrung: 'EUR'},
-      plaetze: [
-        {reiheNr: 1, platzNr: 2, sitzplatzStatus: 'FREI'},
-        {reiheNr: 1, platzNr: 3, sitzplatzStatus: 'FREI'},
-      ],
-      saalplan: {},
-    } as Angebot;
+    component.zahlungsbestaetigung = {
+      auftragsnummer: 'A-2025-000123',
+      vorstellungId: '123e4567-e89b-12d3-a456-426614174000',
+      plaetze: {plaetze: [{reihe: 1, platz: 2}]},
+      betrag: {
+        betrag: 36.0,
+        waehrung: Waehrung.EUR,
+      },
+    };
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe('createPlaetzeString', () => {
-    it('should return correct string with valid angebot', () => {
-
-      const expectedResult = "Reihe 1, Platz 2, 3";
-
-      const result: string = component.createPlaetzeString()
-
-      expect(result).toEqual(expectedResult);
-    })
-
-    it('should throw exception with invalid angebot', () => {
-      component.angebot.plaetze = [];
-
-      expect(() => {
-        component.createPlaetzeString();
-      }).toThrowError('Angebot enthält keine Plätze');
-    })
-  })
 });

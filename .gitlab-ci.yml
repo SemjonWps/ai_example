@@ -28,6 +28,7 @@ default:
 
 stages:
   - build
+  - test
 
 build:backend:
   stage: build
@@ -46,3 +47,18 @@ build:frontend:
     paths:
       - frontend/dist/
     expire_in: 1 hour
+
+test:backend:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS -pl backend verify
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - backend/target/surefire-reports/TEST-*.xml
+
+test:frontend:
+  stage: test
+  script:
+    - mvn $MAVEN_CLI_OPTS -pl frontend verify

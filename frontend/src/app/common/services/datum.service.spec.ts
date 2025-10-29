@@ -6,30 +6,14 @@ describe('DatumService', () => {
   let service: DatumService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [DatumService]
+    });
     service = TestBed.inject(DatumService);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
-  });
-
-  describe('getWochentag', () => {
-    it('should return sunday from date', () => {
-      const datum = new Date("2025-03-16T16:30:00");
-
-      const result = service.formatWochentag(datum);
-
-      expect(result).toEqual("So");
-    });
-
-    it('should return tuesday from date', () => {
-      const datum = new Date("2025-03-18T16:30:00");
-
-      const result = service.formatWochentag(datum);
-
-      expect(result).toEqual("Di");
-    });
   });
 
   describe('getWocheBeginnendAn', () => {

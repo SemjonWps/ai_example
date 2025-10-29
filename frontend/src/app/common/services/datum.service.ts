@@ -1,22 +1,12 @@
 import {Injectable} from '@angular/core';
-import {addDays, format, startOfWeek} from 'date-fns';
+import {addDays, startOfWeek} from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatumService {
-
-  private today: Date = new Date();
-
+  
   constructor() {
-  }
-
-  getToday() {
-    return this.today;
-  }
-
-  formatWochentag(date: Date): string {
-    return format(date, 'EE').slice(0, 2);
   }
 
   getWochentage(date: Date) {
