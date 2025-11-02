@@ -3,6 +3,7 @@ package de.wps.ddd.kino.kartenverkauf.application.fixtures;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.wps.ddd.kino.common.fixtures.Fixture;
+import de.wps.ddd.kino.filmauswahl.events.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.*;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.*;
@@ -14,6 +15,7 @@ import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalKonfigurati
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.*;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,5 +96,10 @@ public class Saalplaene implements Fixture {
         var saalplan = new Saalplan(vorstellung.getId(), plaetze);
 
         saalplanStapel.legeZurueck(saalplan);
+    }
+
+    @EventListener
+    public void handleFilmAktualisiert(FilmHinzugefuegtEvent event) {
+        log.info("Empfange FilmHinzugefuegtEvent: {}", event);
     }
 }

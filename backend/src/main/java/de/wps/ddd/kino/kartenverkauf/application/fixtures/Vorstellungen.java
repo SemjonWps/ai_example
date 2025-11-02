@@ -26,25 +26,25 @@ public class Vorstellungen implements Fixture {
     @Transactional
     @Override
     public void install() {
-        log.info("Lade Vorstellungen aus JSON...");
-
-        try {
-            var objectMapper = new ObjectMapper();
-            objectMapper.registerModule(new JavaTimeModule());
-
-            var inputStream = getClass().getClassLoader().getResourceAsStream("fixtures/vorstellungen.json");
-            if (inputStream == null) {
-                throw new IllegalStateException("fixtures/vorstellungen.json nicht gefunden");
-            }
-
-            VorstellungEntity[] vorstellungen = objectMapper.readValue(inputStream, VorstellungEntity[].class);
-            List<VorstellungEntity> vorstellungList = Arrays.asList(vorstellungen);
-
-            vorstellungRepository.saveAll(vorstellungList);
-
-            log.info("Vorstellungen geladen: {}", vorstellungList.size());
-        } catch (IOException e) {
-            throw new IllegalStateException("Fehler beim Laden der Vorstellungen", e);
-        }
+//        log.info("Lade Vorstellungen aus JSON...");
+//
+//        try {
+//            var objectMapper = new ObjectMapper();
+//            objectMapper.registerModule(new JavaTimeModule());
+//
+//            var inputStream = getClass().getClassLoader().getResourceAsStream("kartenverkauf/vorstellungen.json");
+//            if (inputStream == null) {
+//                throw new IllegalStateException("kartenverkauf/vorstellungen.json nicht gefunden");
+//            }
+//
+//            VorstellungEntity[] vorstellungen = objectMapper.readValue(inputStream, VorstellungEntity[].class);
+//            List<VorstellungEntity> vorstellungList = Arrays.asList(vorstellungen);
+//
+//            vorstellungRepository.saveAll(vorstellungList);
+//
+//            log.info("Vorstellungen geladen: {}", vorstellungList.size());
+//        } catch (IOException e) {
+//            throw new IllegalStateException("Fehler beim Laden der Vorstellungen", e);
+//        }
     }
 }
