@@ -61,5 +61,10 @@ test:backend:
 
 test:frontend:
   stage: test
+  before_script:
+    - apt-get update -y
+    - apt-get install -y chromium
+    - export CHROME_BIN=$(command -v chromium)
+    - export CHROME_FLAGS="--no-sandbox --disable-gpu --disable-dev-shm-usage"
   script:
     - mvn $MAVEN_CLI_OPTS -pl frontend test
