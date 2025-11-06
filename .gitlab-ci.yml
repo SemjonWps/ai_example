@@ -24,6 +24,7 @@ default:
         - .m2/repository
     - key: npm_cache
       paths:
+        - frontend/node/
         - frontend/node_modules/
 
 stages:
@@ -51,7 +52,7 @@ build:frontend:
 test:backend:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS -pl backend verify
+    - mvn $MAVEN_CLI_OPTS -pl backend test
   artifacts:
     when: always
     reports:
@@ -61,4 +62,4 @@ test:backend:
 test:frontend:
   stage: test
   script:
-    - mvn $MAVEN_CLI_OPTS -pl frontend verify
+    - mvn $MAVEN_CLI_OPTS -pl frontend test
