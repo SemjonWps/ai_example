@@ -65,7 +65,15 @@ test:frontend:
     - apt-get update -y
     # Install native libraries required by Chromium used by Puppeteer
     - apt-get install -y --no-install-recommends \
-      ca-certificates libnss3 libxss1 libasound2 \
-      libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libxshmfence1
+      ca-certificates \
+      libnss3 \
+      libxss1 \
+      libasound2t64 \
+      libatk1.0-0t64 \
+      libatk-bridge2.0-0t64 \
+      libgtk-3-0t64 \
+      libgbm1 \
+      libxshmfence1 \
+      fonts-liberation
   script:
     - mvn $MAVEN_CLI_OPTS -pl frontend test
