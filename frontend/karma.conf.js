@@ -1,9 +1,12 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
+// Always use Puppeteer's bundled Chromium
 process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function (config) {
+  const isCI = !!process.env.CI;
+
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -14,10 +17,12 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
-    browsers: ['ChromeHeadless'],
+    browsers: [isCI ? 'ChromeHeadlessCI' : 'ChromeHeadless'],
     customLaunchers: {
-      ChromeHeadlessPuppeteer: {
+      // CI-safe headless launcher with required flags for containers
+      ChromeHeadlessCI: {
         base: 'ChromeHeadless',
+        flags: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
       }
     },
     client: {
@@ -41,5 +46,6 @@ module.exports = function (config) {
     },
     reporters: ['progress', 'kjhtml'],
     restartOnFileChange: true,
+    singleRun: isCI
   });
 };

@@ -35,21 +35,24 @@
         <executions>
           <execution>
             <id>install-node-npm</id>
+            <phase>initialize</phase>
             <goals>
               <goal>install-node-and-npm</goal>
             </goals>
           </execution>
           <execution>
             <id>npm-install</id>
+            <phase>generate-resources</phase>
             <goals>
               <goal>npm</goal>
             </goals>
             <configuration>
-              <arguments>install</arguments>
+              <arguments>ci</arguments>
             </configuration>
           </execution>
           <execution>
             <id>npm-build</id>
+            <phase>compile</phase>
             <goals>
               <goal>npm</goal>
             </goals>
