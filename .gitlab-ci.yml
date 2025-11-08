@@ -64,7 +64,8 @@ test:frontend:
   before_script:
     - apt-get update -y
     # Install native libraries required by Chromium used by Puppeteer
-    - apt-cache depends chromium
-    - apt-cache depends chromium | grep "Depends:" | awk '{print $2}' | sort -u
+    - apt-get install -y --no-install-recommends \
+      ca-certificates libnss3 libxss1 libasound2 \
+      libatk1.0-0 libatk-bridge2.0-0 libgtk-3-0 libgbm1 libxshmfence1
   script:
     - mvn $MAVEN_CLI_OPTS -pl frontend test
