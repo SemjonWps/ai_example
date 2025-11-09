@@ -40,16 +40,12 @@ public class Saalplaene implements Fixture {
     @Transactional
     @Override
     public void install() {
-        log.info("Lade Säle...");
+        installSaele();
 
-        saalRepository.save(new SaalEntity("großer Saal", 6, 20));
-        saalRepository.save(new SaalEntity("kleiner Saal", 4, 8));
+        installVorstellungen();
+    }
 
-        log.info("Säle geladen: {}", saalRepository.count());
-
-
-        log.info("Lade Vorstellungen aus JSON...");
-
+    private void installVorstellungen() {
         try {
             final var resource = new ClassPathResource("kartenverkauf/vorstellungen.json");
             final var vorstellungen = objectMapper.readValue(
@@ -73,6 +69,18 @@ public class Saalplaene implements Fixture {
         }
 
         log.info("Saalpläne erzeugt: {}", vorstellungen.size());
+    }
+
+    private void installSaele() {
+        log.info("Lade Säle...");
+
+        saalRepository.save(new SaalEntity("großer Saal", 6, 20));
+        saalRepository.save(new SaalEntity("kleiner Saal", 4, 8));
+
+        log.info("Säle geladen: {}", saalRepository.count());
+
+
+        log.info("Lade Vorstellungen aus JSON...");
     }
 
     private void initialisiereVorstellung(Vorstellung vorstellung, Random random) {
