@@ -21,9 +21,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -46,29 +50,24 @@ public class Saalplaene implements Fixture {
     }
 
     private void installVorstellungen() {
-        try {
-            final var resource = new ClassPathResource("kartenverkauf/vorstellungen.json");
-            final var vorstellungen = objectMapper.readValue(
-                resource.getInputStream(),
-                new TypeReference<List<VorstellungEntity>>() {}
-            );
+        // Vorstellungen werden nicht mehr aus JSON geladen, sondern
+        // programmatisch generiert, wenn FilmHinzugefuegtEvent empfangen wird
+        log.info("Überspringe JSON-basiertes Laden von Vorstellungen - werden durch Events generiert");
 
-            vorstellungRepository.saveAll(vorstellungen);
-            log.info("Vorstellungen geladen: {}", vorstellungen.size());
-        } catch (IOException e) {
-            throw new RuntimeException("Fehler beim Laden der Vorstellungen aus JSON", e);
-        }
-
-        log.info("Erzeuge Saalpläne...");
-
-        var random = new Random(42);
-
+        // Falls bereits Vorstellungen existieren (z.B. aus Events), initialisiere deren Saalpläne
         var vorstellungen = aktuelleVorstellungen.alleVorstellungen();
-        for (var vorstellung : vorstellungen) {
-            initialisiereVorstellung(vorstellung, random);
-        }
+        if (!vorstellungen.isEmpty()) {
+            log.info("Erzeuge Saalpläne für existierende Vorstellungen...");
+            var random = new Random(42);
 
-        log.info("Saalpläne erzeugt: {}", vorstellungen.size());
+            for (var vorstellung : vorstellungen) {
+                initialisiereVorstellung(vorstellung, random);
+            }
+
+            log.info("Vorstellung erzeugt: {}", vorstellungen.size());
+        } else {
+            log.info("Keine Vorstellungen zum Initialisieren gefunden");
+        }
     }
 
     private void installSaele() {
@@ -107,7 +106,63 @@ public class Saalplaene implements Fixture {
     }
 
     @EventListener
+    @Transactional
     public void handleFilmAktualisiert(FilmHinzugefuegtEvent event) {
         log.info("Empfange FilmHinzugefuegtEvent: {}", event);
+        generiereVorstellungenFuerNaechsteFuenfTage(event);
+    }
+
+    private void generiereVorstellungenFuerNaechsteFuenfTage(FilmHinzugefuegtEvent event) {
+        log.info("Generiere Vorstellungen für Film '{}' für die nächsten 5 Tage", event.getTitel());
+
+        var random = new Random();
+        var saele = new String[]{"großer Saal", "kleiner Saal"};
+        var zeitslots = new LocalTime[]{
+            LocalTime.of(14, 30),  // Nachmittag
+            LocalTime.of(19, 30)   // Abend
+        };
+
+        var heute = LocalDate.now();
+        var generierteVorstellungen = new ArrayList<VorstellungEntity>();
+
+        // Generiere für die nächsten 5 Tage
+        for (int tag = 0; tag < 5; tag++) {
+            var datum = heute.plusDays(tag);
+
+            // Generiere 1-2 Vorstellungen pro Tag
+            var anzahlVorstellungenProTag = 1 + random.nextInt(2); // 1 oder 2
+
+            for (int i = 0; i < anzahlVorstellungenProTag; i++) {
+                var zeitslot = zeitslots[i % zeitslots.length];
+                var beginn = LocalDateTime.of(datum, zeitslot);
+                var saal = saele[random.nextInt(saele.length)];
+
+                var vorstellung = new VorstellungEntity(
+                    UUID.randomUUID(),
+                    beginn,
+                    saal,
+                    event.getTitel(),
+                    event.getPreis()
+                );
+
+                generierteVorstellungen.add(vorstellung);
+            }
+        }
+
+        // Speichere alle generierten Vorstellungen
+        vorstellungRepository.saveAll(generierteVorstellungen);
+        log.info("Vorstellungen generiert und gespeichert: {}", generierteVorstellungen.size());
+
+        // Initialisiere Saalpläne für alle generierten Vorstellungen
+        var alleVorstellungen = aktuelleVorstellungen.alleVorstellungen();
+        var randomFuerSaalplaene = new Random(42);
+
+        for (var vorstellung : alleVorstellungen) {
+            if (vorstellung.getFilm().equals(event.getTitel())) {
+                initialisiereVorstellung(vorstellung, randomFuerSaalplaene);
+            }
+        }
+
+        log.info("Saalpläne für {} Vorstellungen initialisiert", generierteVorstellungen.size());
     }
 }
