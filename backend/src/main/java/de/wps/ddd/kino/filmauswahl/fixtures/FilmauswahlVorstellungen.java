@@ -26,19 +26,33 @@ public class FilmauswahlVorstellungen implements Fixture {
     @Transactional
     @Override
     public void install() {
-        log.info("Lade Filmauswahl-Säle...");
+        installSaele();
 
-        var grosserSaal = new Saal();
-        grosserSaal.setName("großer Saal");
+        installFilme();
 
-        var kleinerSaal = new Saal();
-        kleinerSaal.setName("kleiner Saal");
+        installVorstellungen();
+    }
 
-        saalRepository.save(grosserSaal);
-        saalRepository.save(kleinerSaal);
+    private void installFilme() {
+        log.info("Lade Filmauswahl-Filme aus JSON...");
 
-        log.info("Filmauswahl-Säle geladen: 2");
+        try {
+            final var resource = new ClassPathResource("filmauswahl/filme.json");
+            final var filme = objectMapper.readValue(
+                    resource.getInputStream(),
+                    new TypeReference<List<Film>>() {
+                    }
+            );
 
+            filmRepository.saveAll(filme);
+            log.info("Filmauswahl-Filme geladen: {}", filme.size());
+
+        } catch (IOException e) {
+            throw new RuntimeException("Fehler beim Laden der Filmauswahl-Filme aus JSON", e);
+        }
+    }
+
+    private void installVorstellungen() {
         log.info("Lade Filmauswahl-Vorstellungen aus JSON...");
 
         try {
@@ -71,6 +85,20 @@ public class FilmauswahlVorstellungen implements Fixture {
 
             domainEventPublisher.publish(event);
         }
+    }
 
+    private void installSaele() {
+        log.info("Lade Filmauswahl-Säle...");
+
+        var grosserSaal = new Saal();
+        grosserSaal.setName("großer Saal");
+
+        var kleinerSaal = new Saal();
+        kleinerSaal.setName("kleiner Saal");
+
+        saalRepository.save(grosserSaal);
+        saalRepository.save(kleinerSaal);
+
+        log.info("Filmauswahl-Säle geladen: 2");
     }
 }

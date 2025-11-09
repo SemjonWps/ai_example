@@ -1,0 +1,57 @@
+[
+  {
+    "titel": "Star Boars",
+    "laufzeit": 125,
+    "posterUrl": "assets/Star_Boars.jpeg",
+    "fsk": 12,
+    "beschreibung": "In einer weit, weit entfernten Galaxie kämpfen mutige Wildschweine gegen das tyrannische Imperium.\nAngeführt von Luke Stywalker, müssen sie sich mit Lichttrüffeln und telepathischen Grunzkraftfähigkeiten gegen den dunklen Lord Swineous behaupten.\nEin episches Sci-Fi-Abenteuer voller Action, Humor und intergalaktischem Speckduft!",
+    "genre": "Sci-Fi, Comedy",
+    "hauptdarsteller": "Luke Stywalker",
+    "regie": "George Laxus",
+    "sprache": "deutsch"
+  },
+  {
+    "titel": "Guardians of the Lunacy",
+    "laufzeit": 95,
+    "posterUrl": "assets/Guardians_Of_The_Lunacy.jpeg",
+    "fsk": 6,
+    "beschreibung": "Eine Truppe aus abgedrehten Außenseitern wird widerwillig zum Schutz des Universums verpflichtet – und das ist kein gutes Zeichen.\nChris Plattfall und sein chaotisches Team aus galaktischen Verrückten stürzen sich in explosive Abenteuer voller skurriler Aliens,\ndummer Sprüche und unerwarteter Heldentaten. Werden sie das Universum retten? Wahrscheinlich nicht. Aber es wird lustig!",
+    "genre": "Sci-Fi, Comedy",
+    "hauptdarsteller": "Chris Plattfall",
+    "regie": "James Gunner",
+    "sprache": "englisch"
+  },
+  {
+    "titel": "Back to the Futura",
+    "laufzeit": 116,
+    "posterUrl": "assets/Back_To_The_Futura.jpeg",
+    "fsk": 12,
+    "beschreibung": "Als die junge Marty McGigawatts mit einer experimentellen Zeitmaschine in die Zukunft reist, findet sie sich in einer dystopischen Megacity wieder,\n        in der Roboter die Welt regieren. Mit der Hilfe eines exzentrischen Erfinders und einem Hoverboard muss sie den Lauf der Geschichte ändern,\n        bevor sie in einer Endlosschleife der Zeit gefangen bleibt.",
+    "genre": "Sci-Fi, Adventure",
+    "hauptdarsteller": "Marty McGigawatts",
+    "regie": "Robert Zoomekis",
+    "sprache": "deutsch"
+  },
+  {
+    "titel": "Clown Wars",
+    "laufzeit": 105,
+    "posterUrl": "assets/Clown_Wars.jpeg",
+    "fsk": 18,
+    "beschreibung": "Die Erde wird von einer Horde außerirdischer Clowns angegriffen, die nichts anderes wollen, als die Menschheit mit tödlichen Gags zu unterwerfen.\nNur eine Gruppe rebellischer Spaßmacher kann sich der Bedrohung entgegenstellen. Ein intergalaktisches Spektakel voller Ballontier-Kriege,\nKiller-Jojos und einem epischen Showdown in der Zirkusarena des Todes.",
+    "genre": "Sci-Fi, Horror, Comedy",
+    "hauptdarsteller": "Penny Wisecrack",
+    "regie": "Tim Burtonisch",
+    "sprache": "englisch"
+  },
+  {
+    "titel": "The Fast and the Curious",
+    "laufzeit": 135,
+    "posterUrl": "assets/The_Fast_And_The_Curious.jpeg",
+    "fsk": 16,
+    "beschreibung": "The Fast and the Curious ist ein actiongeladener Film über eine Bande von hochintelligenten Straßenkatzen, die illegale Straßenrennen fahren und geheime Raubüberfälle planen.\nAngeführt von der waghalsigen und charismatischen Kätzin Velo, entdeckt das Team, dass eine rivalisierende Hunde-Gang versucht, die Straßen zu übernehmen.\nWährend atemberaubender Verfolgungsjagden, waghalsiger Stunts und cleverer Pläne müssen die Katzen nicht nur ihre Revierhoheit verteidigen, sondern auch ein letztes, spektakuläres Rennen gewinnen, um ihre Freiheit zu sichern.\nEin rasanter Mix aus Action, Humor und katzenhafter Cleverness!",
+    "genre": "Action, Adventure, Tierfilm",
+    "hauptdarsteller": "Cat Moss",
+    "regie": "Rob Kitten",
+    "sprache": "deutsch"
+  }
+]
