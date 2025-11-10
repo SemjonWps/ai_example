@@ -122,7 +122,7 @@ public class Saalplaene implements Fixture {
             LocalTime.of(19, 30)   // Abend
         };
 
-        var heute = LocalDate.now();
+        var heute = LocalDate.of(2025, 3, 19);
         var generierteVorstellungen = new ArrayList<VorstellungEntity>();
 
         // Generiere für die nächsten 5 Tage
@@ -138,7 +138,7 @@ public class Saalplaene implements Fixture {
                 var saal = saele[random.nextInt(saele.length)];
 
                 var vorstellung = new VorstellungEntity(
-                    UUID.randomUUID(),
+                    event.getUuid(),
                     beginn,
                     saal,
                     event.getTitel(),

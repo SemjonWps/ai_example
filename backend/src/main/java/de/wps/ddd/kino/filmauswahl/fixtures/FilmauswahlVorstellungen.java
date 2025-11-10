@@ -92,7 +92,7 @@ public class FilmauswahlVorstellungen implements Fixture {
             final var filmTitel = filmRepository.findTitleById(filmId);
 
             var event = new FilmHinzugefuegtEvent(
-                    vorstellung.getId(),
+                    vorstellung.getUuid(),
                     filmTitel,
                     vorstellung.getPreis(),
                     vorstellung.getSaal().getName(),

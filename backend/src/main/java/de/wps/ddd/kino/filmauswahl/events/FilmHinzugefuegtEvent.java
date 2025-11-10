@@ -1,15 +1,16 @@
 package de.wps.ddd.kino.filmauswahl.events;
 
 import java.time.*;
+import java.util.*;
 
 public class FilmHinzugefuegtEvent {
-    private Long uuid;
+    private UUID uuid;
     private String titel;
     private Integer preis;
     private String saal;
     private LocalDateTime beginn;
 
-    public FilmHinzugefuegtEvent(Long uuid, String titel, Integer preis, String saal, LocalDateTime beginn) {
+    public FilmHinzugefuegtEvent(UUID uuid, String titel, Integer preis, String saal, LocalDateTime beginn) {
         this.uuid = uuid;
         this.titel = titel;
         this.preis = preis;
@@ -17,7 +18,7 @@ public class FilmHinzugefuegtEvent {
         this.beginn = beginn;
     }
 
-    public Long getUuid() {
+    public UUID getUuid() {
         return uuid;
     }
     public String getTitel() {
