@@ -1,38 +1,25 @@
 package de.wps.ddd.kino.kartenverkauf.application.fixtures;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.wps.ddd.kino.common.fixtures.Fixture;
+import com.fasterxml.jackson.databind.*;
+import de.wps.ddd.kino.common.fixtures.*;
 import de.wps.ddd.kino.filmauswahl.events.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.*;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.*;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzId;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.PlatzNummer;
-import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.ReiheNummer;
-import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.AktuelleVorstellungen;
-import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalKonfiguration;
-import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.SaalplanStapel;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.*;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.*;
+import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.*;
+import java.time.*;
+import java.util.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class Saalplaene implements Fixture {
+public class KartenverkaufFixture implements Fixture {
 
     private final AktuelleVorstellungen aktuelleVorstellungen;
     private final SaalplanStapel saalplanStapel;
