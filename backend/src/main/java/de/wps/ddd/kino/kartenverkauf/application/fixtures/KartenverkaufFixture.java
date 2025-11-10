@@ -25,7 +25,6 @@ public class KartenverkaufFixture implements Fixture {
     private final SaalplanStapel saalplanStapel;
     private final SaalKonfiguration saalKonfiguration;
     private final KartenverkaufVorstellungRepository vorstellungRepository;
-    private final ObjectMapper objectMapper;
     private final SaalRepository saalRepository;
 
     @Transactional
