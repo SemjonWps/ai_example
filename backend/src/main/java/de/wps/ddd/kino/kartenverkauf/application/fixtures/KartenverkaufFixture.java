@@ -31,7 +31,6 @@ public class KartenverkaufFixture implements Fixture {
     @Override
     public void install() {
         installSaele();
-
         installVorstellungen();
     }
 
@@ -66,29 +65,6 @@ public class KartenverkaufFixture implements Fixture {
 
 
         log.info("Lade Vorstellungen aus JSON...");
-    }
-
-    private void initialisiereVorstellung(Vorstellung vorstellung, Random random) {
-        log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
-
-        var abmessungen = saalKonfiguration.findeAbmessungen(vorstellung.getSaal())
-                .orElseThrow(() -> new IllegalStateException("Keine Konfiguration gefunden für Saal: " + vorstellung.getSaal().name()));
-
-        var reihen = abmessungen.reihen();
-        var spalten = abmessungen.spalten();
-
-        var plaetze = new ArrayList<Platz>(reihen * spalten);
-        for (int reihe = 1; reihe <= reihen; reihe++) {
-            for (int spalte = 1; spalte <= spalten; spalte++) {
-                var istVerkauft = random.nextInt(4) == 0;
-                var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft, null);
-                plaetze.add(platz);
-            }
-        }
-
-        var saalplan = new Saalplan(vorstellung.getId(), plaetze);
-
-        saalplanStapel.legeZurueck(saalplan);
     }
 
     @EventListener
@@ -150,5 +126,28 @@ public class KartenverkaufFixture implements Fixture {
         }
 
         log.info("Saalpläne für {} Vorstellungen initialisiert", generierteVorstellungen.size());
+    }
+
+    private void initialisiereVorstellung(Vorstellung vorstellung, Random random) {
+        log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
+
+        var abmessungen = saalKonfiguration.findeAbmessungen(vorstellung.getSaal())
+                .orElseThrow(() -> new IllegalStateException("Keine Konfiguration gefunden für Saal: " + vorstellung.getSaal().name()));
+
+        var reihen = abmessungen.reihen();
+        var spalten = abmessungen.spalten();
+
+        var plaetze = new ArrayList<Platz>(reihen * spalten);
+        for (int reihe = 1; reihe <= reihen; reihe++) {
+            for (int spalte = 1; spalte <= spalten; spalte++) {
+                var istVerkauft = random.nextInt(4) == 0;
+                var platz = new Platz(new PlatzId(new ReiheNummer(reihe), new PlatzNummer(spalte)), istVerkauft, null);
+                plaetze.add(platz);
+            }
+        }
+
+        var saalplan = new Saalplan(vorstellung.getId(), plaetze);
+
+        saalplanStapel.legeZurueck(saalplan);
     }
 }
