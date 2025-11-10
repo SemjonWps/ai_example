@@ -33,6 +33,21 @@ public class FilmauswahlVorstellungen implements Fixture {
         installVorstellungen();
     }
 
+    private void installSaele() {
+        log.info("Lade Filmauswahl-Säle...");
+
+        var grosserSaal = new Saal();
+        grosserSaal.setName("großer Saal");
+
+        var kleinerSaal = new Saal();
+        kleinerSaal.setName("kleiner Saal");
+
+        saalRepository.save(grosserSaal);
+        saalRepository.save(kleinerSaal);
+
+        log.info("Filmauswahl-Säle geladen: 2");
+    }
+
     private void installFilme() {
         log.info("Lade Filmauswahl-Filme aus JSON...");
 
@@ -85,20 +100,5 @@ public class FilmauswahlVorstellungen implements Fixture {
 
             domainEventPublisher.publish(event);
         }
-    }
-
-    private void installSaele() {
-        log.info("Lade Filmauswahl-Säle...");
-
-        var grosserSaal = new Saal();
-        grosserSaal.setName("großer Saal");
-
-        var kleinerSaal = new Saal();
-        kleinerSaal.setName("kleiner Saal");
-
-        saalRepository.save(grosserSaal);
-        saalRepository.save(kleinerSaal);
-
-        log.info("Filmauswahl-Säle geladen: 2");
     }
 }
