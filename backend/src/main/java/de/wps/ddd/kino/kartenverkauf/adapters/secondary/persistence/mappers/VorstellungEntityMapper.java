@@ -21,4 +21,14 @@ public class VorstellungEntityMapper {
                 Geldbetrag.euroInCent(entity.getEintrittspreis())
         );
     }
+
+    public VorstellungEntity toEntity(Vorstellung vorstellung) {
+        return new VorstellungEntity(
+                vorstellung.getId().uuid(),
+                vorstellung.getBeginn().zeitpunkt(),
+                vorstellung.getSaal().name(),
+                vorstellung.getFilm().name(),
+                vorstellung.getEintrittspreis().getBetrag()
+        );
+    }
 }

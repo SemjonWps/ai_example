@@ -49,15 +49,14 @@ public class KartenverkaufFixture implements Fixture {
         log.info("Empfange FilmHinzugefuegtEvent: {}", event);
 
         var neueVorstellung = FilmHinzugefuegtEventMapper.map(event);
-        vorstellungRepository.save(neueVorstellung);
-        log.info("Vorstellung gespeichert: {}");
+        aktuelleVorstellungen.hinzufuegen(neueVorstellung);
 
         // Initialisiere Saalpläne für alle generierten Vorstellungen
         var alleVorstellungen = aktuelleVorstellungen.alleVorstellungen();
         var randomFuerSaalplaene = new Random(42);
 
         for (var vorstellung : alleVorstellungen) {
-            if (vorstellung.getFilm().equals(event.getTitel())) {
+            if (vorstellung.getFilm().name().equals(event.getTitel())) {
                 initialisiereVorstellung(vorstellung, randomFuerSaalplaene);
             }
         }

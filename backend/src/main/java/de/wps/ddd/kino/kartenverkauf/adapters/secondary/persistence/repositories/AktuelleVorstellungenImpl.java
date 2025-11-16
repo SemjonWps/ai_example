@@ -28,4 +28,10 @@ public class AktuelleVorstellungenImpl implements AktuelleVorstellungen {
         var vorstellung = vorstellungRepository.findById(vorstellungId.uuid());
         return vorstellung.map(vorstellungMapper::toDomain).orElseThrow();
     }
+
+    @Override
+    public void hinzufuegen(Vorstellung neueVorstellung) {
+        var vorstellungEntity = vorstellungMapper.toEntity(neueVorstellung);
+        vorstellungRepository.save(vorstellungEntity);
+    }
 }

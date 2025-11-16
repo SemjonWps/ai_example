@@ -10,4 +10,5 @@ import java.util.List;
 public interface AktuelleVorstellungen {
     List<Vorstellung> alleVorstellungen();
     Vorstellung holeVorstellung(VorstellungId vorstellungId);
+    void hinzufuegen(Vorstellung neueVorstellung);
 }
