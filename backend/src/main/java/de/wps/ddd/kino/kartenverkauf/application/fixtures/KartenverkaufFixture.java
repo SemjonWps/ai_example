@@ -22,14 +22,13 @@ public class KartenverkaufFixture implements Fixture {
 
     private final AktuelleVorstellungen aktuelleVorstellungen;
     private final SaalplanStapel saalplanStapel;
-    private final SaalKonfiguration saalKonfiguration;
     private final KartenverkaufVorstellungRepository vorstellungRepository;
     private final SaalRepository saalRepository;
+    private boolean areSaeleInstalled = false;
 
     @Transactional
     @Override
     public void install() {
-        installSaele();
     }
 
     private void installSaele() {
@@ -41,11 +40,16 @@ public class KartenverkaufFixture implements Fixture {
         log.info("Säle geladen: {}", saalRepository.count());
 
         log.info("Lade Vorstellungen aus JSON...");
+        areSaeleInstalled = true;
     }
 
     @EventListener
     @Transactional
     public void handleFilmAktualisiert(FilmHinzugefuegtEvent event) {
+        if (!areSaeleInstalled) {
+            installSaele();
+        }
+
         log.info("Empfange FilmHinzugefuegtEvent: {}", event);
 
         var neueVorstellung = FilmHinzugefuegtEventMapper.map(event);
@@ -67,11 +71,11 @@ public class KartenverkaufFixture implements Fixture {
     private void initialisiereVorstellung(Vorstellung vorstellung, Random random) {
         log.info("Erzeuge Saalplan für Vorstellung: {}", vorstellung);
 
-        var abmessungen = saalKonfiguration.findeAbmessungen(vorstellung.getSaal())
+        var saal = saalRepository.findByName (vorstellung.getSaal().name())
                 .orElseThrow(() -> new IllegalStateException("Keine Konfiguration gefunden für Saal: " + vorstellung.getSaal().name()));
 
-        var reihen = abmessungen.reihen();
-        var spalten = abmessungen.spalten();
+        var reihen = saal.getReihen();
+        var spalten = saal.getSpalten();
 
         var plaetze = new ArrayList<Platz>(reihen * spalten);
         for (int reihe = 1; reihe <= reihen; reihe++) {
