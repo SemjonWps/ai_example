@@ -68,7 +68,7 @@ public class ProgrammService {
         return film;
     }
 
-    private void generiereVorstellungenFuerFilm(Film film, List<Saal> saele) {
+    public void generiereVorstellungenFuerFilm(Film film, List<Saal> saele) {
         log.info("Generiere Vorstellungen für Film: {}", film.getTitel());
 
         final var random = new Random();
