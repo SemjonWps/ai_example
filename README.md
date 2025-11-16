@@ -110,6 +110,12 @@ Durch Klick auf eine Vorstellung gelangt man zum Kartenverkauf. Dieser umfasst f
 - Zahlungsvorgang (angedeutet)
 - Ausstellen der Kinokarten
 
+## Technische Hinweise
+
+Das Projekt verwendet eine H2-Datenbank, die bei jedem Start der Anwendung geleert und anschließend mit Beispieldaten
+befüllt wird. Die Beispieldaten befinden sich in backend/src/main/resources/filmauswahl/filme.json. Alle anderen Daten
+werden beim Start generiert.
+
 ## Lizenz
 
 Dieses Projekt steht unter der [MIT Lizenz](LICENSE).
