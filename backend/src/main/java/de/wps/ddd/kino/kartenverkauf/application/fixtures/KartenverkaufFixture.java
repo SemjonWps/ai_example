@@ -77,12 +77,13 @@ public class KartenverkaufFixture implements Fixture {
     private void generiereVorstellungenFuerNaechsteFuenfTage(FilmHinzugefuegtEvent event) {
         log.info("Generiere Vorstellungen für Film '{}' für die nächsten 5 Tage", event.getTitel());
 
-        var random = new Random();
+                var random = new Random(42);
         var saele = new String[]{"großer Saal", "kleiner Saal"};
-        var zeitslots = new LocalTime[]{
-            LocalTime.of(14, 30),  // Nachmittag
-            LocalTime.of(19, 30)   // Abend
-        };
+
+        // Zeitraum: 14:00 bis 22:00 (2pm bis 10pm)
+        var startStunde = 14;
+        var endStunde = 22;
+        var moeglicheMinuten = new int[]{0, 15, 30, 45};
 
         var heute = LocalDate.of(2025, 3, 19);
         var generierteVorstellungen = new ArrayList<VorstellungEntity>();
@@ -95,7 +96,12 @@ public class KartenverkaufFixture implements Fixture {
             var anzahlVorstellungenProTag = 1 + random.nextInt(2); // 1 oder 2
 
             for (int i = 0; i < anzahlVorstellungenProTag; i++) {
-                var zeitslot = zeitslots[i % zeitslots.length];
+                // Zufällige Stunde zwischen 14 und 21 (inclusive)
+                var stunde = startStunde + random.nextInt(endStunde - startStunde);
+                // Zufällige Minuten: 0, 15, 30 oder 45
+                var minute = moeglicheMinuten[random.nextInt(moeglicheMinuten.length)];
+                var zeitslot = LocalTime.of(stunde, minute);
+
                 var beginn = LocalDateTime.of(datum, zeitslot);
                 var saal = saele[random.nextInt(saele.length)];
 
