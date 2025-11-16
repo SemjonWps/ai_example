@@ -1,8 +1,8 @@
 package de.wps.ddd.kino.kartenverkauf.application.fixtures;
 
-import com.fasterxml.jackson.databind.*;
 import de.wps.ddd.kino.common.fixtures.*;
 import de.wps.ddd.kino.filmauswahl.events.*;
+import de.wps.ddd.kino.kartenverkauf.adapters.primary.event.mappers.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.model.*;
 import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories.*;
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.*;
@@ -99,13 +99,7 @@ public class KartenverkaufFixture implements Fixture {
                 var beginn = LocalDateTime.of(datum, zeitslot);
                 var saal = saele[random.nextInt(saele.length)];
 
-                var vorstellung = new VorstellungEntity(
-                    event.getUuid(),
-                    beginn,
-                    saal,
-                    event.getTitel(),
-                    event.getPreis()
-                );
+                var vorstellung = FilmHinzugefuegtEventMapper.map(event, beginn, saal);
 
                 generierteVorstellungen.add(vorstellung);
             }
