@@ -1,3 +1,5 @@
+BC = Bounded Context
+
 The kartenverkauf bounded context is located at:
 backend/src/main/java/de/wps/ddd/kino/kartenverkauf/
 

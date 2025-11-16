@@ -8,7 +8,6 @@ import de.wps.ddd.kino.kartenverkauf.adapters.secondary.persistence.repositories
 import de.wps.ddd.kino.kartenverkauf.application.domain.entities.*;
 import de.wps.ddd.kino.kartenverkauf.application.domain.valueobjects.*;
 import de.wps.ddd.kino.kartenverkauf.application.ports.secondary.*;
-import java.time.*;
 import java.util.*;
 import lombok.*;
 import lombok.extern.slf4j.*;
@@ -31,28 +30,6 @@ public class KartenverkaufFixture implements Fixture {
     @Override
     public void install() {
         installSaele();
-        installVorstellungen();
-    }
-
-    private void installVorstellungen() {
-        // Vorstellungen werden nicht mehr aus JSON geladen, sondern
-        // programmatisch generiert, wenn FilmHinzugefuegtEvent empfangen wird
-        log.info("Überspringe JSON-basiertes Laden von Vorstellungen - werden durch Events generiert");
-
-        // Falls bereits Vorstellungen existieren (z.B. aus Events), initialisiere deren Saalpläne
-        var vorstellungen = aktuelleVorstellungen.alleVorstellungen();
-        if (!vorstellungen.isEmpty()) {
-            log.info("Erzeuge Saalpläne für existierende Vorstellungen...");
-            var random = new Random(42);
-
-            for (var vorstellung : vorstellungen) {
-                initialisiereVorstellung(vorstellung, random);
-            }
-
-            log.info("Vorstellung erzeugt: {}", vorstellungen.size());
-        } else {
-            log.info("Keine Vorstellungen zum Initialisieren gefunden");
-        }
     }
 
     private void installSaele() {
@@ -63,7 +40,6 @@ public class KartenverkaufFixture implements Fixture {
 
         log.info("Säle geladen: {}", saalRepository.count());
 
-
         log.info("Lade Vorstellungen aus JSON...");
     }
 
@@ -71,16 +47,9 @@ public class KartenverkaufFixture implements Fixture {
     @Transactional
     public void handleFilmAktualisiert(FilmHinzugefuegtEvent event) {
         log.info("Empfange FilmHinzugefuegtEvent: {}", event);
-        generiereVorstellungenFuerNaechsteFuenfTage(event);
-    }
 
-    private void generiereVorstellungenFuerNaechsteFuenfTage(FilmHinzugefuegtEvent event) {
-        log.info("Generiere Vorstellungen für Film '{}' für die nächsten 5 Tage", event.getTitel());
-
-        var vorstellung = FilmHinzugefuegtEventMapper.map(event);
-
-        // Speichere alle generierten Vorstellungen
-        vorstellungRepository.save(vorstellung);
+        var neueVorstellung = FilmHinzugefuegtEventMapper.map(event);
+        vorstellungRepository.save(neueVorstellung);
         log.info("Vorstellung gespeichert: {}");
 
         // Initialisiere Saalpläne für alle generierten Vorstellungen
@@ -93,7 +62,7 @@ public class KartenverkaufFixture implements Fixture {
             }
         }
 
-        log.info("Saalpläne für {} Vorstellungen initialisiert", generierteVorstellungen.size());
+        log.info("Saalpläne für Vorstellungen mit Film '{}' initialisiert", event.getTitel());
     }
 
     private void initialisiereVorstellung(Vorstellung vorstellung, Random random) {
