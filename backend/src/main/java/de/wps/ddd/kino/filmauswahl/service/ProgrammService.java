@@ -9,6 +9,7 @@ import de.wps.ddd.kino.filmauswahl.data.FilmauswahlVorstellungRepository;
 import de.wps.ddd.kino.filmauswahl.data.Saal;
 import de.wps.ddd.kino.filmauswahl.data.Vorstellung;
 import de.wps.ddd.kino.filmauswahl.events.*;
+import de.wps.ddd.kino.filmauswahl.mapper.FilmMapper;
 import de.wps.ddd.kino.filmauswahl.web.FilmEingebenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class ProgrammService {
     private final FilmauswahlSaalRepository saalRepository;
     private final FilmauswahlVorstellungRepository vorstellungRepository;
     private final DomainEventPublisher domainEventPublisher;
+    private final FilmMapper filmMapper;
 
     public List<Film> holeVorstellungenFuerTag(LocalDate datum) {
         LocalDateTime start = datum.atStartOfDay();
@@ -45,17 +47,7 @@ public class ProgrammService {
     public Film fuegeFilmHinzu(FilmEingebenDto filmDto) {
         log.info("Füge neuen Film hinzu: {}", filmDto.getTitel());
 
-        // Map DTO to Film entity
-        Film film = new Film();
-        film.setTitel(filmDto.getTitel());
-        film.setLaufzeit(filmDto.getLaufzeit());
-        film.setPosterUrl(filmDto.getPosterUrl());
-        film.setFsk(filmDto.getFsk());
-        film.setBeschreibung(filmDto.getBeschreibung());
-        film.setGenre(filmDto.getGenre());
-        film.setHauptdarsteller(filmDto.getHauptdarsteller());
-        film.setRegie(filmDto.getRegie());
-        film.setSprache(filmDto.getSprache());
+        Film film = filmMapper.toEntity(filmDto);
 
         // Save film
         film = filmRepository.save(film);
