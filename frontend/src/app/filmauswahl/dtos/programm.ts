@@ -19,3 +19,15 @@ export interface Vorstellung {
   preis: number
   saal: string
 }
+
+export interface FilmEingebenDto {
+  titel: string
+  laufzeit: number
+  posterUrl?: string
+  fsk?: number
+  beschreibung: string
+  genre?: string
+  hauptdarsteller?: string
+  regie?: string
+  sprache?: string
+}
