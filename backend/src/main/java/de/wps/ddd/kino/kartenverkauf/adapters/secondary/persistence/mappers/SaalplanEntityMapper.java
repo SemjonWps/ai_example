@@ -16,7 +16,7 @@ public class SaalplanEntityMapper {
 
     public SaalplanEntity toEntity(Saalplan saalplan, @Nullable Integer saalplanId) {
         var saalplanEntity = new SaalplanEntity(saalplanId, saalplan.getVorstellungId().uuid());
-        saalplan.getPlaetze().values().stream()
+        saalplan.getPlaetze().values().stream() // this code raises an exception during debugging but actually runs fine. The issue is probably some Hibernate circular reference magic problem.
                 .flatMap(inner -> inner.values().stream())
                 .forEach(platz -> saalplanEntity.addPlatz(
                         platz.getId().reihe().nummer(),
