@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.*;
 @Component
 @RequiredArgsConstructor
 public class FilmauswahlVorstellungen implements Fixture {
+    public static final int MAXIMUM_NUMBER_OF_VORSTELLUNGEN_PER_DAY = 3;
     private final FilmauswahlVorstellungRepository vorstellungRepository;
     private final FilmauswahlSaalRepository saalRepository;
     private final ObjectMapper objectMapper;
@@ -75,46 +76,52 @@ public class FilmauswahlVorstellungen implements Fixture {
     }
 
     private void installVorstellungen(List<Saal> saele, List<Film> filme) {
-        log.info("Lade Filmauswahl-Vorstellungen aus JSON...");
+        log.info("Generiere Vorstellungen für die nächsten 5 Tage");
 
-        log.info("Generiere Vorstellungen für Film '{}' für die nächsten 5 Tage", event.getTitel());
-
-        var random = new Random(42);
-        var saele = new String[]{ "großer Saal", "kleiner Saal" };
+        final var random = new Random(42);
 
         // Zeitraum: 14:00 bis 22:00 (2pm bis 10pm)
-        var startStunde = 14;
-        var endStunde = 22;
-        var moeglicheMinuten = new int[]{ 0, 15, 30, 45 };
+        final var startStunde = 14;
+        final var endStunde = 22;
+        final var moeglicheMinuten = new int[]{ 0, 15, 30, 45 };
 
-        var heute = LocalDate.of(2025, 3, 19);
-        var generierteVorstellungen = new ArrayList<VorstellungEntity>();
+        final var heute = LocalDate.of(2025, 3, 19);
+        final var generierteVorstellungen = new ArrayList<Vorstellung>();
 
-        // Generiere für die nächsten 5 Tage
-        for (int tag = 0; tag < 5; tag++) {
-            var datum = heute.plusDays(tag);
+        for (var film : filme) {
 
-            // Generiere 1-2 Vorstellungen pro Tag
-            var anzahlVorstellungenProTag = 1 + random.nextInt(2); // 1 oder 2
+            // Generiere für die nächsten 5 Tage
+            for (int tag = 0; tag < 5; tag++) {
+                var datum = heute.plusDays(tag);
 
-            for (int i = 0; i < anzahlVorstellungenProTag; i++) {
-                // Zufällige Stunde zwischen 14 und 21 (inclusive)
-                var stunde = startStunde + random.nextInt(endStunde - startStunde);
-                // Zufällige Minuten: 0, 15, 30 oder 45
-                var minute = moeglicheMinuten[random.nextInt(moeglicheMinuten.length)];
-                var zeitslot = LocalTime.of(stunde, minute);
+                // Generiere 1-2 Vorstellungen pro Tag
+                var anzahlVorstellungenProTag = 1 + random.nextInt(MAXIMUM_NUMBER_OF_VORSTELLUNGEN_PER_DAY); // 1 oder 2
 
-                var beginn = LocalDateTime.of(datum, zeitslot);
-                var saal = saele[random.nextInt(saele.length)];
+                for (int i = 0; i < anzahlVorstellungenProTag; i++) {
+                    // Zufällige Stunde zwischen 14 und 21 (inclusive)
+                    var stunde = startStunde + random.nextInt(endStunde - startStunde);
+                    // Zufällige Minuten: 0, 15, 30 oder 45
+                    var minute = moeglicheMinuten[random.nextInt(moeglicheMinuten.length)];
+                    var zeitslot = LocalTime.of(stunde, minute);
 
-                var vorstellung = FilmHinzugefuegtEventMapper.map(event, beginn, saal);
+                    var beginn = LocalDateTime.of(datum, zeitslot);
+                    var saal = saele.get(random.nextInt(saele.size()));
 
-                generierteVorstellungen.add(vorstellung);
+                    final var eintrittspreis = 10 + random.nextInt(6);
+                    var vorstellung = new Vorstellung();
+                    vorstellung.setUuid(UUID.randomUUID());
+                    vorstellung.setBeginn(beginn);
+                    vorstellung.setSaal(saal);
+                    vorstellung.setFilmId(film.getId());
+                    vorstellung.setPreis(eintrittspreis);
+
+                    generierteVorstellungen.add(vorstellung);
+                }
             }
         }
 
-        vorstellungRepository.saveAll(vorstellungen);
-        log.info("Filmauswahl-Vorstellungen geladen: {}", vorstellungen.size());
+        vorstellungRepository.saveAll(generierteVorstellungen);
+        log.info("Filmauswahl-Vorstellungen geladen: {}", generierteVorstellungen.size());
 
 
         final var vorstellungen = vorstellungRepository.findAll();
