@@ -95,7 +95,7 @@ public class FilmauswahlVorstellungen implements Fixture {
                 var datum = heute.plusDays(tag);
 
                 // Generiere 1-2 Vorstellungen pro Tag
-                var anzahlVorstellungenProTag = 1 + random.nextInt(MAXIMUM_NUMBER_OF_VORSTELLUNGEN_PER_DAY); // 1 oder 2
+                var anzahlVorstellungenProTag = 1 + random.nextInt(MAXIMUM_NUMBER_OF_VORSTELLUNGEN_PER_DAY);
 
                 for (int i = 0; i < anzahlVorstellungenProTag; i++) {
                     // Zufällige Stunde zwischen 14 und 21 (inclusive)
