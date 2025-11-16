@@ -77,13 +77,13 @@ public class KartenverkaufFixture implements Fixture {
     private void generiereVorstellungenFuerNaechsteFuenfTage(FilmHinzugefuegtEvent event) {
         log.info("Generiere Vorstellungen für Film '{}' für die nächsten 5 Tage", event.getTitel());
 
-                var random = new Random(42);
-        var saele = new String[]{"großer Saal", "kleiner Saal"};
+        var random = new Random(42);
+        var saele = new String[]{ "großer Saal", "kleiner Saal" };
 
         // Zeitraum: 14:00 bis 22:00 (2pm bis 10pm)
         var startStunde = 14;
         var endStunde = 22;
-        var moeglicheMinuten = new int[]{0, 15, 30, 45};
+        var moeglicheMinuten = new int[]{ 0, 15, 30, 45 };
 
         var heute = LocalDate.of(2025, 3, 19);
         var generierteVorstellungen = new ArrayList<VorstellungEntity>();
