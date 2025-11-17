@@ -26,10 +26,7 @@ public class SlotService {
         LocalTime startZeit = moeglicheStarts.get(random.nextInt(moeglicheStarts.size()));
         LocalTime endeZeit = startZeit.plusMinutes(FILM_DURATION_MINUTES);
 
-        TimeSlot neuerSlot = new TimeSlot(startZeit, endeZeit);
-        belegteZeiten.add(neuerSlot);
-
-        return neuerSlot;
+        return new TimeSlot(startZeit, endeZeit);
     }
 
     private List<LocalTime> berechneVerfuegbareZeiten(List<TimeSlot> belegteZeiten) {

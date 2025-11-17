@@ -1,28 +1,16 @@
 package de.wps.ddd.kino.filmauswahl.service;
 
-import de.wps.ddd.kino.common.architecture.ApplicationService;
-import de.wps.ddd.kino.filmauswahl.data.AktuelleFilme;
-import de.wps.ddd.kino.filmauswahl.data.Film;
-import de.wps.ddd.kino.filmauswahl.data.FilmRepository;
-import de.wps.ddd.kino.filmauswahl.data.FilmauswahlSaalRepository;
-import de.wps.ddd.kino.filmauswahl.data.FilmauswahlVorstellungRepository;
-import de.wps.ddd.kino.filmauswahl.data.Saal;
-import de.wps.ddd.kino.filmauswahl.data.Vorstellung;
+import de.wps.ddd.kino.common.architecture.*;
+import de.wps.ddd.kino.filmauswahl.data.*;
 import de.wps.ddd.kino.filmauswahl.events.*;
-import de.wps.ddd.kino.filmauswahl.mapper.FilmMapper;
-import de.wps.ddd.kino.filmauswahl.web.FilmEingebenDto;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import de.wps.ddd.kino.filmauswahl.mapper.*;
+import de.wps.ddd.kino.filmauswahl.web.*;
+import java.time.*;
+import java.util.*;
+import lombok.*;
+import lombok.extern.slf4j.*;
+import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 @ApplicationService
 @Service
@@ -87,51 +75,35 @@ public class ProgrammService {
     private ArrayList<Vorstellung> generiereVorstellungen(Film film, List<Saal> saele) {
         final var random = new Random();
 
-
-        List<String> filme2 = List.of("Film A", "Film B", "Film C", "Film D", "Film E");
-
-        for (String film2 : filme2) {
-            TimeSlot slot = slotService.platziereFilm(film2);
-            if (slot != null) {
-                System.out.println(film2 + ": " + slot.start + " - " + slot.ende);
-            } else {
-                System.out.println(film2 + ": Kein Zeitslot verfügbar");
-            }
-        }
-
-
-        final var startStunde = 14;
-        final var endStunde = 22;
-        final var moeglicheMinuten = new int[]{ 0, 15, 30, 45 };
-
         final var heute = LocalDate.of(2025, 3, 19);
         final var generierteVorstellungen = new ArrayList<Vorstellung>();
 
         for (int tag = 0; tag < 4; tag++) {
-            var datum = heute.plusDays(tag);
+            final var datum = heute.plusDays(tag);
 
-            var anzahlVorstellungenProTag = 1 + random.nextInt(MAX_ANZAHL_VORSTELLUNGEN_PRO_TAG);
+            var besetzt = vorstellungRepository.findAll().stream()
+                    .filter(it -> it.getBeginn().toLocalDate().equals(datum)).map(
+                            it -> new TimeSlot(it.getBeginn().toLocalTime(), it.getBeginn().toLocalTime().plusMinutes(90)))
+                    .toList();
 
-            for (int i = 0; i < anzahlVorstellungenProTag; i++) {
-                // Zufällige Stunde zwischen 14 und 21 (inclusive)
-                var stunde = startStunde + random.nextInt(endStunde - startStunde);
-                // Zufällige Minuten: 0, 15, 30 oder 45
-                var minute = moeglicheMinuten[random.nextInt(moeglicheMinuten.length)];
-                var zeitslot = LocalTime.of(stunde, minute);
+            System.out.println(besetzt);
 
-                var beginn = LocalDateTime.of(datum, zeitslot);
-                var saal = saele.get(random.nextInt(saele.size()));
+            TimeSlot timeSlot = slotService.platziereFilm(besetzt);
+            var beginnZeit = timeSlot != null ? timeSlot.start : LocalTime.of(9,0);
 
-                final var eintrittspreis = 10 + random.nextInt(6);
-                var vorstellung = new Vorstellung();
-                vorstellung.setUuid(UUID.randomUUID());
-                vorstellung.setBeginn(beginn);
-                vorstellung.setSaal(saal);
-                vorstellung.setFilmId(film.getId());
-                vorstellung.setPreis(eintrittspreis);
+            var beginn = LocalDateTime.of(datum, beginnZeit);
 
-                generierteVorstellungen.add(vorstellung);
-            }
+            var saal = saele.get(random.nextInt(saele.size()));
+
+            final var eintrittspreis = 10 + random.nextInt(6);
+            var vorstellung = new Vorstellung();
+            vorstellung.setUuid(UUID.randomUUID());
+            vorstellung.setBeginn(beginn);
+            vorstellung.setSaal(saal);
+            vorstellung.setFilmId(film.getId());
+            vorstellung.setPreis(eintrittspreis);
+
+            generierteVorstellungen.add(vorstellung);
         }
         return generierteVorstellungen;
     }
