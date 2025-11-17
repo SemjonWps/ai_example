@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.*;
 import com.fasterxml.jackson.databind.*;
 import de.wps.ddd.kino.common.fixtures.*;
 import de.wps.ddd.kino.filmauswahl.data.*;
-import de.wps.ddd.kino.filmauswahl.service.ProgrammService;
+import de.wps.ddd.kino.filmauswahl.service.*;
 import java.io.*;
 import java.util.*;
 import lombok.*;

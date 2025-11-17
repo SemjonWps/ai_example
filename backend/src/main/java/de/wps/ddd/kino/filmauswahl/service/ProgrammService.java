@@ -37,6 +37,8 @@ public class ProgrammService {
     private final FilmauswahlVorstellungRepository vorstellungRepository;
     private final DomainEventPublisher domainEventPublisher;
     private final FilmMapper filmMapper;
+    private final SlotService slotService;
+
 
     public List<Film> holeVorstellungenFuerTag(LocalDate datum) {
         LocalDateTime start = datum.atStartOfDay();
@@ -82,8 +84,21 @@ public class ProgrammService {
         }
     }
 
-    private static ArrayList<Vorstellung> generiereVorstellungen(Film film, List<Saal> saele) {
+    private ArrayList<Vorstellung> generiereVorstellungen(Film film, List<Saal> saele) {
         final var random = new Random();
+
+
+        List<String> filme2 = List.of("Film A", "Film B", "Film C", "Film D", "Film E");
+
+        for (String film2 : filme2) {
+            TimeSlot slot = slotService.platziereFilm(film2);
+            if (slot != null) {
+                System.out.println(film2 + ": " + slot.start + " - " + slot.ende);
+            } else {
+                System.out.println(film2 + ": Kein Zeitslot verfügbar");
+            }
+        }
+
 
         final var startStunde = 14;
         final var endStunde = 22;
