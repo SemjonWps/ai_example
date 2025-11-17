@@ -3,6 +3,8 @@ BC = Bounded Context
 The kartenverkauf bounded context is located at:
 backend/src/main/java/de/wps/ddd/kino/kartenverkauf/
 
+The Kartenverkauf BC uses hexagonal architecture (ports and adapters pattern).
+
 When working on Kartenverkauf features, stay within this bounded context.
 
 Structure:

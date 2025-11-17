@@ -63,7 +63,7 @@ public class ProgrammService {
     public void generiereVorstellungenFuerFilm(Film film, List<Saal> saele) {
         log.info("Generiere Vorstellungen für Film: {}", film.getTitel());
 
-        final var random = new Random();
+        final var random = new Random(42); // Fester Seed für Reproduzierbarkeit
 
         // Zeitraum: 14:00 bis 22:00 (2pm bis 10pm)
         final var startStunde = 14;
