@@ -14,7 +14,16 @@ public class SlotService {
     private static final int FILM_DURATION_MINUTES = 90;
     private static final int TIME_SLOT_STEP_MINUTES = 15;
 
-    private final Random random = new Random();
+    private final Random random;
+
+    public SlotService() {
+        this.random = new Random();
+    }
+
+    // Constructor for testing with mocked Random
+    SlotService(Random random) {
+        this.random = random;
+    }
 
     // start
     public TimeSlot platziereFilm(List<TimeSlot> belegteZeiten) {
