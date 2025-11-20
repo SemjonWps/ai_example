@@ -16,6 +16,7 @@ public class SlotService {
 
     private final Random random = new Random();
 
+    // start
     public TimeSlot platziereFilm(List<TimeSlot> belegteZeiten) {
         List<LocalTime> moeglicheStarts = berechneVerfuegbareZeiten(belegteZeiten);
 
