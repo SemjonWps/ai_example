@@ -233,3 +233,4 @@ replay_pid*
 /data/testdb.mv.db
 /data/testdb.trace.db
 /backend/data/testdb.mv.db
+backend/data/testdb.trace.db
